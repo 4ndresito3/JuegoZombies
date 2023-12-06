@@ -8,6 +8,9 @@ package juegozombies;
  *
  * @author j.perezm.2022
  */
-public class ZCaminanteBerserker {
+public class ZCaminanteBerserker extends ZCaminante{
     
+    public void reaccion(Superviviente superviviente , EArmas arma){
+        
+    }
 }

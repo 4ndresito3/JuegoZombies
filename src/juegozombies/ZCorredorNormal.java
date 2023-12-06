@@ -8,6 +8,9 @@ package juegozombies;
  *
  * @author j.perezm.2022
  */
-public class ZCorredorNormal {
+public class ZCorredorNormal extends ZCorredor{
     
+    public void reaccion(Superviviente superviviente , EArmas arma){
+        
+    }
 }

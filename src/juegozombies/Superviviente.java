@@ -23,6 +23,8 @@ public class Superviviente extends EntidadActivable{
     public Superviviente (String nombre, Punto posicion){
         this.nombre = nombre;
         this.setPosicion(posicion);
+        this.heridas = 0;
+        this.elimZombies = 0;
     }
 
     public String getNombre() {

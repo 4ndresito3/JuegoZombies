@@ -8,6 +8,9 @@ package juegozombies;
  *
  * @author Andrés
  */
-public class ZCaminante {
+public abstract class ZCaminante extends Zombi{
     
+    public ZCaminante (){
+        super(1,1);
+    }
 }

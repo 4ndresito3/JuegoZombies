@@ -13,6 +13,11 @@ public abstract class Zombi extends EntidadActivable{
     private int aguante;
     private int numAcciones;
     
+    public Zombi(int aguante, int numAcciones){
+        this.aguante = aguante;
+        this.numAcciones = numAcciones;
+    }
+
     public Punto supervivienteCercano(){
         Punto cercano = new Punto();
         double distancia;
@@ -35,9 +40,14 @@ public abstract class Zombi extends EntidadActivable{
     @Override
     public void atacar(){
         int i = 0;
+        boolean atacado = false;
         do{ // bucle para sacar el superviviente al que hay que atacar
-
-        }while(i < Juego.getSupervivientes().size());
+            if(this.devolverCoordenada().equals(Juego.getSupervivientes().get(i).devolverCoordenada())){
+                atacado = true;
+            }
+        }while((i < Juego.getSupervivientes().size()) | (atacado));
+        Juego.getSupervivientes().get(i).setHeridas(Juego.getSupervivientes().get(i).getHeridas()+ 1);
+        
     }
     @Override 
     public void morir(){
@@ -64,5 +74,5 @@ public abstract class Zombi extends EntidadActivable{
         }
     }
     
-    public abstract void reaccion(EArmas arma);
+    public abstract void reaccion(Superviviente superviviente , EArmas arma);
 }
