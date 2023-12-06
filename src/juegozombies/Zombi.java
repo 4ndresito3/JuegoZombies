@@ -8,12 +8,14 @@ package juegozombies;
  *
  * @author Andrés
  */
-public class Zombi /*extends EntidadActivable*/{
+public abstract class Zombi extends EntidadActivable{
     private int aguante;
     private int numAcciones;
     
-    
-    public void reaccion(){
+    @Override
+    public void atacar(){
         
     }
+    
+    public abstract void reaccion(EArmas arma);
 }
