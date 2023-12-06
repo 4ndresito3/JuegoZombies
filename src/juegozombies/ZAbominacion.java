@@ -8,6 +8,9 @@ package juegozombies;
  *
  * @author Andrés
  */
-public class ZAbominacion {
+public abstract class ZAbominacion extends Zombi{
     
+    public ZAbominacion (){
+        super(3,1);
+    }
 }

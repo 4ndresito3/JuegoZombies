@@ -8,6 +8,9 @@ package juegozombies;
  *
  * @author Andrés
  */
-public class ZCorredor {
+public abstract class ZCorredor extends Zombi{
     
+    public ZCorredor (){
+        super(1,2);
+    }
 }
