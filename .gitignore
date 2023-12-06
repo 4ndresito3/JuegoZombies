@@ -3,3 +3,6 @@
 
 #ignora archivos del .properties
 .properties
+
+#ignorar XML
+.xml
