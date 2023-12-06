@@ -12,13 +12,20 @@ import java.util.Scanner;
  */
 public class Juego {
     
-    private ArrayList<Superviviente> listaSupervivientes;
-    private ArrayList<Zombi> listaZombies;
-    private ArrayList<Equipo> listaEquipo;
+    private static ArrayList<Superviviente> listaSupervivientes;
+    private static ArrayList<Zombi> listaZombies;
+    private static ArrayList<Equipo> listaEquipo;
     
     private Punto objetivo;
     private Punto tamanoCuadricula;
     
+    public static ArrayList<Zombi> getZombis (){
+        return listaZombies;
+    }
+    public static ArrayList<Superviviente> getSupervivientes (){
+        return listaSupervivientes;
+    }
+
     public void generarSupervivientes(int numeroSupervivientes){
         Scanner scan = new Scanner(System.in);
         this.tamanoCuadricula = new Punto(numeroSupervivientes + 6, numeroSupervivientes + 6);
