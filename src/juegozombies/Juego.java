@@ -87,6 +87,8 @@ public class Juego {
         // Opcion es para decidir si los zombies se generan por primera vez o a lo largo del juego
         int numSupers = Juego.listaSupervivientes.size();
         boolean repetir = false;
+        // Zombi no se inicializa, habria que tener en cuenta algun tipo de zombi inicial para que no salte el error de que puede que no se haga
+        Zombi zombi = new ZCaminanteNormal();
         if(!opcion){
             for(int i = 0; i < 3*numSupers ; i++){
                 do{
@@ -103,7 +105,6 @@ public class Juego {
                 int probabilidad = (int) (Math.random()*100 +1);
                 int probabilidad2 = (int) (Math.random()*3 +1);
                 if( probabilidad <= 60){
-                    ZCaminante zombi;
                     switch(probabilidad2){
                         case 1->{
                             zombi = new ZCaminanteNormal();
@@ -112,11 +113,10 @@ public class Juego {
                             zombi = new ZCaminanteToxico();
                         }
                         case 3->{
-                            zombi = new ZCaminanteBerseker();
+                            zombi = new ZCaminanteBerserker();
                         }
                     }
                 }else if(probabilidad <= 90){
-                    ZCorredor zombi;
                     switch(probabilidad2){
                         case 1->{
                             zombi = new ZCorredorNormal();
@@ -125,11 +125,10 @@ public class Juego {
                             zombi = new ZCorredorToxico();
                         }
                         case 3->{
-                            zombi = new ZCorredorBerseker();
+                            zombi = new ZCorredorBerserker();
                         }
                     }
                 }else{
-                    ZAbominacion zombi;
                     switch(probabilidad2){
                         case 1->{
                             zombi = new ZAbominacionNormal();
@@ -138,11 +137,11 @@ public class Juego {
                             zombi = new ZAbominacionToxico();
                         }
                         case 3->{
-                            zombi = new ZAbominacionBerseker();
+                            zombi = new ZAbominacionBerserker();
                         }
                     }
                 }
-                this.listaZombies.add(zombi);
+                Juego.listaZombies.add(zombi);
        
             }
         } else{
@@ -159,7 +158,6 @@ public class Juego {
                 int probabilidad = (int) (Math.random()*100 +1);
                 int probabilidad2 = (int) (Math.random()*3 +1);
                 if( probabilidad <= 60){
-                    ZCaminante zombi;
                     switch(probabilidad2){
                         case 1->{
                             zombi = new ZCaminanteNormal();
@@ -168,11 +166,10 @@ public class Juego {
                             zombi = new ZCaminanteToxico();
                         }
                         case 3->{
-                            zombi = new ZCaminanteBerseker();
+                            zombi = new ZCaminanteBerserker();
                         }
                     }
                 }else if(probabilidad <= 90){
-                    ZCorredor zombi;
                     switch(probabilidad2){
                         case 1->{
                             zombi = new ZCorredorNormal();
@@ -181,11 +178,10 @@ public class Juego {
                             zombi = new ZCorredorToxico();
                         }
                         case 3->{
-                            zombi = new ZCorredorBerseker();
+                            zombi = new ZCorredorBerserker();
                         }
                     }
                 }else{
-                    ZAbominacion zombi;
                     switch(probabilidad2){
                         case 1->{
                             zombi = new ZAbominacionNormal();
@@ -194,11 +190,11 @@ public class Juego {
                             zombi = new ZAbominacionToxico();
                         }
                         case 3->{
-                            zombi = new ZAbominacionBerseker();
+                            zombi = new ZAbominacionBerserker();
                         }
                     }
                 }
-                this.listaZombies.add(zombi);
+                Juego.listaZombies.add(zombi);
             }
         }
 
