@@ -151,7 +151,47 @@ public class Superviviente extends EntidadActivable{
     }
     @Override   
     public void moverse(){
-        
+        if(this.puedeMoverse()==true){
+            int direccion=0;
+            this.devolverCoordenada().setY(this.devolverCoordenada().getY()+1);
+            switch (direccion){ /*1:arriba 2:abajo 3:izquierda 4:derecha*/
+                case 1 ->{
+                    if(this.devolverCoordenada().getY()+1<=Juego.getTamanoCuadricula().getY()){
+                        this.devolverCoordenada().setY(this.devolverCoordenada().getY()+1);
+                    }
+                    else{ /*el survi no se puede mover en esta direccion*/
+                        this.moverse();
+                    }
+                }
+                case 2 ->{
+                    if(this.devolverCoordenada().getY()-1>=0){
+                        this.devolverCoordenada().setY(this.devolverCoordenada().getY()-1);
+                    }
+                    else{
+                        this.moverse();
+                    }
+                }
+                case 3 ->{
+                    if(this.devolverCoordenada().getX()-1>=0){
+                        this.devolverCoordenada().setX(this.devolverCoordenada().getX()-1);
+                    }
+                    else{
+                        this.moverse();
+                    }
+                }
+                case 4 ->{
+                    if(this.devolverCoordenada().getX()+1<=Juego.getTamanoCuadricula().getX()){
+                        this.devolverCoordenada().setX(this.devolverCoordenada().getX()+1);
+                    }
+                    else{
+                        this.moverse();
+                    }
+                }
+            }
+        }
+        else{
+            
+        }
     }
     @Override
     public void atacar(){

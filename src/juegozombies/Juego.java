@@ -17,7 +17,7 @@ public class Juego {
     private static ArrayList<Equipo> listaEquipo;
     
     private Punto objetivo;
-    private Punto tamanoCuadricula;
+    private static Punto tamanoCuadricula;
     
     public static ArrayList<Zombi> getZombis (){
         return listaZombies;
@@ -26,6 +26,10 @@ public class Juego {
         return listaSupervivientes;
     }
 
+    public static Punto getTamanoCuadricula() {
+        return tamanoCuadricula;
+    }
+    
     public void generarSupervivientes(int numeroSupervivientes){
         Scanner scan = new Scanner(System.in);
         this.tamanoCuadricula = new Punto(numeroSupervivientes + 6, numeroSupervivientes + 6);
@@ -98,7 +102,7 @@ public class Juego {
                     Punto puntito = new Punto(random1,random2);
                     for(int j = 0; j < numSupers ; i++){
                         //Comprobacion de que no sea en la casilla del superviviente
-                        Punto position = Juego.listaSupervivientes.get(j).getPosicion();
+                        Punto position = Juego.listaSupervivientes.get(j).devolverCoordenada(); /*cambiado de getposicion*/
                         repetir = position.equals(puntito);
                     }
                 } while(repetir);
@@ -151,7 +155,7 @@ public class Juego {
                     int random2 = (int) (Math.random()*this.tamanoCuadricula.getY());
                     Punto puntito = new Punto(random1,random2);
                     for(int j = 0; j < numSupers ; i++){
-                        Punto position = this.listaSupervivientes.get(j).getPosicion();
+                        Punto position = this.listaSupervivientes.get(j).devolverCoordenada(); /*cambiado de getposicion*/
                         repetir = position.equals(puntito);
                     }
                 } while(repetir);
