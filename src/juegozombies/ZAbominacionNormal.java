@@ -9,7 +9,7 @@ package juegozombies;
  * @author j.perezm.2022
  */
 public class ZAbominacionNormal extends ZAbominacion{
-    
+    @Override
     public void reaccion(Superviviente superviviente , EArmas arma){
         
     }

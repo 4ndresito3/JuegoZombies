@@ -10,6 +10,7 @@ package juegozombies;
  */
 public class ZAbominacionBerserker extends ZAbominacion{
     
+    @Override
     public void reaccion(Superviviente superviviente , EArmas arma){
         
     }
