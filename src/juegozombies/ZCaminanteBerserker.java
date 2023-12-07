@@ -11,6 +11,8 @@ package juegozombies;
 public class ZCaminanteBerserker extends ZCaminante{
     @Override
     public void reaccion(Superviviente superviviente , EArmas arma){
-        
+        if (arma.getPotencia() >= this.getAguante() && arma.getAlcanceMax() == 0){
+            this.morir();
+        }
     }
 }

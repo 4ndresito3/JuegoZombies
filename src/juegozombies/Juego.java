@@ -49,11 +49,11 @@ public class Juego {
                 posicion.setY(0);
             }
         }
-        generarObjetivo(random);
+        this.generarObjetivo(random);
         for(int i = 0; i < numeroSupervivientes ; i++){
             //System.out.println("introduce el nombre");
             String nombre = scan.nextLine();
-            this.listaSupervivientes.add(new Superviviente(nombre, posicion));
+            Juego.listaSupervivientes.add(new Superviviente(nombre, posicion));
         }
         /*switch(numeroSupervivientes){
             case 1 ->{
@@ -84,17 +84,19 @@ public class Juego {
     }
     
     public void generarZombie(boolean opcion){
-        
-        int numSupers = this.listaSupervivientes.size();
+        // Opcion es para decidir si los zombies se generan por primera vez o a lo largo del juego
+        int numSupers = Juego.listaSupervivientes.size();
         boolean repetir = false;
         if(!opcion){
             for(int i = 0; i < 3*numSupers ; i++){
                 do{
+                    // Generacion de punto aleatorio del zombi
                     int random1 = (int) (Math.random()*this.tamanoCuadricula.getX());
                     int random2 = (int) (Math.random()*this.tamanoCuadricula.getY());
                     Punto puntito = new Punto(random1,random2);
                     for(int j = 0; j < numSupers ; i++){
-                        Punto position = this.listaSupervivientes.get(j).getPosicion();
+                        //Comprobacion de que no sea en la casilla del superviviente
+                        Punto position = Juego.listaSupervivientes.get(j).getPosicion();
                         repetir = position.equals(puntito);
                     }
                 } while(repetir);

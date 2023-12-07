@@ -11,6 +11,9 @@ package juegozombies;
 public class ZCorredorToxico extends ZCorredor{
     @Override
     public void reaccion(Superviviente superviviente , EArmas arma){
-        
+        if (arma.getPotencia() >= this.getAguante()){
+            this.atacar();
+            this.morir();
+        }
     }
 }

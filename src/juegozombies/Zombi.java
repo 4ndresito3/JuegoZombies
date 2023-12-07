@@ -17,14 +17,26 @@ public abstract class Zombi extends EntidadActivable{
         this.aguante = aguante;
         this.numAcciones = numAcciones;
     }
+    
+    public int getAguante() {
+        return this.aguante;
+    }
 
+    public int getNumAcciones() {
+        return this.numAcciones;
+    }
     public Punto supervivienteCercano(){
-        Punto cercano = new Punto();
+        /**
+         * Calculo de que superviviente esta mas cerca y devuelve sus coordenadas
+         */
+        Punto cercano = Juego.getSupervivientes().get(0).devolverCoordenada();
         double distancia;
+        // calculo del modulo/hipotenusa del vector Zombi-Superviviente1 para posteriormente comparar
         int x0 = Juego.getSupervivientes().get(0).devolverCoordenada().getX() - this.devolverCoordenada().getX();
         int y0 = Juego.getSupervivientes().get(0).devolverCoordenada().getY() - this.devolverCoordenada().getY();
         distancia = Math.sqrt(x0^2 + y0^2);
         for (int i = 0; i < Juego.getSupervivientes().size(); i++){
+            // Posible mejora del rendimiento si se cambia i = 0 por i = 1
             int x = Juego.getSupervivientes().get(i).devolverCoordenada().getX() - this.devolverCoordenada().getX();
             int y = Juego.getSupervivientes().get(i).devolverCoordenada().getY() - this.devolverCoordenada().getY();
             double auxDistancia = Math.sqrt(x^2 + y^2);
@@ -39,23 +51,37 @@ public abstract class Zombi extends EntidadActivable{
 
     @Override
     public void atacar(){
+        /**
+         * Ataca al superviviente, se debe comprobar antes de llamarse
+         */
         int i = 0;
         boolean atacado = false;
-        do{ // bucle para sacar el superviviente al que hay que atacar
+        do{ 
+            // bucle para sacar el superviviente al que hay que atacar
             if(this.devolverCoordenada().equals(Juego.getSupervivientes().get(i).devolverCoordenada())){
                 atacado = true;
+            }else{
+                // Si no encuentra al superviviente avanza la posicion de la lista
+                i++;
             }
         }while((i < Juego.getSupervivientes().size()) | (atacado));
-        Juego.getSupervivientes().get(i).setHeridas(Juego.getSupervivientes().get(i).getHeridas()+ 1);
-        
+        if(i < Juego.getSupervivientes().size() && atacado){
+            Juego.getSupervivientes().get(i).setHeridas(Juego.getSupervivientes().get(i).getHeridas()+ 1);
+        }
     }
     @Override 
     public void morir(){
+        /**
+         * Zombi muere
+         */
         Juego.getZombis().remove(this);
     }
 
     @Override
     public void moverse(){
+        /**
+         * Movimiento del zombi, la idea es que persiga al jugador aka 0 neuronas
+         */
         Punto superviviente = this.supervivienteCercano(); // obtenemos el punto mas cercano
         int x = superviviente.getX() - this.devolverCoordenada().getX();
         int y = superviviente.getY() - this.devolverCoordenada().getY();
