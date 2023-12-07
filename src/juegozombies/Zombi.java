@@ -22,6 +22,10 @@ public abstract class Zombi extends EntidadActivable{
         return this.aguante;
     }
 
+    public void setAguante(int aguante) {
+        this.aguante = aguante;
+    }
+    
     public int getNumAcciones() {
         return this.numAcciones;
     }
