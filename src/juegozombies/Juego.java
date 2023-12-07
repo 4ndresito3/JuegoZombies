@@ -32,7 +32,7 @@ public class Juego {
     
     public void generarSupervivientes(int numeroSupervivientes){
         Scanner scan = new Scanner(System.in);
-        this.tamanoCuadricula = new Punto(numeroSupervivientes + 6, numeroSupervivientes + 6);
+        Juego.tamanoCuadricula = new Punto(numeroSupervivientes + 6, numeroSupervivientes + 6);
         Punto posicion = new Punto();
         int random = (int)(Math.random()*4)+1;
         switch(random){
@@ -41,15 +41,15 @@ public class Juego {
                 posicion.setY(0);
             }
             case 2->{
-                posicion.setX(this.tamanoCuadricula.getX());
-                posicion.setY(this.tamanoCuadricula.getY());
+                posicion.setX(Juego.tamanoCuadricula.getX());
+                posicion.setY(Juego.tamanoCuadricula.getY());
             }
             case 3->{
                 posicion.setX(0);
-                posicion.setY(this.tamanoCuadricula.getY());
+                posicion.setY(Juego.tamanoCuadricula.getY());
             }
             case 4->{
-                posicion.setX(this.tamanoCuadricula.getX());
+                posicion.setX(Juego.tamanoCuadricula.getX());
                 posicion.setY(0);
             }
         }
@@ -97,8 +97,8 @@ public class Juego {
             for(int i = 0; i < 3*numSupers ; i++){
                 do{
                     // Generacion de punto aleatorio del zombi
-                    int random1 = (int) (Math.random()*this.tamanoCuadricula.getX());
-                    int random2 = (int) (Math.random()*this.tamanoCuadricula.getY());
+                    int random1 = (int) (Math.random()*Juego.tamanoCuadricula.getX());
+                    int random2 = (int) (Math.random()*Juego.tamanoCuadricula.getY());
                     Punto puntito = new Punto(random1,random2);
                     for(int j = 0; j < numSupers ; i++){
                         //Comprobacion de que no sea en la casilla del superviviente
@@ -151,11 +151,11 @@ public class Juego {
         } else{
             for(int i = 0; i < numSupers ; i++){
                 do{
-                    int random1 = (int) (Math.random()*this.tamanoCuadricula.getX());
-                    int random2 = (int) (Math.random()*this.tamanoCuadricula.getY());
+                    int random1 = (int) (Math.random()*Juego.tamanoCuadricula.getX());
+                    int random2 = (int) (Math.random()*Juego.tamanoCuadricula.getY());
                     Punto puntito = new Punto(random1,random2);
                     for(int j = 0; j < numSupers ; i++){
-                        Punto position = this.listaSupervivientes.get(j).devolverCoordenada(); /*cambiado de getposicion*/
+                        Punto position = Juego.listaSupervivientes.get(j).devolverCoordenada(); /*cambiado de getposicion*/
                         repetir = position.equals(puntito);
                     }
                 } while(repetir);
@@ -210,16 +210,16 @@ public class Juego {
     private void generarObjetivo(int genSupervivientes){
         switch(genSupervivientes){
             case 1->{
-                this.objetivo = new Punto (this.tamanoCuadricula.getX(),this.tamanoCuadricula.getY());
+                this.objetivo = new Punto (Juego.tamanoCuadricula.getX(),Juego.tamanoCuadricula.getY());
             }
             case 2->{
                 this.objetivo = new Punto ();
             }
             case 3->{
-                this.objetivo = new Punto (this.tamanoCuadricula.getX(),0);
+                this.objetivo = new Punto (Juego.tamanoCuadricula.getX(),0);
             }
             case 4->{
-                this.objetivo = new Punto (0,this.tamanoCuadricula.getY());
+                this.objetivo = new Punto (0,Juego.tamanoCuadricula.getY());
             }
         }
     }
