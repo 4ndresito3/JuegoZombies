@@ -1,0 +1,14 @@
+#ignora archivos ini personales
+*.ini
+
+#ignora archivos del .properties
+*.properties
+
+#ignorar XML
+*.xml
+
+#Ignorar .mf
+*.mf
+
+#Ignorar la carpeta nbproject
+nbproject
