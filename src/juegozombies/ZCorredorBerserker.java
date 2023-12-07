@@ -8,6 +8,9 @@ package juegozombies;
  *
  * @author j.perezm.2022
  */
-public class ZCorredorBerserker {
-    
+public class ZCorredorBerserker  extends ZCorredor{
+    @Override
+    public void reaccion(Superviviente superviviente , EArmas arma){
+        
+    }
 }

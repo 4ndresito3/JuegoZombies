@@ -9,7 +9,7 @@ package juegozombies;
  * @author j.perezm.2022
  */
 public class ZCaminanteToxico extends ZCaminante{
-    
+    @Override
     public void reaccion(Superviviente superviviente , EArmas arma){
         
     }
