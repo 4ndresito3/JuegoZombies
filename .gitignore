@@ -1,8 +1,0 @@
-#ignora archivos ini personales
-*.ini
-
-#ignora archivos del .properties
-*.properties
-
-#ignorar XML
-*.xml

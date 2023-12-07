@@ -1,2 +1,0 @@
-# JuegoZombies
-Proyecto final POO
