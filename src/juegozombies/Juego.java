@@ -18,6 +18,7 @@ public class Juego {
     
     private Punto objetivo;
     private static Punto tamanoCuadricula;
+    private static ArrayList<Punto> listaCasillasBuscadas;
     
     public static ArrayList<Zombi> getZombis (){
         return listaZombies;
@@ -28,13 +29,24 @@ public class Juego {
     public static Punto getTamanoCuadricula() {
         return tamanoCuadricula;
     }
-    public Juego(){
-        this.generarSupervivientes(1);
-        this.generarZombie(true);
+
+    public static ArrayList<Punto> getListaCasillasBuscadas() {
+        return listaCasillasBuscadas;
     }
     
-    public void generarSupervivientes(int numeroSupervivientes){
-        Scanner scan = new Scanner(System.in);
+    public Juego(){
+        listaSupervivientes = new ArrayList<>();
+        listaZombies = new ArrayList<>();
+        listaEquipo = new ArrayList<>();
+    }
+    
+    public void generarSupervivientes(String[] listaNombres){
+        int numeroSupervivientes = 0;
+        for(int i = 0; i < 4; i++){
+            if(!listaNombres[i].equals("")){
+                numeroSupervivientes ++;
+            }
+        }
         Juego.tamanoCuadricula = new Punto(numeroSupervivientes + 6, numeroSupervivientes + 6);
         Punto posicion = new Punto();
         int random = (int)(Math.random()*4)+1;
@@ -58,39 +70,12 @@ public class Juego {
         }
         this.generarObjetivo(random);
         for(int i = 0; i < numeroSupervivientes ; i++){
-            //System.out.println("introduce el nombre");
-            String nombre = scan.nextLine();
-            Juego.listaSupervivientes.add(new Superviviente(nombre, posicion));
+            Juego.listaSupervivientes.add(new Superviviente(listaNombres[i], posicion));
         }
-        /*switch(numeroSupervivientes){
-            case 1 ->{
-                Superviviente super1 = new Superviviente();
-                this.listaSupervivientes.add(super1);
-            }
-            case 2 ->{
-                Superviviente super1 = new Superviviente();
-                Superviviente super2 = new Superviviente();
-                this.listaSupervivientes.add(super1);
-                this.listaSupervivientes.add(super2);
-            }
-            case 3 ->{
-                Superviviente super1 = new Superviviente();
-                Superviviente super2 = new Superviviente();
-                Superviviente super3 = new Superviviente();
-                this.listaSupervivientes.add(super1);
-            }
-            case 4 ->{
-                Superviviente super1 = new Superviviente();
-                Superviviente super2 = new Superviviente();
-                Superviviente super3 = new Superviviente();
-                Superviviente super4 = new Superviviente();
-
-            }
-            
-        }*/
+       
     }
     
-    public void generarZombie(boolean opcion){
+    public void generarZombies(boolean opcion){
         // Opcion es para decidir si los zombies se generan por primera vez o a lo largo del juego
         int numSupers = Juego.listaSupervivientes.size();
         boolean repetir = false;
@@ -103,7 +88,7 @@ public class Juego {
                     int random1 = (int) (Math.random()*Juego.tamanoCuadricula.getX());
                     int random2 = (int) (Math.random()*Juego.tamanoCuadricula.getY());
                     Punto puntito = new Punto(random1,random2);
-                    for(int j = 0; j < numSupers ; i++){
+                    for(int j = 0; j < numSupers ; j++){
                         //Comprobacion de que no sea en la casilla del superviviente
                         Punto position = Juego.listaSupervivientes.get(j).devolverCoordenada(); /*cambiado de getposicion*/
                         repetir = position.equals(puntito);
@@ -157,7 +142,7 @@ public class Juego {
                     int random1 = (int) (Math.random()*Juego.tamanoCuadricula.getX());
                     int random2 = (int) (Math.random()*Juego.tamanoCuadricula.getY());
                     Punto puntito = new Punto(random1,random2);
-                    for(int j = 0; j < numSupers ; i++){
+                    for(int j = 0; j < numSupers ; j++){
                         Punto position = Juego.listaSupervivientes.get(j).devolverCoordenada(); /*cambiado de getposicion*/
                         repetir = position.equals(puntito);
                     }
