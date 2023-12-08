@@ -202,7 +202,7 @@ public class VentanaPartida extends javax.swing.JFrame {
             Juego partida = new Juego();
             partida.generarSupervivientes(nombres);
             partida.generarZombies(false);
-        }
+        } 
   
     }//GEN-LAST:event_seleccionarNumeroMouseClicked
 

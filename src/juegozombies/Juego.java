@@ -37,7 +37,7 @@ public class Juego {
     public void generarSupervivientes(String[] listaNombres){
         int numeroSupervivientes = 0;
         for(int i = 0; i < 4; i++){
-            if(listaNombres[i] != null){
+            if(!listaNombres[i].equals("")){
                 numeroSupervivientes ++;
             }
         }
