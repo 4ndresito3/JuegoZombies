@@ -16,6 +16,7 @@ public class VentanaMenu extends javax.swing.JFrame {
     public VentanaMenu() {
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
