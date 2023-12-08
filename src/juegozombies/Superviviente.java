@@ -165,47 +165,21 @@ public class Superviviente extends EntidadActivable{
         return exitos;
     }
     public boolean puedeMoverse(){ /*depende de si hay zombis*/
-        int i;
         int numZombies=0; /*Zombis en la misma casilla del survi*/
-        for(i=0; i>Juego.getZombis().size(); i++){
-            if (this.devolverCoordenada()==Juego.getZombis().get(i).devolverCoordenada()){
+        for(int i=0; i>Juego.getZombis().size(); i++){
+            if (this.devolverCoordenada().equals(Juego.getZombis().get(i).devolverCoordenada())){
                 numZombies+=1;
             }          
         }
-        switch (numZombies){
-            case 0 ->{
-                this.numAcciones-=1;  
-                return true;
-            }
-            case 1 ->{ 
-                if (this.numAcciones>=2){
-                    this.numAcciones-=2;
-                    return true;
-                }
-                else{
-                    return false;
-                }                   
-            }
-            case 2 ->{ 
-                if (this.numAcciones==3){
-                    this.numAcciones-=3;
-                    return true;
-                }
-                else{
-                    return false;
-                }
-            }
-            default ->{
-                return false;                
-            }
-        }
+        // Devuelve true si se puede mover
+        return this.numAcciones >= numZombies + 1;
     }
     @Override   
     public void moverse(){
         boolean puedeMoverseDir = false; /*para comprobar si se puede mover en una determinada direccion*/
-        if(this.puedeMoverse()==true){
+        if(this.puedeMoverse()){
             int direccion=0; /*desde la interfaz*/
-            while (puedeMoverseDir==false){
+            while (!puedeMoverseDir){
                 switch (direccion){ /*1:arriba 2:abajo 3:izquierda 4:derecha*/
                     case 1 ->{
                         if(this.devolverCoordenada().getY()+1<=Juego.getTamanoCuadricula().getY()){
