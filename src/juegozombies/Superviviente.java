@@ -266,7 +266,7 @@ public class Superviviente extends EntidadActivable{
         int exitos = this.tirarDados(arma);
         for(i=0; i>Juego.getZombis().size(); i++){
             if (casillaObj.equals(Juego.getZombis().get(i).devolverCoordenada()) && exitos>0){               
-                if(arma.getPotencia()>=Juego.getZombis().get(i).getAguante()){
+                if(arma.getPotencia()>=Juego.getZombis().get(i).getAguante()){ /*comprueba si el arma mata el zombi*/
                     Juego.getZombis().get(i).morir();
                     exitos-=1;
                 }
