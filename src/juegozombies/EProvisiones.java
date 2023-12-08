@@ -12,7 +12,8 @@ public class EProvisiones extends Equipo {
     private int valorEnergetico;
     private int caducidad;
 
-    public EProvisiones(int valorEnergetico, int caducidad) {
+    public EProvisiones(String nombre, int valorEnergetico, int caducidad) {
+        this.setNombre(nombre);
         this.valorEnergetico = valorEnergetico;
         this.caducidad = caducidad;
     }

@@ -14,6 +14,14 @@ public class EArmas extends Equipo {
     private int numDados;
     private int valorExito;
     private boolean armaActiva;
+    
+    public EArmas (String nombre, int potencia, int alcance, int numDados, int valorExito){
+        this.setNombre(nombre);
+        this.potencia=potencia;
+        this.alcanceMax=alcance;
+        this.numDados=numDados;
+        this.valorExito=valorExito;
+    }
 
     public int getPotencia() {
         return potencia;
