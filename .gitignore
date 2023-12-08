@@ -10,5 +10,6 @@
 #Ignorar .mf
 *.mf
 
-#Ignorar la carpeta nbproject
+#Ignorar la carpeta nbproject y build
 nbproject
+build

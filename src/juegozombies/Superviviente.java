@@ -82,43 +82,38 @@ public class Superviviente extends EntidadActivable{
     }
     
     public void buscar(){
-        int probArmaEquipo = (int)Math.floor(Math.random()*100+1); /*prob arma o equipo*/       
+        int probArmaEquipo = (int) (Math.random()*100+1); /*prob arma o equipo*/       
+        EArmas arma = new EArmas("",0,0,0,0);
+        EProvisiones provision = new EProvisiones("",0);
             if (probArmaEquipo<=50){
                 if (probArmaEquipo>0 && probArmaEquipo<=10){
-                    EArmas arma = new EArmas("Bazooka", 3, 5, 5, 2);
-                    this.armasActivas.add(arma);
+                    arma = new EArmas("Bazooka", 3, 5, 5, 2);
                 }
                 if (probArmaEquipo>10 && probArmaEquipo<=20){
-                    EArmas arma = new EArmas("Uzi", 1, 3, 10, 4);
-                    this.armasActivas.add(arma);
+                    arma = new EArmas("Uzi", 1, 3, 10, 4);
                 }
                 if (probArmaEquipo>20 && probArmaEquipo<=30){
-                    EArmas arma = new EArmas("Raygun", 3, 2, 2, 2);
-                    this.armasActivas.add(arma);
+                    arma = new EArmas("Raygun", 3, 2, 2, 2);
                 }
                 if (probArmaEquipo>30 && probArmaEquipo<=40){
-                    EArmas arma = new EArmas("Bate con pinchos", 2, 1, 3, 3);
-                    this.armasActivas.add(arma);
-                }    
-                if (probArmaEquipo>40 && probArmaEquipo<=50){
-                    EArmas arma = new EArmas("Ballesta", 2, 4, 3, 4);
-                    this.armasActivas.add(arma);
+                    arma = new EArmas("Bate con pinchos", 2, 1, 3, 3);
                 }
-            }
-            else if (probArmaEquipo>50){
+                if (probArmaEquipo>40 && probArmaEquipo<=50){
+                    arma = new EArmas("Ballesta", 2, 4, 3, 4);
+                }
+                this.armasActivas.add(arma);
+            }else if (probArmaEquipo>50){
                 if (probArmaEquipo>50 && probArmaEquipo<=70){
-                    EProvisiones provision = new EProvisiones("Redbull",1000,-50);
-                    this.inventario.add(provision);
+                    provision = new EProvisiones("Redbull",1000);
                 }
                 if (probArmaEquipo>70 && probArmaEquipo<=85){
-                    EProvisiones provision = new EProvisiones("Lata de judías",300, 500);
-                    this.inventario.add(provision);
+                    provision = new EProvisiones("Lata de judías",300);
                 }
                 if (probArmaEquipo>85 && probArmaEquipo<=100){
-                    EProvisiones provision = new EProvisiones("Golosinas",200, 100);
-                    this.inventario.add(provision);
+                    provision = new EProvisiones("Golosinas",200);
                 }
-            }            
+                this.inventario.add(provision);
+            }
     }
     
     public void noHacerNada(){
@@ -257,7 +252,7 @@ public class Superviviente extends EntidadActivable{
     }
     @Override
     public void atacar(){
-        int i;       
+        int i;
         this.numAcciones-=1;        
         EArmas arma= this.elegirArma(this.obtenerArma()); /*se elige arma*/
         int x = this.obtenerCasillaObjX(arma);
