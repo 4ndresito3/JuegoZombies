@@ -25,9 +25,12 @@ public class Juego {
     public static ArrayList<Superviviente> getSupervivientes (){
         return listaSupervivientes;
     }
-
     public static Punto getTamanoCuadricula() {
         return tamanoCuadricula;
+    }
+    public Juego(){
+        this.generarSupervivientes(1);
+        this.generarZombie(true);
     }
     
     public void generarSupervivientes(int numeroSupervivientes){
