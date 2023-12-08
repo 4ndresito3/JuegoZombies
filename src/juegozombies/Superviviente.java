@@ -80,40 +80,55 @@ public class Superviviente extends EntidadActivable{
     public void setArmasActivas(ArrayList<EArmas> armasActivas) {
         this.armasActivas = armasActivas;
     }
-    
-    public void buscar(){
-        int probArmaEquipo = (int) (Math.random()*100+1); /*prob arma o equipo*/       
-        EArmas arma = new EArmas("",0,0,0,0);
-        EProvisiones provision = new EProvisiones("",0);
-            if (probArmaEquipo<=50){
-                if (probArmaEquipo>0 && probArmaEquipo<=10){
-                    arma = new EArmas("Bazooka", 3, 5, 5, 2);
-                }
-                if (probArmaEquipo>10 && probArmaEquipo<=20){
-                    arma = new EArmas("Uzi", 1, 3, 10, 4);
-                }
-                if (probArmaEquipo>20 && probArmaEquipo<=30){
-                    arma = new EArmas("Raygun", 3, 2, 2, 2);
-                }
-                if (probArmaEquipo>30 && probArmaEquipo<=40){
-                    arma = new EArmas("Bate con pinchos", 2, 1, 3, 3);
-                }
-                if (probArmaEquipo>40 && probArmaEquipo<=50){
-                    arma = new EArmas("Ballesta", 2, 4, 3, 4);
-                }
-                this.armasActivas.add(arma);
-            }else if (probArmaEquipo>50){
-                if (probArmaEquipo>50 && probArmaEquipo<=70){
-                    provision = new EProvisiones("Redbull",1000);
-                }
-                if (probArmaEquipo>70 && probArmaEquipo<=85){
-                    provision = new EProvisiones("Lata de judías",300);
-                }
-                if (probArmaEquipo>85 && probArmaEquipo<=100){
-                    provision = new EProvisiones("Golosinas",200);
-                }
-                this.inventario.add(provision);
+    public boolean casillaBuscada(Punto casilla){
+        int i;
+        for(i=0; i>Juego.getListaCasillasBuscadas().size(); i++){ /*comprueba que la casilla que se va a buscar no esta en la lista*/
+            if(this.devolverCoordenada().equals(Juego.getListaCasillasBuscadas().get(i))){
+                return true;
             }
+        }
+        return false;
+    }
+    public void buscar(){
+        if(!this.casillaBuscada(this.devolverCoordenada())){
+            int probArmaEquipo = (int) (Math.random()*100+1); /*prob arma o equipo*/       
+            EArmas arma = new EArmas("",0,0,0,0);
+            EProvisiones provision = new EProvisiones("",0);
+                if (probArmaEquipo<=50){
+                    if (probArmaEquipo>0 && probArmaEquipo<=10){
+                        arma = new EArmas("Bazooka", 3, 5, 5, 2);
+                    }
+                    if (probArmaEquipo>10 && probArmaEquipo<=20){
+                        arma = new EArmas("Uzi", 1, 3, 10, 4);
+                    }
+                    if (probArmaEquipo>20 && probArmaEquipo<=30){
+                        arma = new EArmas("Raygun", 3, 2, 2, 2);
+                    }
+                    if (probArmaEquipo>30 && probArmaEquipo<=40){
+                        arma = new EArmas("Bate con pinchos", 2, 1, 3, 3);
+                    }
+                    if (probArmaEquipo>40 && probArmaEquipo<=50){
+                        arma = new EArmas("Ballesta", 2, 4, 3, 4);
+                    }
+                    this.armasActivas.add(arma);
+                }
+                else if (probArmaEquipo>50){
+                    if (probArmaEquipo>50 && probArmaEquipo<=70){
+                        provision = new EProvisiones("Redbull",1000);
+                    }
+                    if (probArmaEquipo>70 && probArmaEquipo<=85){
+                        provision = new EProvisiones("Lata de judías",300);
+                    }
+                    if (probArmaEquipo>85 && probArmaEquipo<=100){
+                        provision = new EProvisiones("Golosinas",200);
+                    }
+                    this.inventario.add(provision);
+                }
+            Juego.getListaCasillasBuscadas().add(this.devolverCoordenada());
+        }
+        else{
+            this.noHacerNada(); /*ya se habia buscado antes en esta coordenada*/
+        }
     }
     
     public void noHacerNada(){
@@ -128,8 +143,10 @@ public class Superviviente extends EntidadActivable{
         return this.armasActivas.get(huecoArma);
     }
     public int obtenerArma(){
-        /*Para obtener el argumento que recibe elegirArma desde la interfaz, posiblemente innecesario idk*/
         int i=0;
+        do{
+            i=0;  /*Para obtener el argumento que recibe elegirArma desde la interfaz, posiblemente innecesario idk*/
+        }while(i>5 || i<0);
         return i;
     }
     public Punto elegirCasillaObj(int x, int y){
@@ -141,8 +158,7 @@ public class Superviviente extends EntidadActivable{
         int x=0;
         do{
             x=0; /*este valor se elige desde la interfaz grafica*/
-        }
-        while((x>Juego.getTamanoCuadricula().getX() || x<0) && (x-this.devolverCoordenada().getX()>arma.getAlcanceMax()));          
+        }while((x>Juego.getTamanoCuadricula().getX() || x<0) && (x-this.devolverCoordenada().getX()>arma.getAlcanceMax()));          
         return x;
     }
     public int obtenerCasillaObjY(EArmas arma){ /*argumento para elegirCasillaObj*/
