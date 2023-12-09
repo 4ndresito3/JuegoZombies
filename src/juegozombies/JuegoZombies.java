@@ -14,7 +14,10 @@ public class JuegoZombies {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        VentanaMenu juego = new VentanaMenu();
+        juego.setVisible(true);
+        juego.setLocationRelativeTo(null);
+        
     }
     
 }

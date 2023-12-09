@@ -18,6 +18,7 @@ public class Juego {
     
     private Punto objetivo;
     private static Punto tamanoCuadricula;
+    private static ArrayList<Punto> listaCasillasBuscadas;
     
     public static ArrayList<Zombi> getZombis (){
         return listaZombies;
@@ -28,6 +29,11 @@ public class Juego {
     public static Punto getTamanoCuadricula() {
         return tamanoCuadricula;
     }
+
+    public static ArrayList<Punto> getListaCasillasBuscadas() {
+        return listaCasillasBuscadas;
+    }
+    
     public Juego(){
         listaSupervivientes = new ArrayList<>();
         listaZombies = new ArrayList<>();
