@@ -81,13 +81,14 @@ public class Juego {
         boolean repetir = false;
         // Zombi no se inicializa, habria que tener en cuenta algun tipo de zombi inicial para que no salte el error de que puede que no se haga
         Zombi zombi = new ZCaminanteNormal();
+        Punto puntito;
         if(!opcion){
             for(int i = 0; i < 3*numSupers ; i++){
                 do{
                     // Generacion de punto aleatorio del zombi
                     int random1 = (int) (Math.random()*Juego.tamanoCuadricula.getX());
                     int random2 = (int) (Math.random()*Juego.tamanoCuadricula.getY());
-                    Punto puntito = new Punto(random1,random2);
+                    puntito = new Punto(random1,random2);
                     for(int j = 0; j < numSupers ; j++){
                         //Comprobacion de que no sea en la casilla del superviviente
                         Punto position = Juego.listaSupervivientes.get(j).devolverCoordenada(); /*cambiado de getposicion*/
@@ -133,6 +134,7 @@ public class Juego {
                         }
                     }
                 }
+                zombi.setPosicion(puntito);
                 Juego.listaZombies.add(zombi);
        
             }
@@ -141,7 +143,7 @@ public class Juego {
                 do{
                     int random1 = (int) (Math.random()*Juego.tamanoCuadricula.getX());
                     int random2 = (int) (Math.random()*Juego.tamanoCuadricula.getY());
-                    Punto puntito = new Punto(random1,random2);
+                    puntito = new Punto(random1,random2);
                     for(int j = 0; j < numSupers ; j++){
                         Punto position = Juego.listaSupervivientes.get(j).devolverCoordenada(); /*cambiado de getposicion*/
                         repetir = position.equals(puntito);
@@ -186,6 +188,7 @@ public class Juego {
                         }
                     }
                 }
+                zombi.setPosicion(puntito);
                 Juego.listaZombies.add(zombi);
             }
         }
