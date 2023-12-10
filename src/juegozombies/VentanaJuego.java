@@ -31,7 +31,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         frame.setTitle("HOLA");
         frame.setSize(1000, 800);
         frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
         for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
             for(int j = 0; j< Juego.getTamanoCuadricula().getY(); j++){
@@ -40,6 +40,12 @@ public class VentanaJuego extends javax.swing.JFrame {
                     for(int l = 0; l< Juego.getSupervivientes().size(); l++){
                         celda[i][j].setText(Juego.getSupervivientes().get(l).getNombre() + " , ");
                     }
+                } else/* if(Juego.getZombis().get(0).devolverCoordenada().getX() == i && Juego.getZombis().get(0).devolverCoordenada().getY() == j)*/{
+                           for(int k = 0; k< Juego.getZombis().size(); k++){
+                               if(Juego.getZombis().get(k).devolverCoordenada().getX() == i && Juego.getZombis().get(k).devolverCoordenada().getY() == j){
+                                   celda[i][j].setText("Zombi");
+                               }
+                           }
                 }
                 
                 tablero.add(celda[i][j]);
