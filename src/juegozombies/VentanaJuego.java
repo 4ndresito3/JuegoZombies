@@ -31,7 +31,13 @@ public class VentanaJuego extends javax.swing.JFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
         for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
             for(int j = 0; j< Juego.getTamanoCuadricula().getX(); j++){
-                celda[i][j] = new JButton(String.valueOf(i+1));
+                celda[i][j] = new JButton(String.valueOf(""));
+                if(Juego.getSupervivientes().get(0).devolverCoordenada().getX() == i && Juego.getSupervivientes().get(0).devolverCoordenada().getY() == i ){
+                    for(int l = 0; l< Juego.getSupervivientes().size(); l++){
+                        celda[i][j].setText(Juego.getSupervivientes().get(l).getNombre() + " , ");
+                    }
+                }
+                
                 tablero.add(celda[i][j]);
             }
 
