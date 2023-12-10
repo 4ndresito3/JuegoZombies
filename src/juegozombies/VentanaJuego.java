@@ -35,12 +35,14 @@ public class VentanaJuego extends javax.swing.JFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
         for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
             for(int j = 0; j< Juego.getTamanoCuadricula().getY(); j++){
-                celda[i][j] = new JButton((String.valueOf(i*Juego.getTamanoCuadricula().getY()+j)));
-                if(Juego.getSupervivientes().get(0).devolverCoordenada().getX() == i && Juego.getSupervivientes().get(0).devolverCoordenada().getY() == i ){
+                celda[i][j] = new JButton("");
+                if(Juego.getSupervivientes().get(0).devolverCoordenada().getX() == i && Juego.getSupervivientes().get(0).devolverCoordenada().getY() == j ){
                     for(int l = 0; l< Juego.getSupervivientes().size(); l++){
-                        celda[i][j].setText(Juego.getSupervivientes().get(l).getNombre() + " , ");
+                           String texto = celda[i][j].getText();
+                           String newTexto=  texto + Juego.getSupervivientes().get(l).getNombre() + " , ";
+                           celda[i][j].setText(newTexto);
                     }
-                } else/* if(Juego.getZombis().get(0).devolverCoordenada().getX() == i && Juego.getZombis().get(0).devolverCoordenada().getY() == j)*/{
+                } else{
                            for(int k = 0; k< Juego.getZombis().size(); k++){
                                if(Juego.getZombis().get(k).devolverCoordenada().getX() == i && Juego.getZombis().get(k).devolverCoordenada().getY() == j){
                                    celda[i][j].setText("Zombi");
