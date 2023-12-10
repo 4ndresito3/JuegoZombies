@@ -206,7 +206,7 @@ public class VentanaPartida extends javax.swing.JFrame {
             partida.generarZombies(false);
             this.setVisible(false);
             ventanaJuego = new VentanaJuego();
-            ventanaJuego.setVisible(true);
+            
         } 
   
     }//GEN-LAST:event_seleccionarNumeroMouseClicked
