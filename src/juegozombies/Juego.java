@@ -16,7 +16,7 @@ public class Juego {
     private static ArrayList<Zombi> listaZombies;
     private static ArrayList<Equipo> listaEquipo;
     
-    private Punto objetivo;
+    private static Punto objetivo;
     private static Punto tamanoCuadricula;
     private static ArrayList<Punto> listaCasillasBuscadas;
     
@@ -33,11 +33,17 @@ public class Juego {
     public static ArrayList<Punto> getListaCasillasBuscadas() {
         return listaCasillasBuscadas;
     }
+
+    public static Punto getObjetivo() {
+        return objetivo;
+    }
+    
     
     public Juego(){
         listaSupervivientes = new ArrayList<>();
         listaZombies = new ArrayList<>();
         listaEquipo = new ArrayList<>();
+        listaCasillasBuscadas = new ArrayList<>();
     }
     
     public void generarSupervivientes(String[] listaNombres){
@@ -48,29 +54,34 @@ public class Juego {
             }
         }
         Juego.tamanoCuadricula = new Punto(numeroSupervivientes + 6, numeroSupervivientes + 6);
-        Punto posicion = new Punto();
-        int random = (int)(Math.random()*4)+1;
-        switch(random){
+        
+        int random1 = (int)Math.round(Math.random())*(numeroSupervivientes+5);
+        int random2 = (int)Math.round(Math.random())*(numeroSupervivientes+5);
+        Punto posicion = new Punto(random1,random2);
+        //int random = (int)((Math.random()*4)+1);
+        //posicion.setX(Math.round(Math.random())*(numeroSupervivientes+6)
+        /*switch(random){
             case 1->{
                 posicion.setX(0);
                 posicion.setY(0);
             }
             case 2->{
-                posicion.setX(Juego.tamanoCuadricula.getX()-1);
-                posicion.setY(Juego.tamanoCuadricula.getY()-1);
+                posicion.setX(numeroSupervivientes + 5);
+                posicion.setY(numeroSupervivientes + 5);
             }
             case 3->{
                 posicion.setX(0);
-                posicion.setY(Juego.tamanoCuadricula.getY()-1);
+                posicion.setY(numeroSupervivientes + 5);
             }
             case 4->{
-                posicion.setX(Juego.tamanoCuadricula.getX()-1);
+                posicion.setX(numeroSupervivientes + 5);
                 posicion.setY(0);
             }
-        }
-        this.generarObjetivo(random);
+        }*/
+        this.generarObjetivo(random1,random2);
         for(int i = 0; i < numeroSupervivientes ; i++){
             Juego.listaSupervivientes.add(new Superviviente(listaNombres[i], posicion));
+            System.out.println(listaSupervivientes.get(i).devolverCoordenada().getX() + "," + listaSupervivientes.get(i).devolverCoordenada().getY());
         }
        
     }
@@ -135,8 +146,7 @@ public class Juego {
                     }
                 }
                 zombi.setPosicion(puntito);
-                Juego.listaZombies.add(zombi);
-       
+                Juego.listaZombies.add(zombi);      
             }
         } else{
             for(int i = 0; i < numSupers ; i++){
@@ -192,14 +202,9 @@ public class Juego {
                 Juego.listaZombies.add(zombi);
             }
         }
-
-        
     }
-    
-    
-    
-    private void generarObjetivo(int genSupervivientes){
-        switch(genSupervivientes){
+    private void generarObjetivo(int genSupervivientes,int genSupervivientes2){
+        /*switch(genSupervivientes){
             case 1->{
                 this.objetivo = new Punto (Juego.tamanoCuadricula.getX()-1,Juego.tamanoCuadricula.getY()-1);
             }
@@ -211,11 +216,7 @@ public class Juego {
             }
             case 4->{
                 this.objetivo = new Punto (0,Juego.tamanoCuadricula.getY()-1);
-            }
+            }*/
+            this.objetivo = new Punto (Math.abs(genSupervivientes-(tamanoCuadricula.getX()-1)),Math.abs(genSupervivientes2-(tamanoCuadricula.getY()-1)));
         }
     }
-    
-    
-    
-    
-}

@@ -93,14 +93,14 @@ public class VentanaJuego extends javax.swing.JFrame {
         }
          private void atacarActionPerformed(java.awt.event.ActionEvent evt){
                   celda[2][2].setText("adadad");
-                  textoSeg.setText("Has atacado");
+                  textoSeg.setText("" + Juego.getObjetivo().getX() + Juego.getObjetivo().getY());
                   textoSeg2.setText("" + Juego.getSupervivientes().get(0).devolverCoordenada().getX() + Juego.getSupervivientes().get(0).devolverCoordenada().getY());
                   textoSeg3.setText("" + Juego.getSupervivientes().get(1).devolverCoordenada().getX() + Juego.getSupervivientes().get(1).devolverCoordenada().getY());
          }
          private void moverActionPerformed(java.awt.event.ActionEvent evt){
                   celda[2][2].setText("adadad");
                   textoSeg.setText("" + Juego.getZombis().get(0).devolverCoordenada().getX() + Juego.getZombis().get(0).devolverCoordenada().getY());
-                  textoSeg2.setText("" + Juego.getZombis().get(1).devolverCoordenada().getX() + Juego.getZombis().get(0).devolverCoordenada().getY());
-                  textoSeg3.setText("" + Juego.getZombis().get(2).devolverCoordenada().getX() + Juego.getZombis().get(0).devolverCoordenada().getY());
+                  textoSeg2.setText("" + Juego.getZombis().get(1).devolverCoordenada().getX() + Juego.getZombis().get(1).devolverCoordenada().getY());
+                  textoSeg3.setText("" + Juego.getZombis().get(2).devolverCoordenada().getX() + Juego.getZombis().get(2).devolverCoordenada().getY());
          }
 }

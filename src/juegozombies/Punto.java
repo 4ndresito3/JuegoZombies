@@ -33,7 +33,7 @@ public class Punto {
         this.coordenadaX = x;
     }
     public void setY(int y){
-        this.coordenadaX = y;
+        this.coordenadaY = y;
     }
     @Override
     public String toString() {
