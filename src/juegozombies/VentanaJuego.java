@@ -5,9 +5,11 @@
 package juegozombies;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,6 +23,8 @@ public class VentanaJuego extends javax.swing.JFrame {
 
     JFrame frame = new JFrame();
     JPanel seguimiento = new JPanel();
+    JLabel textoSeg = new JLabel("texto aqui");
+    JLabel textoSeg2 = new JLabel("texto aqui 2");
     JPanel tablero = new JPanel(new GridLayout(Juego.getTamanoCuadricula().getX(), Juego.getTamanoCuadricula().getY()));
     JPanel acciones = new JPanel(new GridLayout(1, 3));
     JButton celda[][] = new JButton[Juego.getTamanoCuadricula().getX()] [Juego.getTamanoCuadricula().getY() ];
@@ -28,7 +32,7 @@ public class VentanaJuego extends javax.swing.JFrame {
      * Creates new form JFrame
      */
     public VentanaJuego() {
-        frame.setTitle("HOLA");
+        frame.setTitle("VentanaJuego");
         frame.setSize(1000, 800);
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
@@ -60,10 +64,16 @@ public class VentanaJuego extends javax.swing.JFrame {
         acciones.add(atacar);
         acciones.add(mover);
         acciones.add(buscar);
-        JLabel texto = new JLabel("texto aqui");
-        seguimiento.add(texto);
+        seguimiento.setLayout(new BoxLayout(seguimiento, BoxLayout.Y_AXIS));
+        textoSeg.setAlignmentX(Component.CENTER_ALIGNMENT);
+        textoSeg2.setAlignmentX(Component.CENTER_ALIGNMENT);
+        Font font = new Font("Serif", Font.ITALIC, 20); // Tipo de fuente, estilo y tamaño
+        textoSeg.setFont(font);
+        textoSeg2.setFont(font);
+        seguimiento.add(textoSeg);
+        seguimiento.add(textoSeg2);
         frame.add(tablero, BorderLayout.CENTER);
-        frame.add(acciones, BorderLayout.SOUTH);
+        frame.add(acciones, BorderLayout.SOUTH);       
         frame.add(seguimiento, BorderLayout.EAST);
         seguimiento.setPreferredSize(new Dimension(300, 0));
         atacar.addActionListener(new java.awt.event.ActionListener() {
@@ -82,8 +92,12 @@ public class VentanaJuego extends javax.swing.JFrame {
         }
          private void atacarActionPerformed(java.awt.event.ActionEvent evt){
                   celda[2][2].setText("adadad");
+                  textoSeg.setText("Has atacado");
+                  textoSeg2.setText("El zombie sigue vivo");
          }
          private void moverActionPerformed(java.awt.event.ActionEvent evt){
                   celda[2][2].setText("adadad");
+                  textoSeg.setText("Te has movido");
+                  textoSeg2.setText("");
          }
 }

@@ -82,7 +82,7 @@ public class Superviviente extends EntidadActivable{
     }
     public boolean casillaBuscada(Punto casilla){
         int i;
-        for(i=0; i>Juego.getListaCasillasBuscadas().size(); i++){ /*comprueba que la casilla que se va a buscar no esta en la lista*/
+        for(i=0; i<Juego.getListaCasillasBuscadas().size(); i++){ /*comprueba que la casilla que se va a buscar no esta en la lista*/
             if(this.devolverCoordenada().equals(Juego.getListaCasillasBuscadas().get(i))){
                 return true;
             }
@@ -172,7 +172,7 @@ public class Superviviente extends EntidadActivable{
     public int tirarDados(EArmas arma){
         int i;
         int exitos=0;
-        for(i=0; i>arma.getNumDados(); i++){
+        for(i=0; i<arma.getNumDados(); i++){
             int numero = (int)Math.floor(Math.random()*6+1);
             if(numero>=arma.getValorExito()){
                 exitos+=1;
@@ -182,7 +182,7 @@ public class Superviviente extends EntidadActivable{
     }
     public boolean puedeMoverse(){ /*depende de si hay zombis*/
         int numZombies=0; /*Zombis en la misma casilla del survi*/
-        for(int i=0; i>Juego.getZombis().size(); i++){
+        for(int i=0; i<Juego.getZombis().size(); i++){
             if (this.devolverCoordenada().equals(Juego.getZombis().get(i).devolverCoordenada())){
                 numZombies+=1;
             }          
@@ -249,7 +249,7 @@ public class Superviviente extends EntidadActivable{
         int y = this.obtenerCasillaObjY(arma);
         Punto casillaObj = this.elegirCasillaObj(x, y); /*se elige casilla objetivo*/
         int exitos = this.tirarDados(arma);
-        for(i=0; i>Juego.getZombis().size(); i++){
+        for(i=0; i<Juego.getZombis().size(); i++){
             if (casillaObj.equals(Juego.getZombis().get(i).devolverCoordenada()) && exitos>0){               
                 if(arma.getPotencia()>=Juego.getZombis().get(i).getAguante()){ /*comprueba si el arma mata el zombi*/
                     Juego.getZombis().get(i).morir();
