@@ -251,6 +251,4 @@ public class VentanaPartida extends javax.swing.JFrame {
     private javax.swing.JPanel tituloNP;
     // End of variables declaration//GEN-END:variables
     private VentanaJuego ventanaJuego;
-
-
 }

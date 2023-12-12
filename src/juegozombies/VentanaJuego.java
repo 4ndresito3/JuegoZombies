@@ -32,10 +32,10 @@ public class VentanaJuego extends javax.swing.JFrame {
     /**
      * Creates new form JFrame
      */
-        public static void turnoJugador(Superviviente jugador){
+    public static void turnoJugador(Superviviente jugador){
         
     }
-     private void jugar(){
+    private void jugar(){
         boolean todosMuertos = false;
         boolean todosObjetivo = false;
         int cont = 0;
@@ -115,26 +115,26 @@ public class VentanaJuego extends javax.swing.JFrame {
             }
         });
         frame.setVisible(true);
-        jugar();
+        //jugar();
         }
         
-         private void atacarActionPerformed(java.awt.event.ActionEvent evt){
-                  Superviviente jugador = Juego.obtenerJugadorActual();
+         private void atacarActionPerformed(java.awt.event.ActionEvent evt){           
+                  /*Superviviente jugador = Juego.obtenerJugadorActual();
                   jugador.atacar();
                   if(jugador.getNumAcciones() == 0 && (Juego.getTurnoJugador() == Juego.getSupervivientes().size()-1 )){
-                      turnoZombies();
+                      Juego.turnoZombies();
                       Juego.pasarTurno();     
                   }else if(jugador.getNumAcciones() == 0 && (Juego.getTurnoJugador() != Juego.getSupervivientes().size()-1 )){
                       Juego.pasarTurno();
                   }else if(jugador.getNumAcciones() > 0){
                       
-                  }
+                  }*/
                   /*textoSeg.setText("" + Juego.getObjetivo().getX() + Juego.getObjetivo().getY());
                   textoSeg2.setText("" + Juego.getSupervivientes().get(0).devolverCoordenada().getX() + Juego.getSupervivientes().get(0).devolverCoordenada().getY());
                   textoSeg3.setText("" + Juego.getSupervivientes().get(1).devolverCoordenada().getX() + Juego.getSupervivientes().get(1).devolverCoordenada().getY());*/
          }
          private void moverActionPerformed(java.awt.event.ActionEvent evt){
-                  celda[2][2].setText("adadad");
+                  VentanaMoverse ventanaMoverse = new VentanaMoverse();
                   textoSeg.setText("" + Juego.getZombis().get(0).devolverCoordenada().getX() + Juego.getZombis().get(0).devolverCoordenada().getY());
                   textoSeg2.setText("" + Juego.getZombis().get(1).devolverCoordenada().getX() + Juego.getZombis().get(1).devolverCoordenada().getY());
                   textoSeg3.setText("" + Juego.getZombis().get(2).devolverCoordenada().getX() + Juego.getZombis().get(2).devolverCoordenada().getY());

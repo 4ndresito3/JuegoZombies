@@ -84,10 +84,8 @@ public class Juego {
         for(int i = 0; i < numeroSupervivientes ; i++){
             Juego.listaSupervivientes.add(new Superviviente(listaNombres[i], posicion));
             System.out.println(listaSupervivientes.get(i).devolverCoordenada().getX() + "," + listaSupervivientes.get(i).devolverCoordenada().getY());
-        }
-       
-    }
-    
+        }      
+    }  
     public void generarZombies(boolean opcion){
         // Opcion es para decidir si los zombies se generan por primera vez o a lo largo del juego
         int numSupers = Juego.listaSupervivientes.size();
@@ -231,5 +229,8 @@ public class Juego {
         }
         public static void pasarTurno(){
             turnoJugador = (turnoJugador + 1) % listaSupervivientes.size();
+        }
+        public static void turnoZombies(){
+            
         }
     }
