@@ -32,6 +32,31 @@ public class VentanaJuego extends javax.swing.JFrame {
     /**
      * Creates new form JFrame
      */
+        public static void turnoJugador(Superviviente jugador){
+        
+    }
+     private void jugar(){
+        boolean todosMuertos = false;
+        boolean todosObjetivo = false;
+        int cont = 0;
+        while(!todosMuertos && !todosObjetivo){
+             for(int i = 0; i < Juego.getSupervivientes().size(); i++){
+                  while(Juego.getSupervivientes().get(i).getNumAcciones() > 0){
+                        turnoJugador(Juego.getSupervivientes().get(i));
+                  }
+             }
+            
+            
+            
+            for(int i = 0; i < Juego.getSupervivientes().size(); i++){
+                if(Juego.getSupervivientes().get(i).devolverCoordenada().equals(Juego.getObjetivo())){
+                    cont ++;
+                }
+            }
+            todosMuertos = Juego.getSupervivientes().isEmpty();
+            todosObjetivo = cont == Juego.getSupervivientes().size();
+        }
+    }
     public VentanaJuego() {
         frame.setTitle("VentanaJuego");
         frame.setSize(1000, 800);
@@ -90,12 +115,23 @@ public class VentanaJuego extends javax.swing.JFrame {
             }
         });
         frame.setVisible(true);
+        jugar();
         }
+        
          private void atacarActionPerformed(java.awt.event.ActionEvent evt){
-                  celda[2][2].setText("adadad");
-                  textoSeg.setText("" + Juego.getObjetivo().getX() + Juego.getObjetivo().getY());
+                  Superviviente jugador = Juego.obtenerJugadorActual();
+                  jugador.atacar();
+                  if(jugador.getNumAcciones() == 0 && (Juego.getTurnoJugador() == Juego.getSupervivientes().size()-1 )){
+                      turnoZombies();
+                      Juego.pasarTurno();     
+                  }else if(jugador.getNumAcciones() == 0 && (Juego.getTurnoJugador() != Juego.getSupervivientes().size()-1 )){
+                      Juego.pasarTurno();
+                  }else if(jugador.getNumAcciones() > 0){
+                      
+                  }
+                  /*textoSeg.setText("" + Juego.getObjetivo().getX() + Juego.getObjetivo().getY());
                   textoSeg2.setText("" + Juego.getSupervivientes().get(0).devolverCoordenada().getX() + Juego.getSupervivientes().get(0).devolverCoordenada().getY());
-                  textoSeg3.setText("" + Juego.getSupervivientes().get(1).devolverCoordenada().getX() + Juego.getSupervivientes().get(1).devolverCoordenada().getY());
+                  textoSeg3.setText("" + Juego.getSupervivientes().get(1).devolverCoordenada().getX() + Juego.getSupervivientes().get(1).devolverCoordenada().getY());*/
          }
          private void moverActionPerformed(java.awt.event.ActionEvent evt){
                   celda[2][2].setText("adadad");

@@ -12,6 +12,7 @@ import java.util.Scanner;
  */
 public class Juego {
     
+    private static int turnoJugador;
     private static ArrayList<Superviviente> listaSupervivientes;
     private static ArrayList<Zombi> listaZombies;
     private static ArrayList<Equipo> listaEquipo;
@@ -40,6 +41,7 @@ public class Juego {
     
     
     public Juego(){
+        turnoJugador = 0;
         listaSupervivientes = new ArrayList<>();
         listaZombies = new ArrayList<>();
         listaEquipo = new ArrayList<>();
@@ -218,5 +220,16 @@ public class Juego {
                 this.objetivo = new Punto (0,Juego.tamanoCuadricula.getY()-1);
             }*/
             this.objetivo = new Punto (Math.abs(genSupervivientes-(tamanoCuadricula.getX()-1)),Math.abs(genSupervivientes2-(tamanoCuadricula.getY()-1)));
+        }
+
+        public static int getTurnoJugador() {
+            return turnoJugador;
+        }
+        
+        public static Superviviente obtenerJugadorActual(){
+            return listaSupervivientes.get(turnoJugador);
+        }
+        public static void pasarTurno(){
+            turnoJugador = (turnoJugador + 1) % listaSupervivientes.size();
         }
     }
