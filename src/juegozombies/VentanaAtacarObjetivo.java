@@ -157,7 +157,7 @@ public class VentanaAtacarObjetivo extends javax.swing.JFrame {
          }else if  (distancia > arma.getAlcanceMax()){  
             JOptionPane.showMessageDialog(null, "Fuera del alcance del arma ", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
         }else{
-             
+             // falta implementarlo para atacar y que se hagan bien los turnos
          }
         
         
