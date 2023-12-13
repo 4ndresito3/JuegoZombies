@@ -4,16 +4,21 @@
  */
 package juegozombies;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author josem
  */
 public class VentanaAtacarObjetivo extends javax.swing.JFrame {
-
+    private EArmas arma;
+    private Superviviente jugador = Juego.obtenerJugadorActual();
+    
     /**
      * Creates new form VentanaAtacarObjetivo
      */
-    public VentanaAtacarObjetivo() {
+    public VentanaAtacarObjetivo(EArmas arma) {
+        this.arma = arma;
         initComponents();
         setVisible(true);
     }
@@ -32,8 +37,9 @@ public class VentanaAtacarObjetivo extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        aceptar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         ObjetivoX.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -63,6 +69,13 @@ public class VentanaAtacarObjetivo extends javax.swing.JFrame {
 
         jLabel3.setText("Elige la casilla a la que disparar:");
 
+        aceptar.setText("Aceptar");
+        aceptar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                aceptarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,6 +95,10 @@ public class VentanaAtacarObjetivo extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel3)))
                 .addContainerGap(18, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(aceptar)
+                .addGap(62, 62, 62))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,7 +113,9 @@ public class VentanaAtacarObjetivo extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ObjetivoY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ObjetivoX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(aceptar)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
@@ -112,8 +131,10 @@ public class VentanaAtacarObjetivo extends javax.swing.JFrame {
 
     private void ObjetivoXMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ObjetivoXMouseClicked
         // TODO add your handling code here:
-        //Superviviente jugador = Juego.obtenerJugadorActual();
-        //int x = Integer.parseInt(ObjetivoX.getText());
+
+            
+
+       
         //jugador.obtenerCasillaObjX(x);
         //setVisible(false);
     }//GEN-LAST:event_ObjetivoXMouseClicked
@@ -126,9 +147,26 @@ public class VentanaAtacarObjetivo extends javax.swing.JFrame {
         //setVisible(false);
     }//GEN-LAST:event_ObjetivoYMouseClicked
 
+    private void aceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aceptarMouseClicked
+        Superviviente jugador = Juego.obtenerJugadorActual();
+        int x = Integer.parseInt(ObjetivoX.getText());
+        int y = Integer.parseInt(ObjetivoY.getText());
+        double distancia = Math.sqrt(((x - jugador.devolverCoordenada().getX()-1)^2) + ((y-jugador.devolverCoordenada().getY()-1)^2));
+        if((x>Juego.getTamanoCuadricula().getX()-1 || x<0) || (y>Juego.getTamanoCuadricula().getY()-1 || y<0)){
+           JOptionPane.showMessageDialog(null, "Fuera de los limites ", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
+         }else if  (distancia > arma.getAlcanceMax()){  
+            JOptionPane.showMessageDialog(null, "Fuera del alcance del arma ", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
+        }else{
+             
+         }
+        
+        
+    }//GEN-LAST:event_aceptarMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ObjetivoX;
     private javax.swing.JTextField ObjetivoY;
+    private javax.swing.JButton aceptar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

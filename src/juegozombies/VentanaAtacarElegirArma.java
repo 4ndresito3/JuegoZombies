@@ -5,6 +5,7 @@
 package juegozombies;
 
 import java.awt.BorderLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -17,35 +18,57 @@ import javax.swing.JPanel;
 public class VentanaAtacarElegirArma extends javax.swing.JFrame {
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
+        JPanel panelBoton = new JPanel();
         Superviviente jugador = Juego.obtenerJugadorActual();
-        JComboBox<EArmas>armas;
+        JComboBox<String>armas;
         EArmas opciones[];
+        JButton aceptar;
     /**
      * Creates new form VentanaAtacarElegirArma
      */
     public VentanaAtacarElegirArma() {
-        try{
+        /*jugador.getArmasActivas().add(new EArmas("Paco",0,1,2,3));
+        jugador.getArmasActivas().add(new EArmas("Paco",0,0,0,0));*/
+        if(jugador.getArmasActivas().size() == 0){
+            JOptionPane.showMessageDialog(null, "El superviviente no tiene armas", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
+            frame.dispose();
+        }else{
             opciones = new EArmas[jugador.armasActivas.size()];
             for(int i=0; i<jugador.armasActivas.size(); i++){
-                opciones[i] = jugador.armasActivas.get(i);
+            opciones[i] = jugador.armasActivas.get(i);
             }
-        }catch (NullPointerException e) {
-            // Manejo de la excepción
-            JOptionPane.showMessageDialog(null, "El superviviente no tiene armas", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);    
+        armas = new JComboBox<>();
+        for(int i = 0; i < opciones.length ; i++){
+            armas.addItem(opciones[i].getNombre());
         }
-        armas = new JComboBox<>(opciones);
-        frame.setTitle("VentanaJuego");
-        frame.setSize(200, 300);
-        frame.setResizable(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("Elige el arma");
+        frame.setSize(400, 200);
+        frame.setResizable(false);
+        frame.setLocation(300,300);
+        aceptar  = new JButton("Aceptar");
+        panelBoton.add(aceptar);
+        frame.add(panelBoton, BorderLayout.SOUTH);
         panel.add(armas);
         frame.add(panel, BorderLayout.CENTER);
+        aceptar.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                aceptarMouseClicked(evt);
+            }
+        });
         frame.setVisible(true);
+        }
     }
-    private void armasActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
-
-        setVisible(false);
+ 
+    private void aceptarMouseClicked(java.awt.event.MouseEvent evt){
+        String nombreArma = armas.getSelectedItem().toString();
+        
+        for(int i = 0; i < jugador.getArmasActivas().size(); i++){
+            if(nombreArma.equals(jugador.getArmasActivas().get(i).getNombre())){
+                VentanaAtacarObjetivo ventana = new VentanaAtacarObjetivo(jugador.getArmasActivas().get(i));
+                frame.dispose();
+            }
+        }
     }
 
     /**

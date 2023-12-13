@@ -24,6 +24,8 @@ public class Superviviente extends EntidadActivable{
         this.setPosicion(posicion);
         this.heridas = 0;
         this.elimZombies = 0;
+        this.armasActivas = new ArrayList();
+        this.inventario = new ArrayList();
     }
 
     public String getNombre() {
@@ -154,19 +156,10 @@ public class Superviviente extends EntidadActivable{
         Punto casillaObj = new Punto(x,y);
         return casillaObj;
     }
-    public int obtenerCasillaObjX(EArmas arma){ /*argumento para elegirCasillaObj*/
-        int x=0;
-        do{
-            x=0; /*este valor se elige desde la interfaz grafica*/
-        }while((x>Juego.getTamanoCuadricula().getX() || x<0) && (x-this.devolverCoordenada().getX()>arma.getAlcanceMax()));          
+    public int obtenerCasillaObjX(int x){ /*argumento para elegirCasillaObj*/     
         return x;
     }
-    public int obtenerCasillaObjY(EArmas arma){ /*argumento para elegirCasillaObj*/
-        int y=0;
-        do{
-            y=0; /*este valor se elige desde la interfaz grafica*/
-        }
-        while((y>Juego.getTamanoCuadricula().getY() || y<0) && (y-this.devolverCoordenada().getY()>arma.getAlcanceMax()));
+    public int obtenerCasillaObjY(int y){ /*argumento para elegirCasillaObj*/
         return y;
     }
     public int tirarDados(EArmas arma){
@@ -245,8 +238,6 @@ public class Superviviente extends EntidadActivable{
         int i;
         this.numAcciones-=1;        
         EArmas arma= this.elegirArma(this.obtenerArma()); /*se elige arma*/
-        int x = this.obtenerCasillaObjX(arma);
-        int y = this.obtenerCasillaObjY(arma);
         Punto casillaObj = this.elegirCasillaObj(x, y); /*se elige casilla objetivo*/
         int exitos = this.tirarDados(arma);
         for(i=0; i<Juego.getZombis().size(); i++){
