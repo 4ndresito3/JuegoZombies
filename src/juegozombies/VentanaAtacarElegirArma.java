@@ -4,25 +4,36 @@
  */
 package juegozombies;
 
+import java.awt.BorderLayout;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
  * @author josem
  */
 public class VentanaAtacarElegirArma extends javax.swing.JFrame {
+        JFrame frame = new JFrame();
+        JPanel panel = new JPanel();
+        Superviviente jugador = Juego.obtenerJugadorActual();
+        EArmas opciones[] = new EArmas[jugador.armasActivas.size()];
+        JComboBox<EArmas>armas;
     /**
      * Creates new form VentanaAtacarElegirArma
      */
     public VentanaAtacarElegirArma() {
-        Superviviente jugador = Juego.obtenerJugadorActual();
-        EArmas opciones[] = new EArmas[jugador.armasActivas.size()];
         for(int i=0; i<jugador.armasActivas.size(); i++){
             opciones[i] = jugador.armasActivas.get(i);
         }
-        JComboBox<EArmas>armas = new JComboBox<>(opciones);
-        initComponents();
-        setVisible(true);
+        armas = new JComboBox<>(opciones);
+        frame.setTitle("VentanaJuego");
+        frame.setSize(200, 300);
+        frame.setResizable(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        panel.add(armas);
+        frame.add(panel, BorderLayout.CENTER);
+        frame.setVisible(true);
     }
     private void armasActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // TODO add your handling code here:

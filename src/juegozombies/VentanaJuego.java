@@ -102,6 +102,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         frame.add(acciones, BorderLayout.SOUTH);       
         frame.add(seguimiento, BorderLayout.EAST);
         seguimiento.setPreferredSize(new Dimension(300, 0));
+        
         atacar.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,7 +119,8 @@ public class VentanaJuego extends javax.swing.JFrame {
         //jugar();
         }
         
-         private void atacarActionPerformed(java.awt.event.ActionEvent evt){           
+         private void atacarActionPerformed(java.awt.event.ActionEvent evt){ 
+                VentanaAtacarElegirArma ventana = new VentanaAtacarElegirArma();
                   /*Superviviente jugador = Juego.obtenerJugadorActual();
                   jugador.atacar();
                   if(jugador.getNumAcciones() == 0 && (Juego.getTurnoJugador() == Juego.getSupervivientes().size()-1 )){

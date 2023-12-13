@@ -35,12 +35,22 @@ public class VentanaAtacarObjetivo extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        ObjetivoX.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ObjetivoXMouseClicked(evt);
+            }
+        });
         ObjetivoX.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ObjetivoXActionPerformed(evt);
             }
         });
 
+        ObjetivoY.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ObjetivoYMouseClicked(evt);
+            }
+        });
         ObjetivoY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ObjetivoYActionPerformed(evt);
@@ -71,7 +81,7 @@ public class VentanaAtacarObjetivo extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel3)))
-                .addContainerGap(208, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,27 +96,35 @@ public class VentanaAtacarObjetivo extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ObjetivoY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ObjetivoX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(171, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ObjetivoXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ObjetivoXActionPerformed
+
+    }//GEN-LAST:event_ObjetivoXActionPerformed
+
+    private void ObjetivoYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ObjetivoYActionPerformed
+
+    }//GEN-LAST:event_ObjetivoYActionPerformed
+
+    private void ObjetivoXMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ObjetivoXMouseClicked
         // TODO add your handling code here:
         //Superviviente jugador = Juego.obtenerJugadorActual();
         //int x = Integer.parseInt(ObjetivoX.getText());
         //jugador.obtenerCasillaObjX(x);
         //setVisible(false);
-    }//GEN-LAST:event_ObjetivoXActionPerformed
+    }//GEN-LAST:event_ObjetivoXMouseClicked
 
-    private void ObjetivoYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ObjetivoYActionPerformed
+    private void ObjetivoYMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ObjetivoYMouseClicked
         // TODO add your handling code here:
         //Superviviente jugador = Juego.obtenerJugadorActual();
         //int y = Integer.parseInt(ObjetivoY.getText());
         //jugador.obtenerCasillaObjY(y);
         //setVisible(false);
-    }//GEN-LAST:event_ObjetivoYActionPerformed
+    }//GEN-LAST:event_ObjetivoYMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ObjetivoX;
