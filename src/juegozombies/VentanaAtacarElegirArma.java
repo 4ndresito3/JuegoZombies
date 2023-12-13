@@ -7,6 +7,7 @@ package juegozombies;
 import java.awt.BorderLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -17,14 +18,20 @@ public class VentanaAtacarElegirArma extends javax.swing.JFrame {
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
         Superviviente jugador = Juego.obtenerJugadorActual();
-        EArmas opciones[] = new EArmas[jugador.armasActivas.size()];
         JComboBox<EArmas>armas;
+        EArmas opciones[];
     /**
      * Creates new form VentanaAtacarElegirArma
      */
     public VentanaAtacarElegirArma() {
-        for(int i=0; i<jugador.armasActivas.size(); i++){
-            opciones[i] = jugador.armasActivas.get(i);
+        try{
+            opciones = new EArmas[jugador.armasActivas.size()];
+            for(int i=0; i<jugador.armasActivas.size(); i++){
+                opciones[i] = jugador.armasActivas.get(i);
+            }
+        }catch (NullPointerException e) {
+            // Manejo de la excepción
+            JOptionPane.showMessageDialog(null, "El superviviente no tiene armas", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);    
         }
         armas = new JComboBox<>(opciones);
         frame.setTitle("VentanaJuego");
