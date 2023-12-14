@@ -15,4 +15,8 @@ public class ZCaminanteBerserker extends ZCaminante{
             this.morir();
         }
     }
+    @Override
+    public String obtenerTipo(){
+        return "CaminanteBerserker";
+    }
 }

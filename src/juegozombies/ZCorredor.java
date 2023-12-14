@@ -13,4 +13,6 @@ public abstract class ZCorredor extends Zombi{
     public ZCorredor (){
         super(1,2);
     }
+    @Override
+    public abstract String obtenerTipo();
 }

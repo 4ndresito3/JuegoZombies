@@ -16,4 +16,8 @@ public class ZAbominacionBerserker extends ZAbominacion{
             this.morir();
         }
     }
+    @Override
+    public String obtenerTipo(){
+        return "AbominacionBerserker";
+    }
 }

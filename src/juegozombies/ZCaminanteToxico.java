@@ -16,4 +16,8 @@ public class ZCaminanteToxico extends ZCaminante{
             this.morir();
         }
     }
+    @Override
+    public String obtenerTipo(){
+        return "CaminanteToxico";
+    }
 }

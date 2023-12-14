@@ -16,4 +16,8 @@ public class ZCorredorToxico extends ZCorredor{
             this.morir();
         }
     }
+    @Override
+    public String obtenerTipo(){
+        return "CorredorToxico";
+    }
 }

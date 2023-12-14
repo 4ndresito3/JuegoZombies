@@ -15,4 +15,8 @@ public class ZCaminanteNormal extends ZCaminante{
             this.morir();
         }
     }
+    @Override
+    public String obtenerTipo(){
+        return "CaminanteNormal";
+    }
 }

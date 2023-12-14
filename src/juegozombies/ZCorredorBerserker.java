@@ -15,4 +15,8 @@ public class ZCorredorBerserker  extends ZCorredor{
             this.morir();
         }
     }
+    @Override
+    public String obtenerTipo(){
+        return "CorredorBerserker";
+    }
 }

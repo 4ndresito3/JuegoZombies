@@ -15,4 +15,8 @@ public class ZCorredorNormal extends ZCorredor{
             this.morir();
         }
     }
+    @Override
+    public String obtenerTipo(){
+        return "CorredorNormal";
+    }
 }

@@ -13,4 +13,6 @@ public abstract class ZAbominacion extends Zombi{
     public ZAbominacion (){
         super(3,1);
     }
+    @Override
+    public abstract String obtenerTipo();
 }

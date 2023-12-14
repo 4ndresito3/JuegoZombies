@@ -16,4 +16,8 @@ public class ZAbominacionToxico extends ZAbominacion{
             this.morir();
         }
     }
+    @Override
+    public String obtenerTipo(){
+        return "AbominacionToxico";
+    }
 }

@@ -106,4 +106,7 @@ public abstract class Zombi extends EntidadActivable{
     }
     
     public abstract void reaccion(Superviviente superviviente , EArmas arma);
+    public abstract String obtenerTipo();
+
+        
 }

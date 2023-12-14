@@ -15,4 +15,8 @@ public class ZAbominacionNormal extends ZAbominacion{
             this.morir();
         }
     }
+    @Override
+    public String obtenerTipo(){
+        return "AbominacionNormal";
+    }
 }
