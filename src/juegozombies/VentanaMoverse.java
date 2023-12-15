@@ -32,7 +32,7 @@ public class VentanaMoverse extends javax.swing.JFrame {
         derecha = new javax.swing.JButton();
         izquierda = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         arriba.setText("ARRIBA");
         arriba.addActionListener(new java.awt.event.ActionListener() {

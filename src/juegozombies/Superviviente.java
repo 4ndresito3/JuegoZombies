@@ -27,6 +27,7 @@ public class Superviviente extends EntidadActivable{
         this.elimZombies = 0;
         this.armasActivas = new ArrayList();
         this.inventario = new ArrayList();
+        this.numAcciones = 3;
     }
 
     public String getNombre() {
@@ -117,10 +118,18 @@ public class Superviviente extends EntidadActivable{
                         if (this.armasActivas.size()<2){
                             this.armasActivas.add(arma);
                             this.numAcciones-=1;
+                            VentanaJuego.textoSeg.append(" Se ha encontrado el arma:\n");
+                            VentanaJuego.textoSeg.append(" " + arma.getNombre() + "\n");
+                            VentanaJuego.textoSeg.append(" Añadido el arma a armas activas\n");
+                            VentanaJuego.textoSeg.append(" Nummero de acciones: " + this.getNumAcciones() + "\n");
                         }
                         else{
                             this.inventario.add(arma);
                             this.numAcciones-=1;
+                            VentanaJuego.textoSeg.append(" Se ha encontrado el arma:\n");
+                            VentanaJuego.textoSeg.append(" " + arma.getNombre() + "\n");
+                            VentanaJuego.textoSeg.append(" Añadido el arma al inventario \n");
+                            VentanaJuego.textoSeg.append(" Nummero de acciones: " + this.getNumAcciones() + "\n");
                         }   
                     }
                     else if (probArmaEquipo>50){
@@ -136,12 +145,16 @@ public class Superviviente extends EntidadActivable{
                         if(this.inventario.size()<5){
                             this.inventario.add(provision);
                             this.numAcciones-=1;
+                            VentanaJuego.textoSeg.append(" Se ha encontrado la provision\n " + provision.getNombre() + " " + provision.getValorEnergetico()+ " " + provision.getCaducidad() + "\n");
+                            VentanaJuego.textoSeg.append(" Añadida la provision al inventario \n");
+                            VentanaJuego.textoSeg.append(" Nummero de acciones: " + this.getNumAcciones() + "\n");
+                            
                         }
                         else{
                             JOptionPane.showMessageDialog(null, "Hay una provisión, pero el inventario está lleno", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
                         }
                     }
-                Juego.getListaCasillasBuscadas().add(this.devolverCoordenada());
+                   Juego.getListaCasillasBuscadas().add(this.devolverCoordenada());
             }
             else{
                 JOptionPane.showMessageDialog(null, "Ya se había buscado en esta casilla", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
@@ -156,6 +169,9 @@ public class Superviviente extends EntidadActivable{
     
     public void noHacerNada(){
         this.numAcciones-=1;
+        VentanaJuego.textoSeg.append(this.getNombre() + ", no has hecho nada\n");
+        VentanaJuego.textoSeg.append("Numero de acciones: " + this.getNumAcciones() + "\n");
+        
     }
     
     public void setActivas(EArmas arma){
@@ -211,6 +227,7 @@ public class Superviviente extends EntidadActivable{
                 switch (direccion){ /*1:arriba 2:abajo 3:izquierda 4:derecha*/
                     case 1 ->{
                         if(this.devolverCoordenada().getY()+1<=Juego.getTamanoCuadricula().getY()){
+                            VentanaJuego.borrarJugadoresAntiguos();
                             this.devolverCoordenada().setY(this.devolverCoordenada().getY()+1);
                             puedeMoverseDir=true;
                         }
@@ -220,6 +237,7 @@ public class Superviviente extends EntidadActivable{
                     }
                     case 2 ->{
                         if(this.devolverCoordenada().getY()-1>=0){
+                            VentanaJuego.borrarJugadoresAntiguos();
                             this.devolverCoordenada().setY(this.devolverCoordenada().getY()-1);
                             puedeMoverseDir=true;
                         }
@@ -229,6 +247,7 @@ public class Superviviente extends EntidadActivable{
                     }
                     case 3 ->{
                         if(this.devolverCoordenada().getX()-1>=0){
+                            VentanaJuego.borrarJugadoresAntiguos();
                             this.devolverCoordenada().setX(this.devolverCoordenada().getX()-1);
                             puedeMoverseDir=true;
                         }
@@ -238,6 +257,7 @@ public class Superviviente extends EntidadActivable{
                     }
                     case 4 ->{
                         if(this.devolverCoordenada().getX()+1<=Juego.getTamanoCuadricula().getX()){
+                            VentanaJuego.borrarJugadoresAntiguos();
                             this.devolverCoordenada().setX(this.devolverCoordenada().getX()+1);
                             puedeMoverseDir=true;
                         }
@@ -251,6 +271,13 @@ public class Superviviente extends EntidadActivable{
                 }
                 else{
                      this.numAcciones-=1;
+                     if(this.numAcciones == 0){
+                         VentanaJuego.pasarTurnoJugador();
+                     }
+                     VentanaJuego.textoSeg.append(this.getNombre() + " te moviste\n");
+                     VentanaJuego.textoSeg.append("Numero de acciones: " + this.getNumAcciones() + "\n");
+                     VentanaJuego.actualizarJugadores();
+                     
                 }       
             }
         }
