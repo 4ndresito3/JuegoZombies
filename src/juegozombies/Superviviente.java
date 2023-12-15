@@ -5,6 +5,7 @@
 package juegozombies;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Andrés
@@ -92,44 +93,64 @@ public class Superviviente extends EntidadActivable{
         return false;
     }
     public void buscar(){
-        if(!this.casillaBuscada(this.devolverCoordenada())){
-            int probArmaEquipo = (int) (Math.random()*100+1); /*prob arma o equipo*/       
-            EArmas arma = new EArmas("",0,0,0,0);
-            EProvisiones provision = new EProvisiones("",0);
-                if (probArmaEquipo<=50){
-                    if (probArmaEquipo>0 && probArmaEquipo<=10){
-                        arma = new EArmas("Bazooka", 3, 5, 5, 2);
+        if(this.inventario.size()<5 || this.armasActivas.size()<2){
+            if(!this.casillaBuscada(this.devolverCoordenada())){
+                int probArmaEquipo = (int) (Math.random()*100+1); /*prob arma o equipo*/       
+                EArmas arma = new EArmas("",0,0,0,0);
+                EProvisiones provision = new EProvisiones("",0);
+                    if (probArmaEquipo<=50){
+                        if (probArmaEquipo>0 && probArmaEquipo<=10){
+                            arma = new EArmas("Bazooka", 3, 5, 5, 2);
+                        }
+                        if (probArmaEquipo>10 && probArmaEquipo<=20){
+                            arma = new EArmas("Uzi", 1, 3, 10, 4);
+                        }
+                        if (probArmaEquipo>20 && probArmaEquipo<=30){
+                            arma = new EArmas("Raygun", 3, 2, 2, 2);
+                        }
+                        if (probArmaEquipo>30 && probArmaEquipo<=40){
+                            arma = new EArmas("Bate con pinchos", 2, 1, 3, 3);
+                        }
+                        if (probArmaEquipo>40 && probArmaEquipo<=50){
+                            arma = new EArmas("Ballesta", 2, 4, 3, 4);
+                        }
+                        if (this.armasActivas.size()<2){
+                            this.armasActivas.add(arma);
+                            this.numAcciones-=1;
+                        }
+                        else{
+                            this.inventario.add(arma);
+                            this.numAcciones-=1;
+                        }   
                     }
-                    if (probArmaEquipo>10 && probArmaEquipo<=20){
-                        arma = new EArmas("Uzi", 1, 3, 10, 4);
+                    else if (probArmaEquipo>50){
+                        if (probArmaEquipo>50 && probArmaEquipo<=70){
+                            provision = new EProvisiones("Redbull",1000);
+                        }
+                        if (probArmaEquipo>70 && probArmaEquipo<=85){
+                            provision = new EProvisiones("Lata de judías",300);
+                        }
+                        if (probArmaEquipo>85 && probArmaEquipo<=100){
+                            provision = new EProvisiones("Golosinas",200);
+                        }
+                        if(this.inventario.size()<5){
+                            this.inventario.add(provision);
+                            this.numAcciones-=1;
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Hay una provisión, pero el inventario está lleno", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
+                        }
                     }
-                    if (probArmaEquipo>20 && probArmaEquipo<=30){
-                        arma = new EArmas("Raygun", 3, 2, 2, 2);
-                    }
-                    if (probArmaEquipo>30 && probArmaEquipo<=40){
-                        arma = new EArmas("Bate con pinchos", 2, 1, 3, 3);
-                    }
-                    if (probArmaEquipo>40 && probArmaEquipo<=50){
-                        arma = new EArmas("Ballesta", 2, 4, 3, 4);
-                    }
-                    this.armasActivas.add(arma);
-                }
-                else if (probArmaEquipo>50){
-                    if (probArmaEquipo>50 && probArmaEquipo<=70){
-                        provision = new EProvisiones("Redbull",1000);
-                    }
-                    if (probArmaEquipo>70 && probArmaEquipo<=85){
-                        provision = new EProvisiones("Lata de judías",300);
-                    }
-                    if (probArmaEquipo>85 && probArmaEquipo<=100){
-                        provision = new EProvisiones("Golosinas",200);
-                    }
-                    this.inventario.add(provision);
-                }
-            Juego.getListaCasillasBuscadas().add(this.devolverCoordenada());
+                Juego.getListaCasillasBuscadas().add(this.devolverCoordenada());
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Ya se había buscado en esta casilla", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
+
+                /*ya se habia buscado antes en esta coordenada*/
+            }
         }
         else{
-            this.noHacerNada(); /*ya se habia buscado antes en esta coordenada*/
+            JOptionPane.showMessageDialog(null, "El superviviente no puede llevar nada más", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
         }
     }
     
@@ -225,24 +246,40 @@ public class Superviviente extends EntidadActivable{
                         }
                     }
                 }
+                if (puedeMoverseDir==false){
+                    JOptionPane.showMessageDialog(null, "El superviviente no se puede mover en esta dirección", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);
+                }
+                else{
+                     this.numAcciones-=1;
+                }       
             }
         }
         else{ /*no puede moverse por culpa de los zombis*/
-            this.noHacerNada();
+            JOptionPane.showMessageDialog(null, "El superviviente no se puede mover porque está rodeado", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
         }
     }
-    public void atacar(int x, int y, EArmas arma){
-        int i;
-        this.numAcciones-=1;        
+    public void atacar(int x, int y, EArmas arma){   
+        boolean hayZombies=false;
         int exitos = this.tirarDados(arma);
         Punto casillaObj = new Punto(x, y);
-        for(i=0; i<Juego.getZombis().size(); i++){
-            if (casillaObj.equals(Juego.getZombis().get(i).devolverCoordenada()) && exitos>0){               
-                if(arma.getPotencia()>=Juego.getZombis().get(i).getAguante()){ /*comprueba si el arma mata el zombi*/
-                    Juego.getZombis().get(i).morir();
-                    exitos-=1;
+        for(int i=0; i<Juego.getZombis().size(); i++){
+            if (casillaObj.equals(Juego.getZombis().get(i).devolverCoordenada())){ 
+                hayZombies=true;              
+            }         
+        }
+        if(hayZombies){
+            this.numAcciones-=1;
+            for(int i=0; i<Juego.getZombis().size(); i++){
+                if (casillaObj.equals(Juego.getZombis().get(i).devolverCoordenada()) && exitos>0){               
+                    if(arma.getPotencia()>=Juego.getZombis().get(i).getAguante()){ /*comprueba si el arma mata el zombi*/
+                        Juego.getZombis().get(i).morir();
+                        exitos-=1;
+                    }
                 }
             }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "No hay zombies en esta casilla", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
         }
     }
     @Override

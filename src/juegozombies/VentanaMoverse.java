@@ -98,29 +98,29 @@ public class VentanaMoverse extends javax.swing.JFrame {
 
     private void arribaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arribaActionPerformed
         // TODO add your handling code here:
-        //Superviviente jugador = Juego.obtenerJugadorActual();
-        //jugador.moverse(1);
+        Superviviente jugador = Juego.obtenerJugadorActual();
+        jugador.moverse(1);
         setVisible(false);
     }//GEN-LAST:event_arribaActionPerformed
 
     private void derechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_derechaActionPerformed
         // TODO add your handling code here:
-        //Superviviente jugador = Juego.obtenerJugadorActual();
-        //jugador.moverse(4);
+        Superviviente jugador = Juego.obtenerJugadorActual();
+        jugador.moverse(4);
         setVisible(false);
     }//GEN-LAST:event_derechaActionPerformed
 
     private void abajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abajoActionPerformed
         // TODO add your handling code here:
-        //Superviviente jugador = Juego.obtenerJugadorActual();
-        //jugador.moverse(2);
+        Superviviente jugador = Juego.obtenerJugadorActual();
+        jugador.moverse(2);
         setVisible(false);
     }//GEN-LAST:event_abajoActionPerformed
 
     private void izquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_izquierdaActionPerformed
         // TODO add your handling code here:
-        //Superviviente jugador = Juego.obtenerJugadorActual();
-        //jugador.moverse(3);
+        Superviviente jugador = Juego.obtenerJugadorActual();
+        jugador.moverse(3);
         setVisible(false);
     }//GEN-LAST:event_izquierdaActionPerformed
 

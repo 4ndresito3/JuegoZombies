@@ -172,4 +172,8 @@ public class VentanaJuego extends javax.swing.JFrame {
                   VentanaMoverse ventanaMoverse = new VentanaMoverse();
                  
          }
+         private void buscarActionPerformed(java.awt.event.ActionEvent evt){
+                  Juego.obtenerJugadorActual().buscar();
+                 
+         }
 }
