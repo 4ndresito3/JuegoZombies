@@ -53,8 +53,6 @@ public abstract class Zombi extends EntidadActivable{
         }
         return cercano;
     }
-
-    @Override
     public void atacar(){
         /**
          * Ataca al superviviente, se debe comprobar antes de llamarse
@@ -81,8 +79,6 @@ public abstract class Zombi extends EntidadActivable{
          */
         Juego.getZombis().remove(this);
     }
-
-    @Override
     public void moverse(){
         /**
          * Movimiento del zombi, la idea es que persiga al jugador aka 0 neuronas
@@ -107,6 +103,7 @@ public abstract class Zombi extends EntidadActivable{
     
     public abstract void reaccion(Superviviente superviviente , EArmas arma);
     public abstract String obtenerTipo();
+    public abstract String obtenerTipo2();
 
         
 }

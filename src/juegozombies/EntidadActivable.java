@@ -16,7 +16,5 @@ public abstract class EntidadActivable {
     public Punto devolverCoordenada(){
         return this.posicion;
     }
-    public abstract void moverse();
-    public abstract void atacar();
     public abstract void morir();
 }

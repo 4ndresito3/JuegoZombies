@@ -17,6 +17,10 @@ public class ZAbominacionNormal extends ZAbominacion{
     }
     @Override
     public String obtenerTipo(){
-        return "AbominacionNormal";
+        return "ZAbominacionNormal";
+    }
+    @Override
+    public String obtenerTipo2(){
+        return "ZAbNormal";
     }
 }

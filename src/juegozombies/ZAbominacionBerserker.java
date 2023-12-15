@@ -18,6 +18,11 @@ public class ZAbominacionBerserker extends ZAbominacion{
     }
     @Override
     public String obtenerTipo(){
-        return "AbominacionBerserker";
+        return "ZAbominacionBerserker";
     }
+    @Override
+    public String obtenerTipo2(){
+        return "ZAbBerserker";
+    }
+    
 }

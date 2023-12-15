@@ -15,4 +15,6 @@ public abstract class ZCaminante extends Zombi{
     }
     @Override
     public abstract String obtenerTipo();
+    public abstract String obtenerTipo2();
+
 }

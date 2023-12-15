@@ -17,6 +17,10 @@ public class ZCorredorBerserker  extends ZCorredor{
     }
     @Override
     public String obtenerTipo(){
-        return "CorredorBerserker";
+        return "ZCorredorBerserker";
+    }
+    @Override
+    public String obtenerTipo2(){
+        return "ZCoBerserker";
     }
 }

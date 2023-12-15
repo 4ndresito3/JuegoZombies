@@ -17,6 +17,10 @@ public class ZCaminanteBerserker extends ZCaminante{
     }
     @Override
     public String obtenerTipo(){
-        return "CaminanteBerserker";
+        return "ZCaminanteBerserker";
+    }
+    @Override
+    public String obtenerTipo2(){
+        return "ZCaBerserker";
     }
 }

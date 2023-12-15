@@ -18,6 +18,10 @@ public class ZAbominacionToxico extends ZAbominacion{
     }
     @Override
     public String obtenerTipo(){
-        return "AbominacionToxico";
+        return "ZAbominacionToxico";
+    }
+    @Override
+    public String obtenerTipo2(){
+        return "ZAbToxico";
     }
 }

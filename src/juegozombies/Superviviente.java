@@ -182,12 +182,10 @@ public class Superviviente extends EntidadActivable{
         }
         // Devuelve true si se puede mover
         return this.numAcciones >= numZombies + 1;
-    }
-    @Override   
-    public void moverse(){
+    } 
+    public void moverse(int direccion){
         boolean puedeMoverseDir = false; /*para comprobar si se puede mover en una determinada direccion*/
         if(this.puedeMoverse()){
-            int direccion=0; /*desde la interfaz*/
             while (!puedeMoverseDir){
                 switch (direccion){ /*1:arriba 2:abajo 3:izquierda 4:derecha*/
                     case 1 ->{
@@ -233,13 +231,11 @@ public class Superviviente extends EntidadActivable{
             this.noHacerNada();
         }
     }
-    @Override
-    public void atacar(){
+    public void atacar(int x, int y, EArmas arma){
         int i;
         this.numAcciones-=1;        
-        EArmas arma= this.elegirArma(this.obtenerArma()); /*se elige arma*/
-        Punto casillaObj = this.elegirCasillaObj(x, y); /*se elige casilla objetivo*/
         int exitos = this.tirarDados(arma);
+        Punto casillaObj = new Punto(x, y);
         for(i=0; i<Juego.getZombis().size(); i++){
             if (casillaObj.equals(Juego.getZombis().get(i).devolverCoordenada()) && exitos>0){               
                 if(arma.getPotencia()>=Juego.getZombis().get(i).getAguante()){ /*comprueba si el arma mata el zombi*/

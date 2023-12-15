@@ -61,8 +61,7 @@ public class VentanaAtacarElegirArma extends javax.swing.JFrame {
     }
  
     private void aceptarMouseClicked(java.awt.event.MouseEvent evt){
-        String nombreArma = armas.getSelectedItem().toString();
-        
+        String nombreArma = armas.getSelectedItem().toString();        
         for(int i = 0; i < jugador.getArmasActivas().size(); i++){
             if(nombreArma.equals(jugador.getArmasActivas().get(i).getNombre())){
                 VentanaAtacarObjetivo ventana = new VentanaAtacarObjetivo(jugador.getArmasActivas().get(i));

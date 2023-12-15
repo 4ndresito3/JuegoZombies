@@ -18,6 +18,10 @@ public class ZCorredorToxico extends ZCorredor{
     }
     @Override
     public String obtenerTipo(){
-        return "CorredorToxico";
+        return "ZCorredorToxico";
+    }
+    @Override
+    public String obtenerTipo2(){
+        return "ZCoToxico";
     }
 }

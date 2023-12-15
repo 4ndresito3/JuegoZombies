@@ -17,6 +17,10 @@ public class ZCaminanteNormal extends ZCaminante{
     }
     @Override
     public String obtenerTipo(){
-        return "CaminanteNormal";
+        return "ZCaminanteNormal";
+    }
+    @Override
+    public String obtenerTipo2(){
+        return "ZCaNormal";
     }
 }

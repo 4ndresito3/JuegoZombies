@@ -15,4 +15,5 @@ public abstract class ZAbominacion extends Zombi{
     }
     @Override
     public abstract String obtenerTipo();
+    public abstract String obtenerTipo2();
 }

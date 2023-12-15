@@ -18,6 +18,10 @@ public class ZCaminanteToxico extends ZCaminante{
     }
     @Override
     public String obtenerTipo(){
-        return "CaminanteToxico";
+        return "ZCaminanteToxico";
+    }
+    @Override
+    public String obtenerTipo2(){
+        return "ZCaToxico";
     }
 }

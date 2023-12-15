@@ -78,7 +78,7 @@ public class VentanaJuego extends javax.swing.JFrame {
                 for(int k = 0; k< Juego.getZombis().size(); k++){                            
                     if(Juego.getZombis().get(k).devolverCoordenada().getX() == i && Juego.getZombis().get(k).devolverCoordenada().getY() == j){
                         String texto2 = celda[i][j].getText();
-                           String newTexto2=Juego.getZombis().get(k).obtenerTipo();                          
+                           String newTexto2=Juego.getZombis().get(k).obtenerTipo2();                          
                            StringBuilder textoBoton2 = new StringBuilder("<html>"+texto2);
                            textoBoton2.append("<br>" + newTexto2);
                            celda[i][j].setText(textoBoton2.toString());                    

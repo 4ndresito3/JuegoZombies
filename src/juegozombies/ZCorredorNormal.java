@@ -17,6 +17,10 @@ public class ZCorredorNormal extends ZCorredor{
     }
     @Override
     public String obtenerTipo(){
-        return "CorredorNormal";
+        return "ZCorredorNormal";
+    }
+    @Override
+    public String obtenerTipo2(){
+        return "ZCoNormal";
     }
 }
