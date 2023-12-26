@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -30,9 +31,9 @@ public class VentanaJuego extends javax.swing.JFrame {
     /**
      * Creates new form JFrame
      */
-    public static void turnoJugador(Superviviente jugador){
+    /*public static void turnoJugador(Superviviente jugador){
         
-    }
+    }    
     private void jugar(){
         boolean todosMuertos = false;
         boolean todosObjetivo = false;
@@ -54,8 +55,10 @@ public class VentanaJuego extends javax.swing.JFrame {
             todosMuertos = Juego.getSupervivientes().isEmpty();
             todosObjetivo = cont == Juego.getSupervivientes().size();
         }
-    }
+    }*/
     public static void actualizarJugadores(){
+        
+        // Actualizacion de casillas
          for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
             for(int j=0; j< Juego.getTamanoCuadricula().getY(); j++){
                 for(int l = 0; l< Juego.getSupervivientes().size(); l++){
@@ -68,7 +71,12 @@ public class VentanaJuego extends javax.swing.JFrame {
                     }
                 }              
             }
-        }
+         }
+         
+         if(VentanaJuego.llegarObjetivoProvisiones()){
+                         JOptionPane.showMessageDialog(null, "Fin partida", "Has ganado" , JOptionPane.WARNING_MESSAGE);
+                         
+                     }
     }
         public static void borrarJugadoresAntiguos(){
          for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
@@ -106,10 +114,13 @@ public class VentanaJuego extends javax.swing.JFrame {
                 }               
             }
         }
+        if(VentanaJuego.jugadoresMuertos()){
+                JOptionPane.showMessageDialog(null, "Todos los supervivientes han muerto", "¡Perdiste!" , JOptionPane.WARNING_MESSAGE);
+            }
     }
-    public static boolean llegarObjetivo(){
+    public static boolean llegarObjetivoProvisiones(){
         /*
-        * Comprueba si los supervivientes estan en la casilla objetivo
+        * Comprueba si los supervivientes estan en la casilla objetivo con provisiones
          
          */
         int cont = 0;
@@ -118,7 +129,15 @@ public class VentanaJuego extends javax.swing.JFrame {
                 cont++;
             }
         }
-        return cont == Juego.getSupervivientes().size();
+        int cont2 = 0;
+        for(int i = 0;i<Juego.getSupervivientes().size();i++){
+            for(int j= 0; j < Juego.getSupervivientes().get(i).getInventario().size();j++){
+                if(Juego.getSupervivientes().get(i).getInventario().get(i) instanceof EProvisiones){
+                    cont2++;
+                }
+            }
+        }
+        return cont == Juego.getSupervivientes().size() && cont2 == Juego.getSupervivientes().size() && cont == cont2;
     }
     public static boolean jugadoresMuertos(){
         /**
@@ -232,7 +251,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         }
         
         public static void pasarTurnoJugador(){
-            Superviviente jugador = Juego.obtenerJugadorActual();
+            Superviviente jugador = Juego.obtenerJugadorActual();            
             if((Juego.getTurnoJugador() == Juego.getSupervivientes().size()-1 )){
                   jugador.setNumAcciones(3);
                   Juego.turnoZombies();
@@ -272,8 +291,5 @@ public class VentanaJuego extends javax.swing.JFrame {
                   Juego.obtenerJugadorActual().buscar();
                  
          }
-         private void buscarActionPerformed(java.awt.event.ActionEvent evt){
-
-                 
-         }
+         
 }

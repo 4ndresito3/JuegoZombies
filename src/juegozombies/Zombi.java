@@ -71,6 +71,9 @@ public abstract class Zombi extends EntidadActivable{
         if(i < Juego.getSupervivientes().size() && atacado){
             Juego.getSupervivientes().get(i).setHeridas(Juego.getSupervivientes().get(i).getHeridas()+ 1);
         }
+        if(Juego.getSupervivientes().get(i).getHeridas() == 2){
+            Juego.getSupervivientes().get(i).morir();
+        }
     }
     @Override 
     public void morir(){
@@ -87,6 +90,7 @@ public abstract class Zombi extends EntidadActivable{
         int x = superviviente.getX() - this.devolverCoordenada().getX();
         int y = superviviente.getY() - this.devolverCoordenada().getY();
         if(Math.abs(x) > Math.abs(y)){ // se va a mover en X
+            //Ejes cartesianos
             if(x > 0){
                 this.devolverCoordenada().setY(this.devolverCoordenada().getY()+1);
             }else{
@@ -94,9 +98,9 @@ public abstract class Zombi extends EntidadActivable{
             }
         }else{ //se va a mover en Y
             if(y > 0){
-                this.devolverCoordenada().setX(this.devolverCoordenada().getX()+1);
-            }else{
                 this.devolverCoordenada().setX(this.devolverCoordenada().getX()-1);
+            }else{
+                this.devolverCoordenada().setX(this.devolverCoordenada().getX()+1);
             }
         }
     }

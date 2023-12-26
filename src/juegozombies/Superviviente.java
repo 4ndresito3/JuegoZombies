@@ -85,8 +85,8 @@ public class Superviviente extends EntidadActivable{
         this.armasActivas = armasActivas;
     }
     public boolean casillaBuscada(Punto casilla){
-        int i;
-        for(i=0; i<Juego.getListaCasillasBuscadas().size(); i++){ /*comprueba que la casilla que se va a buscar no esta en la lista*/
+        
+        for(int i=0; i<Juego.getListaCasillasBuscadas().size(); i++){ /*comprueba que la casilla que se va a buscar no esta en la lista*/
             if(this.devolverCoordenada().equals(Juego.getListaCasillasBuscadas().get(i))){
                 return true;
             }
@@ -154,7 +154,7 @@ public class Superviviente extends EntidadActivable{
                             JOptionPane.showMessageDialog(null, "Hay una provisión, pero el inventario está lleno", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
                         }
                     }
-                   Juego.getListaCasillasBuscadas().add(this.devolverCoordenada());
+                   Juego.getListaCasillasBuscadas().add(this.devolverCoordenada().copia());
             }
             else{
                 JOptionPane.showMessageDialog(null, "Ya se había buscado en esta casilla", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
@@ -165,6 +165,9 @@ public class Superviviente extends EntidadActivable{
         else{
             JOptionPane.showMessageDialog(null, "El superviviente no puede llevar nada más", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
         }
+        if(this.numAcciones == 0){
+            VentanaJuego.pasarTurnoJugador();
+         }
     }
     
     public void noHacerNada(){
@@ -279,6 +282,7 @@ public class Superviviente extends EntidadActivable{
                      VentanaJuego.textoSeg.append(this.getNombre() + " te moviste\n");
                      VentanaJuego.textoSeg.append("Numero de acciones: " + this.getNumAcciones() + "\n");
                      VentanaJuego.actualizarJugadores();
+                     
                 }       
             }
         }
