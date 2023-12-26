@@ -171,7 +171,9 @@ public class Superviviente extends EntidadActivable{
         this.numAcciones-=1;
         VentanaJuego.textoSeg.append(this.getNombre() + ", no has hecho nada\n");
         VentanaJuego.textoSeg.append("Numero de acciones: " + this.getNumAcciones() + "\n");
-        
+        if (numAcciones == 0){
+            VentanaJuego.pasarTurnoJugador();
+        } 
     }
     
     public void setActivas(EArmas arma){
@@ -224,7 +226,7 @@ public class Superviviente extends EntidadActivable{
         boolean puedeMoverseDir = false; /*para comprobar si se puede mover en una determinada direccion*/
         if(this.puedeMoverse()){
             while (!puedeMoverseDir){
-                switch (direccion){ /*1:arriba 2:abajo 3:izquierda 4:derecha*/
+                switch (direccion){ /*1:derecha 2:izqda 3:arriba 4:abajo*/
                     case 1 ->{
                         if(this.devolverCoordenada().getY()+1<=Juego.getTamanoCuadricula().getY()){
                             VentanaJuego.borrarJugadoresAntiguos();
@@ -277,7 +279,6 @@ public class Superviviente extends EntidadActivable{
                      VentanaJuego.textoSeg.append(this.getNombre() + " te moviste\n");
                      VentanaJuego.textoSeg.append("Numero de acciones: " + this.getNumAcciones() + "\n");
                      VentanaJuego.actualizarJugadores();
-                     
                 }       
             }
         }

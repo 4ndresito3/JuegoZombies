@@ -83,8 +83,7 @@ public class Juego {
         this.generarObjetivo(random1,random2);
         for(int i = 0; i < numeroSupervivientes ; i++){
             Juego.listaSupervivientes.add(new Superviviente(listaNombres[i], posicion));
-            System.out.println(listaSupervivientes.get(i).devolverCoordenada().getX() + "," + listaSupervivientes.get(i).devolverCoordenada().getY());
-        }      
+        }
     }  
     public static void generarZombies(boolean opcion){
         // Opcion es para decidir si los zombies se generan por primera vez o a lo largo del juego
@@ -155,6 +154,7 @@ public class Juego {
                     int random2 = (int) (Math.random()*Juego.tamanoCuadricula.getY()-1);
                     puntito = new Punto(random1,random2);
                     for(int j = 0; j < numSupers ; j++){
+                        // Se comprueba que no se genera encima de un superviviente
                         Punto position = Juego.listaSupervivientes.get(j).devolverCoordenada(); /*cambiado de getposicion*/
                         repetir = position.equals(puntito);
                     }
@@ -217,7 +217,7 @@ public class Juego {
             case 4->{
                 this.objetivo = new Punto (0,Juego.tamanoCuadricula.getY()-1);
             }*/
-            this.objetivo = new Punto (Math.abs(genSupervivientes-(tamanoCuadricula.getX()-1)),Math.abs(genSupervivientes2-(tamanoCuadricula.getY()-1)));
+            objetivo = new Punto (Math.abs(genSupervivientes-(tamanoCuadricula.getX()-1)),Math.abs(genSupervivientes2-(tamanoCuadricula.getY()-1)));
         }
 
         public static int getTurnoJugador() {
@@ -241,7 +241,7 @@ public class Juego {
                      }
                  }
             }
-            Juego.generarZombies(false);
+            Juego.generarZombies(true);
             VentanaJuego.actualizarZombies();
         }
     }

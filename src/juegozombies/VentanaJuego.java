@@ -67,7 +67,6 @@ public class VentanaJuego extends javax.swing.JFrame {
                            celda[i][j].setText(textoBoton.toString());
                     }
                 }              
-                tablero.add(celda[i][j]);
             }
         }
     }
@@ -79,7 +78,6 @@ public class VentanaJuego extends javax.swing.JFrame {
                            celda[i][j].setText("");
                     }
                 }              
-                tablero.add(celda[i][j]);
             }
         }
     }
@@ -91,7 +89,6 @@ public class VentanaJuego extends javax.swing.JFrame {
                         celda[i][j].setText("");                
                     }               
                 }               
-                tablero.add(celda[i][j]);
             }
         }
     }
@@ -107,9 +104,27 @@ public class VentanaJuego extends javax.swing.JFrame {
                            celda[i][j].setText(textoBoton2.toString());                    
                     }               
                 }               
-                tablero.add(celda[i][j]);
             }
         }
+    }
+    public static boolean llegarObjetivo(){
+        /*
+        * Comprueba si los supervivientes estan en la casilla objetivo
+         
+         */
+        int cont = 0;
+        for(int i = 0;i<Juego.getSupervivientes().size();i++){
+            if(Juego.getSupervivientes().get(i).devolverCoordenada().equals(Juego.getObjetivo())){
+                cont++;
+            }
+        }
+        return cont == Juego.getSupervivientes().size();
+    }
+    public static boolean jugadoresMuertos(){
+        /**
+         * Devuelve true si todos los jugadores estan muertos
+         */
+        return 0 == Juego.getSupervivientes().size();
     }
     public VentanaJuego() {
         frame.setTitle("VentanaJuego");
@@ -250,6 +265,7 @@ public class VentanaJuego extends javax.swing.JFrame {
          }
          private void noHacerNadaMouseClicked(java.awt.event.MouseEvent evt){
                   Juego.obtenerJugadorActual().noHacerNada();
+                  
                  
          }
          private void buscarMouseClicked(java.awt.event.MouseEvent evt){
