@@ -23,7 +23,7 @@ public class VentanaEquiparArma extends javax.swing.JFrame {
         JComboBox<String>armas;
         Equipo opciones[];
         JButton aceptar;
-
+ 
     public VentanaEquiparArma() {
         int cont=0; //para inicializar el array
         int tope=0;
@@ -31,15 +31,16 @@ public class VentanaEquiparArma extends javax.swing.JFrame {
             if(jugador.getInventario().get(i) instanceof EArmas){
                 cont+=1;
             }
+        }
         opciones = new EArmas[cont]; 
-        for(i=0; i<jugador.getInventario().size(); i++){
+        for(int i=0; i<jugador.getInventario().size(); i++){
             if(jugador.getInventario().get(i) instanceof EArmas){
                 opciones[tope] = jugador.getInventario().get(i);
                 tope+=1;
             }
         }    
         armas = new JComboBox<>();
-        for(i = 0; i < opciones.length ; i++){
+        for(int i = 0; i < opciones.length ; i++){
             armas.addItem(opciones[i].getNombre());
         }
         frame.setTitle("Elige el arma");
@@ -59,7 +60,7 @@ public class VentanaEquiparArma extends javax.swing.JFrame {
         });
         frame.setVisible(true);
         }
-    }
+    
  
     private void aceptarMouseClicked(java.awt.event.MouseEvent evt){
         String nombreArma = armas.getSelectedItem().toString();        
