@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -228,22 +229,34 @@ public class VentanaJuego extends javax.swing.JFrame {
                 atacarActionPerformed(evt);
             }
         });
-         mover.addActionListener(new java.awt.event.ActionListener() {
+        mover.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 moverActionPerformed(evt);
             }
         });
-         noHacerNada.addMouseListener(new java.awt.event.MouseAdapter() {
+        noHacerNada.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 noHacerNadaMouseClicked(evt);
             }
         });
-         buscar.addMouseListener(new java.awt.event.MouseAdapter() {
+        buscar.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 buscarMouseClicked(evt);
+            }
+        });
+        inventario.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inventarioActionPerformed(evt);
+            }
+        });
+        equipar.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                equiparActionPerformed(evt);
             }
         });
         frame.setVisible(true);
@@ -291,5 +304,26 @@ public class VentanaJuego extends javax.swing.JFrame {
                   Juego.obtenerJugadorActual().buscar();
                  
          }
-         
+         private void inventarioActionPerformed(java.awt.event.ActionEvent evt){
+             if(Juego.obtenerJugadorActual().getInventario().size()!=0){
+                  VentanaMostrarInventario ventanaInventario = new VentanaMostrarInventario();
+             }
+             else{
+                 JOptionPane.showMessageDialog(null, "El superviviente no tiene nada", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);
+             }
+         }
+         private void equiparActionPerformed(java.awt.event.ActionEvent evt){
+             boolean tieneArmasInv=false;
+             for(int i=0;i<Juego.obtenerJugadorActual().getInventario().size();i++){
+                 if(Juego.obtenerJugadorActual().getInventario().get(i) instanceof EArmas){
+                     tieneArmasInv=true;
+                 }
+             }
+             if(!tieneArmasInv){
+                JOptionPane.showMessageDialog(null, "El superviviente no tiene armas en el inventario", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);                
+             }
+             else{
+                 VentanaEquiparArma ventanaEquiparArma = new VentanaEquiparArma();
+             }         
+         }
 }

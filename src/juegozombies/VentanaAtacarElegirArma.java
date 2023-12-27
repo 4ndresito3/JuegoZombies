@@ -33,9 +33,9 @@ public class VentanaAtacarElegirArma extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El superviviente no tiene armas", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
             frame.dispose();
         }else{
-            opciones = new EArmas[jugador.armasActivas.size()];
-            for(int i=0; i<jugador.armasActivas.size(); i++){
-            opciones[i] = jugador.armasActivas.get(i);
+            opciones = new EArmas[jugador.getArmasActivas().size()];
+            for(int i=0; i<jugador.getArmasActivas().size(); i++){
+            opciones[i] = jugador.getArmasActivas().get(i);
             }
         armas = new JComboBox<>();
         for(int i = 0; i < opciones.length ; i++){

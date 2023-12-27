@@ -92,15 +92,15 @@ public abstract class Zombi extends EntidadActivable{
         if(Math.abs(x) > Math.abs(y)){ // se va a mover en X
             //Ejes cartesianos
             if(x > 0){
-                this.devolverCoordenada().setY(this.devolverCoordenada().getY()+1);
-            }else{
-                this.devolverCoordenada().setY(this.devolverCoordenada().getY()-1);
-            }
-        }else{ //se va a mover en Y
-            if(y > 0){
                 this.devolverCoordenada().setX(this.devolverCoordenada().getX()-1);
             }else{
                 this.devolverCoordenada().setX(this.devolverCoordenada().getX()+1);
+            }
+        }else{ //se va a mover en Y
+            if(y > 0){
+                this.devolverCoordenada().setY(this.devolverCoordenada().getY()+1);
+            }else{
+                this.devolverCoordenada().setY(this.devolverCoordenada().getY()-1);
             }
         }
     }
