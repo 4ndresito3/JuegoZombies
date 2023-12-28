@@ -17,7 +17,7 @@ public abstract class Zombi extends EntidadActivable{
         this.aguante = aguante;
         this.numAcciones = numAcciones;
     }
-    
+
     public int getAguante() {
         return this.aguante;
     }
@@ -69,9 +69,11 @@ public abstract class Zombi extends EntidadActivable{
         }while((i < Juego.getSupervivientes().size()) | (atacado));
         if(i < Juego.getSupervivientes().size() && atacado){
             Juego.getSupervivientes().get(i).setHeridas(Juego.getSupervivientes().get(i).getHeridas()+ 1);
+            VentanaJuego.textoSeg.append(Juego.getSupervivientes().get(i).getNombre() + "tiene " + Juego.getSupervivientes().get(i).getHeridas() + " heridas");
         }
         if(Juego.getSupervivientes().get(i).getHeridas() == 2){
             Juego.getSupervivientes().get(i).morir();
+            VentanaJuego.actualizarTodo();
         }
     }
     @Override 

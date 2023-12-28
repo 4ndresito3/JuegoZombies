@@ -232,7 +232,6 @@ public class Juego {
             turnoJugador = (turnoJugador + 1) % listaSupervivientes.size();
         }
         public static void turnoZombies(){
-            VentanaJuego.borrarZombiesAntiguos();
             for(int i = 0; i < Juego.getZombis().size(); i++){
                  for(int j = 0 ; j < Juego.getSupervivientes().size() ; j++){
                     // se va a buscar si el zombi esta en la misma casilla que un survi, para atacarle
@@ -244,7 +243,7 @@ public class Juego {
                  }
             }
             Juego.generarZombies(true);
-            VentanaJuego.actualizarZombies();
+            VentanaJuego.actualizarTodo();
             
         }
     }

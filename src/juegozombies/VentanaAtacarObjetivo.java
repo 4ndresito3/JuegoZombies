@@ -151,18 +151,17 @@ public class VentanaAtacarObjetivo extends javax.swing.JFrame {
         Superviviente jugador = Juego.obtenerJugadorActual();
         int x = Integer.parseInt(ObjetivoX.getText());
         int y = Integer.parseInt(ObjetivoY.getText());
-        double distancia = Math.sqrt(((x - jugador.devolverCoordenada().getX()-1)^2) + ((y-jugador.devolverCoordenada().getY()-1)^2));
+        double distancia = Math.sqrt(((x - jugador.devolverCoordenada().getX())^2) + ((y-jugador.devolverCoordenada().getY())^2));
         if((x>Juego.getTamanoCuadricula().getX()-1 || x<0) || (y>Juego.getTamanoCuadricula().getY()-1 || y<0)){
-           JOptionPane.showMessageDialog(null, "Fuera de los limites ", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
+           JOptionPane.showMessageDialog(null, "Fuera de los límites ", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
         }else if  (distancia > arma.getAlcanceMax()){  
            JOptionPane.showMessageDialog(null, "Fuera del alcance del arma ", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
         }else{
+            this.dispose();
             jugador.atacar(x, y, arma);
              
              // falta implementarlo para atacar y que se hagan bien los turnos
-         }
-        
-        
+        }   
     }//GEN-LAST:event_aceptarMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,6 +5,7 @@
 package juegozombies;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -24,7 +25,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     JFrame frame = new JFrame();
     JPanel seguimiento = new JPanel();
     JPanel posiciones = new JPanel();
-    JTextArea textoPosiciones = new JTextArea();
+    public static JTextArea textoPosiciones = new JTextArea();
     public static JTextArea textoSeg = new JTextArea();
     public static JPanel tablero = new JPanel(new GridLayout(Juego.getTamanoCuadricula().getX(), Juego.getTamanoCuadricula().getY()));
     JPanel acciones = new JPanel(new GridLayout(2, 3));
@@ -57,10 +58,53 @@ public class VentanaJuego extends javax.swing.JFrame {
             todosObjetivo = cont == Juego.getSupervivientes().size();
         }
     }*/
+    public static void actualizarTodo(){
+        for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
+            for(int j=0; j< Juego.getTamanoCuadricula().getY(); j++){
+                celda[i][j].setText("");
+                for(int l = 0; l< Juego.getSupervivientes().size(); l++){
+                    if(Juego.getSupervivientes().get(l).devolverCoordenada().getX() == i && Juego.getSupervivientes().get(l).devolverCoordenada().getY() == j ){                       
+                           String texto = celda[i][j].getText();
+                           String newTexto=Juego.getSupervivientes().get(l).getNombre();                          
+                           StringBuilder textoBoton = new StringBuilder("<html>"+texto);
+                           textoBoton.append("<br>" + newTexto);
+                           celda[i][j].setText(textoBoton.toString());
+                    }
+                }
+                for(int k = 0; k< Juego.getZombis().size(); k++){                            
+                    if(Juego.getZombis().get(k).devolverCoordenada().getX() == i && Juego.getZombis().get(k).devolverCoordenada().getY() == j){
+                        String texto2 = celda[i][j].getText();
+                           String newTexto2=Juego.getZombis().get(k).obtenerTipo2();                          
+                           StringBuilder textoBoton2 = new StringBuilder("<html>"+texto2);
+                           textoBoton2.append("<br>" + newTexto2);
+                           celda[i][j].setText(textoBoton2.toString());                    
+                    }               
+                }               
+            }
+        }
+        textoPosiciones.setText("");
+        textoPosiciones.append("SUPERVIVIENTES\n");
+        for(int i = 0; i<Juego.getSupervivientes().size(); i++){           
+            textoPosiciones.append("" + Juego.getSupervivientes().get(i).getNombre() + ": " 
+                    + Juego.getSupervivientes().get(i).devolverCoordenada().getX() + ", " + Juego.getSupervivientes().get(i).devolverCoordenada().getY() + "\n");
+        }
+        textoPosiciones.append("\n");
+        textoPosiciones.append("ZOMBIES\n");
+        for(int i = 0; i<Juego.getZombis().size(); i++){
+            textoPosiciones.append("" + Juego.getZombis().get(i).obtenerTipo() + ": " 
+                    + Juego.getZombis().get(i).devolverCoordenada().getX() + ", " + Juego.getZombis().get(i).devolverCoordenada().getY() + "\n");         
+        }
+        if(VentanaJuego.llegarObjetivoProvisiones()){
+            JOptionPane.showMessageDialog(null, "Fin partida", "Has ganado" , JOptionPane.WARNING_MESSAGE);
+        }
+        if(VentanaJuego.jugadoresMuertos()){
+            JOptionPane.showMessageDialog(null, "Todos los supervivientes han muerto", "¡Perdiste!" , JOptionPane.WARNING_MESSAGE);
+        }
+    }
     public static void actualizarJugadores(){
         
         // Actualizacion de casillas
-         for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
+        for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
             for(int j=0; j< Juego.getTamanoCuadricula().getY(); j++){
                 for(int l = 0; l< Juego.getSupervivientes().size(); l++){
                     if(Juego.getSupervivientes().get(l).devolverCoordenada().getX() == i && Juego.getSupervivientes().get(l).devolverCoordenada().getY() == j ){                       
@@ -72,12 +116,11 @@ public class VentanaJuego extends javax.swing.JFrame {
                     }
                 }              
             }
-         }
+        }
          
-         if(VentanaJuego.llegarObjetivoProvisiones()){
-                         JOptionPane.showMessageDialog(null, "Fin partida", "Has ganado" , JOptionPane.WARNING_MESSAGE);
-                         
-                     }
+        if(VentanaJuego.llegarObjetivoProvisiones()){
+            JOptionPane.showMessageDialog(null, "Fin partida", "Has ganado" , JOptionPane.WARNING_MESSAGE);
+        }                                    
     }
         public static void borrarJugadoresAntiguos(){
          for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
@@ -174,7 +217,10 @@ public class VentanaJuego extends javax.swing.JFrame {
                            textoBoton2.append("<br>" + newTexto2);
                            celda[i][j].setText(textoBoton2.toString());                    
                     }               
-                }               
+                }    
+                if(Juego.getObjetivo().getX()==i && Juego.getObjetivo().getY()==j){
+                    celda[i][j].setBackground(Color.red);
+                }
                 tablero.add(celda[i][j]);
             }
         }
@@ -211,7 +257,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         }
         posiciones.add(textoPosiciones);
         
-        Font font = new Font("Serif", Font.ITALIC, 18); // Tipo de fuente, estilo y tamaño 
+        Font font = new Font("Serif", Font.ITALIC, 17); // Tipo de fuente, estilo y tamaño 
         textoSeg.setFont(font);
         textoSeg.setEditable(false);
         seguimiento.setPreferredSize(new Dimension(250, 0));      
@@ -305,7 +351,7 @@ public class VentanaJuego extends javax.swing.JFrame {
                  
          }
          private void inventarioActionPerformed(java.awt.event.ActionEvent evt){
-             if(Juego.obtenerJugadorActual().getInventario().size()!=0){
+             if((Juego.obtenerJugadorActual().getInventario().size()!=0) || (Juego.obtenerJugadorActual().getArmasActivas().size()!=0)){
                   VentanaMostrarInventario ventanaInventario = new VentanaMostrarInventario();
              }
              else{

@@ -66,6 +66,15 @@ public class VentanaEquiparCambiar extends javax.swing.JFrame {
                 }             
                 jugador.getArmasActivas().remove(i); //borra de las armas activas el arma activa
                 jugador.getArmasActivas().add((EArmas)arma); //añade a armas activas el arma del inventario
+                
+                if (jugador.getNumAcciones()==3){
+                    VentanaJuego.textoSeg.setText("");
+                }
+                Juego.obtenerJugadorActual().setNumAcciones(Juego.obtenerJugadorActual().getNumAcciones()-1);
+                VentanaJuego.textoSeg.append("Se han cambiado las armas\n");               
+                if(Juego.obtenerJugadorActual().getNumAcciones()==0){
+                    VentanaJuego.pasarTurnoJugador();
+                }
                 frame.dispose();
             }
         }

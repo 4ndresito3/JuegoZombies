@@ -5,6 +5,7 @@
 package juegozombies;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.JOptionPane;
 /**
  *
@@ -117,19 +118,25 @@ public class Superviviente extends EntidadActivable{
                         }
                         if (this.armasActivas.size()<2){
                             this.armasActivas.add(arma);
+                            if (this.numAcciones==3){
+                                VentanaJuego.textoSeg.setText("");
+                            }                           
                             this.numAcciones-=1;
                             VentanaJuego.textoSeg.append(" Se ha encontrado el arma:\n");
                             VentanaJuego.textoSeg.append(" " + arma.getNombre() + "\n");
                             VentanaJuego.textoSeg.append(" Añadido el arma a armas activas\n");
-                            VentanaJuego.textoSeg.append(" Nummero de acciones: " + this.getNumAcciones() + "\n");
+                            VentanaJuego.textoSeg.append(" Numero de acciones: " + this.getNumAcciones() + "\n");
                         }
                         else{
                             this.inventario.add(arma);
+                            if (this.numAcciones==3){
+                                VentanaJuego.textoSeg.setText("");
+                            }                            
                             this.numAcciones-=1;
                             VentanaJuego.textoSeg.append(" Se ha encontrado el arma:\n");
                             VentanaJuego.textoSeg.append(" " + arma.getNombre() + "\n");
                             VentanaJuego.textoSeg.append(" Añadido el arma al inventario \n");
-                            VentanaJuego.textoSeg.append(" Nummero de acciones: " + this.getNumAcciones() + "\n");
+                            VentanaJuego.textoSeg.append(" Numero de acciones: " + this.getNumAcciones() + "\n");
                         }   
                     }
                     else if (probArmaEquipo>50){
@@ -145,9 +152,10 @@ public class Superviviente extends EntidadActivable{
                         if(this.inventario.size()<5){
                             this.inventario.add(provision);
                             this.numAcciones-=1;
-                            VentanaJuego.textoSeg.append(" Se ha encontrado la provision\n " + provision.getNombre() + " " + provision.getValorEnergetico()+ " " + provision.getCaducidad() + "\n");
-                            VentanaJuego.textoSeg.append(" Añadida la provision al inventario \n");
-                            VentanaJuego.textoSeg.append(" Nummero de acciones: " + this.getNumAcciones() + "\n");
+                            VentanaJuego.textoSeg.append(" Se ha encontrado: " + provision.getNombre() + "\n");
+                            VentanaJuego.textoSeg.append(" -Valor energético: " + provision.getValorEnergetico() + "\n");
+                            VentanaJuego.textoSeg.append(" -Caducidad: " + provision.getCaducidad() + "\n");
+                            VentanaJuego.textoSeg.append(" Numero de acciones: " + this.getNumAcciones() + "\n");
                             
                         }
                         else{
@@ -167,10 +175,13 @@ public class Superviviente extends EntidadActivable{
         }
         if(this.numAcciones == 0){
             VentanaJuego.pasarTurnoJugador();
-         }
+        }
     }
     
     public void noHacerNada(){
+        if (this.numAcciones==3){
+            VentanaJuego.textoSeg.setText("");
+        }
         this.numAcciones-=1;
         VentanaJuego.textoSeg.append(this.getNombre() + ", no has hecho nada\n");
         VentanaJuego.textoSeg.append("Numero de acciones: " + this.getNumAcciones() + "\n");
@@ -181,28 +192,6 @@ public class Superviviente extends EntidadActivable{
     
     public void setActivas(EArmas arma){
         
-    }
-    public EArmas elegirArma(int huecoArma){
-        /*El usuario elige entre las armas disponibles para el superviviente*/
-        return this.armasActivas.get(huecoArma);
-    }
-    public int obtenerArma(){
-        int i=0;
-        do{
-            i=0;  /*Para obtener el argumento que recibe elegirArma desde la interfaz, posiblemente innecesario idk*/
-        }while(i>5 || i<0);
-        return i;
-    }
-    public Punto elegirCasillaObj(int x, int y){
-        /*El usuario elige la casilla a la que va a atacar el superviviente, teniendo en cuenta el alcance*/
-        Punto casillaObj = new Punto(x,y);
-        return casillaObj;
-    }
-    public int obtenerCasillaObjX(int x){ /*argumento para elegirCasillaObj*/     
-        return x;
-    }
-    public int obtenerCasillaObjY(int y){ /*argumento para elegirCasillaObj*/
-        return y;
     }
     public int tirarDados(EArmas arma){
         int i;
@@ -275,13 +264,16 @@ public class Superviviente extends EntidadActivable{
                     JOptionPane.showMessageDialog(null, "El superviviente no se puede mover en esta dirección", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);
                 }
                 else{
+                     if (this.numAcciones==3){
+                         VentanaJuego.textoSeg.setText("");
+                     }
                      this.numAcciones-=1;
                      if(this.numAcciones == 0){
                          VentanaJuego.pasarTurnoJugador();
                      }
                      VentanaJuego.textoSeg.append(this.getNombre() + " te moviste\n");
                      VentanaJuego.textoSeg.append("Numero de acciones: " + this.getNumAcciones() + "\n");
-                     VentanaJuego.actualizarJugadores();
+                     VentanaJuego.actualizarTodo();
                      
                 }       
             }
@@ -299,15 +291,37 @@ public class Superviviente extends EntidadActivable{
                 hayZombies=true;              
             }         
         }
-        if(hayZombies){
+        if(hayZombies){           
+            if (this.numAcciones==3){
+                VentanaJuego.textoSeg.setText("");
+            }
             this.numAcciones-=1;
-            for(int i=0; i<Juego.getZombis().size(); i++){
-                if (casillaObj.equals(Juego.getZombis().get(i).devolverCoordenada()) && exitos>0){               
-                    if(arma.getPotencia()>=Juego.getZombis().get(i).getAguante()){ /*comprueba si el arma mata el zombi*/
-                        Juego.getZombis().get(i).morir();
+            //ESTA MIERDA NO FUNCIONA
+            /*Iterator<Zombi>iterator = Juego.getZombis().iterator();
+            while(iterator.hasNext()){
+                if (casillaObj.equals(iterator.next().devolverCoordenada()) && exitos>0){               
+                    if(arma.getPotencia()>=iterator.next().getAguante()){ 
+                        iterator.remove();
                         exitos-=1;
+                        VentanaJuego.textoSeg.append(" " + iterator.next().obtenerTipo() + " ha muerto\n");
                     }
                 }
+            }*/
+            VentanaJuego.textoSeg.append("Numero de éxitos: " + exitos + "\n");
+            for(int i=0; i<Juego.getZombis().size(); i++){
+                if (casillaObj.equals(Juego.getZombis().get(i).devolverCoordenada()) && exitos>0){               
+                    if(arma.getPotencia()>=Juego.getZombis().get(i).getAguante()){ 
+                        Juego.getZombis().get(i).morir();
+                        exitos-=1;
+                        VentanaJuego.textoSeg.append(" " + Juego.getZombis().get(i).obtenerTipo() + " ha muerto\n");
+                    }
+                }
+            }
+            VentanaJuego.textoSeg.append("Numero de acciones: " + this.numAcciones + "\n");
+            System.gc();
+            VentanaJuego.actualizarTodo();
+            if(this.getNumAcciones()==0){
+                VentanaJuego.pasarTurnoJugador();
             }
         }
         else{
