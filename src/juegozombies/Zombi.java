@@ -16,6 +16,7 @@ public abstract class Zombi extends EntidadActivable{
     public Zombi(int aguante, int numAcciones){
         this.aguante = aguante;
         this.numAcciones = numAcciones;
+        this.setVivo(true);
     }
 
     public int getAguante() {
@@ -37,15 +38,16 @@ public abstract class Zombi extends EntidadActivable{
         Punto cercano = Juego.getSupervivientes().get(0).devolverCoordenada();
         double distancia, auxDistancia;
         // calculo del modulo/hipotenusa del vector Zombi-Superviviente1 para posteriormente comparar
-        int x0 = Juego.getSupervivientes().get(0).devolverCoordenada().getX() - this.devolverCoordenada().getX();
+        /*int x0 = Juego.getSupervivientes().get(0).devolverCoordenada().getX() - this.devolverCoordenada().getX();
         int y0 = Juego.getSupervivientes().get(0).devolverCoordenada().getY() - this.devolverCoordenada().getY();
-        distancia = Math.sqrt(x0^2 + y0^2);
+        distancia = Math.sqrt(x0^2 + y0^2);*/
+        distancia = 1000000;
         for (int i = 0; i < Juego.getSupervivientes().size(); i++){
             // Posible mejora del rendimiento si se cambia i = 0 por i = 1
             int x = Juego.getSupervivientes().get(i).devolverCoordenada().getX() - this.devolverCoordenada().getX();
             int y = Juego.getSupervivientes().get(i).devolverCoordenada().getY() - this.devolverCoordenada().getY();
             auxDistancia = Math.sqrt(x^2 + y^2);
-            if(distancia > auxDistancia){
+            if(distancia > auxDistancia && Juego.getSupervivientes().get(i).isVivo()){
                 distancia = auxDistancia;
                 cercano = Juego.getSupervivientes().get(i).devolverCoordenada();
             }
@@ -66,22 +68,14 @@ public abstract class Zombi extends EntidadActivable{
                 // Si no encuentra al superviviente avanza la posicion de la lista
                 i++;
             }
-        }while((i < Juego.getSupervivientes().size()) | (atacado));
+        }while((i < Juego.getSupervivientes().size()) && !(atacado));
         if(i < Juego.getSupervivientes().size() && atacado){
             Juego.getSupervivientes().get(i).setHeridas(Juego.getSupervivientes().get(i).getHeridas()+ 1);
             VentanaJuego.textoSeg.append(Juego.getSupervivientes().get(i).getNombre() + "tiene " + Juego.getSupervivientes().get(i).getHeridas() + " heridas");
         }
         if(Juego.getSupervivientes().get(i).getHeridas() == 2){
             Juego.getSupervivientes().get(i).morir();
-            VentanaJuego.actualizarTodo();
         }
-    }
-    @Override 
-    public void morir(){
-        /**
-         * Zombi muere
-         */
-        Juego.getZombis().remove(this);
     }
     public void moverse(){
         /**

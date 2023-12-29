@@ -4,6 +4,8 @@
  */
 package juegozombies;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author josem
@@ -99,29 +101,66 @@ public class VentanaMoverse extends javax.swing.JFrame {
     private void arribaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arribaActionPerformed
         // TODO add your handling code here:
         Superviviente jugador = Juego.obtenerJugadorActual();
-        jugador.moverse(3);
-        setVisible(false);
+        if(jugador.puedeMoverse() == 0){
+            if(jugador.devolverCoordenada().getX()-1 >= 0){
+                  jugador.moverse(3);
+                  setVisible(false);
+            }else{
+                 JOptionPane.showMessageDialog(null, "El superviviente no se puede mover en esta dirección", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);
+            }
+
+        }else if(jugador.puedeMoverse() == 1){
+            JOptionPane.showMessageDialog(null, "El superviviente no se puede mover porque está rodeado", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
+        }
+        
     }//GEN-LAST:event_arribaActionPerformed
 
     private void derechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_derechaActionPerformed
         // TODO add your handling code here:
         Superviviente jugador = Juego.obtenerJugadorActual();
-        jugador.moverse(1);
-        setVisible(false);
+        if(jugador.puedeMoverse() == 0){
+            if(jugador.devolverCoordenada().getY()+1 <= Juego.getTamanoCuadricula().getY() - 1){
+                  jugador.moverse(1);
+                  setVisible(false);
+            }else{
+                 JOptionPane.showMessageDialog(null, "El superviviente no se puede mover en esta dirección", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);
+            }
+
+        }else if(jugador.puedeMoverse() == 1){
+            JOptionPane.showMessageDialog(null, "El superviviente no se puede mover porque está rodeado", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
+        }
     }//GEN-LAST:event_derechaActionPerformed
 
     private void abajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abajoActionPerformed
         // TODO add your handling code here:
         Superviviente jugador = Juego.obtenerJugadorActual();
-        jugador.moverse(4);
-        setVisible(false);
+         if(jugador.puedeMoverse() == 0){
+            if(jugador.devolverCoordenada().getX()+1 <= Juego.getTamanoCuadricula().getX() - 1){
+                  jugador.moverse(4);
+                  setVisible(false);
+            }else{
+                 JOptionPane.showMessageDialog(null, "El superviviente no se puede mover en esta dirección", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);
+            }
+
+        }else if(jugador.puedeMoverse() == 1){
+            JOptionPane.showMessageDialog(null, "El superviviente no se puede mover porque está rodeado", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
+        }
     }//GEN-LAST:event_abajoActionPerformed
 
     private void izquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_izquierdaActionPerformed
         // TODO add your handling code here:
         Superviviente jugador = Juego.obtenerJugadorActual();
-        jugador.moverse(2);
-        setVisible(false);
+         if(jugador.puedeMoverse() == 0){
+            if(jugador.devolverCoordenada().getY()-1 >= 0){
+                  jugador.moverse(2);
+                  setVisible(false);
+            }else{
+                 JOptionPane.showMessageDialog(null, "El superviviente no se puede mover en esta dirección", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);
+            }
+
+        }else if(jugador.puedeMoverse() == 1){
+            JOptionPane.showMessageDialog(null, "El superviviente no se puede mover porque está rodeado", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
+        }
     }//GEN-LAST:event_izquierdaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

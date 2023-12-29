@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  */
 public class Superviviente extends EntidadActivable{
     private String nombre;
-    private boolean estado;
+    private boolean vivo;
     private int numAcciones;
     private int elimZombies;
     private int heridas;
@@ -29,7 +29,9 @@ public class Superviviente extends EntidadActivable{
         this.armasActivas = new ArrayList();
         this.inventario = new ArrayList();
         this.numAcciones = 3;
+        this.setVivo(true);
     }
+
 
     public String getNombre() {
         return nombre;
@@ -37,13 +39,6 @@ public class Superviviente extends EntidadActivable{
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public boolean isEstado() {
-        return estado;
-    }
-    public void setEstado(boolean estado) {
-        this.estado = estado;
     }
 
     public int getNumAcciones() {
@@ -204,83 +199,52 @@ public class Superviviente extends EntidadActivable{
         }
         return exitos;
     }
-    public boolean puedeMoverse(){ /*depende de si hay zombis*/
+    public int puedeMoverse(){ /*depende de si hay zombis*/
         int numZombies=0; /*Zombis en la misma casilla del survi*/
         for(int i=0; i<Juego.getZombis().size(); i++){
-            if (this.devolverCoordenada().equals(Juego.getZombis().get(i).devolverCoordenada())){
+            if (this.devolverCoordenada().equals(Juego.getZombis().get(i).devolverCoordenada()) && Juego.getZombis().get(i).isVivo()){
                 numZombies+=1;
             }          
         }
         // Devuelve true si se puede mover
-        return this.numAcciones >= numZombies + 1;
+        if(this.numAcciones >= numZombies + 1){
+            return 0; // puede moverse
+        }else{
+            return 1;
+        }
     } 
     public void moverse(int direccion){
-        boolean puedeMoverseDir = false; /*para comprobar si se puede mover en una determinada direccion*/
-        if(this.puedeMoverse()){
-            while (!puedeMoverseDir){
+        int numZombies=0; /*Zombis en la misma casilla del survi*/
+        for(int i=0; i<Juego.getZombis().size(); i++){
+            if (this.devolverCoordenada().equals(Juego.getZombis().get(i).devolverCoordenada()) && Juego.getZombis().get(i).isVivo()){
+                numZombies+=1;
+            }          
+        }
                 switch (direccion){ /*1:derecha 2:izqda 3:arriba 4:abajo*/
                     case 1 ->{
-                        if(this.devolverCoordenada().getY()+1<=Juego.getTamanoCuadricula().getY()){
-                            VentanaJuego.borrarJugadoresAntiguos();
                             this.devolverCoordenada().setY(this.devolverCoordenada().getY()+1);
-                            puedeMoverseDir=true;
-                        }
-                        else{ /*el survi no se puede mover en esta direccion*/
-                            puedeMoverseDir=false;
-                        }
                     }
                     case 2 ->{
-                        if(this.devolverCoordenada().getY()-1>=0){
-                            VentanaJuego.borrarJugadoresAntiguos();
                             this.devolverCoordenada().setY(this.devolverCoordenada().getY()-1);
-                            puedeMoverseDir=true;
                         }
-                        else{
-                            puedeMoverseDir=false;
-                        }
-                    }
                     case 3 ->{
-                        if(this.devolverCoordenada().getX()-1>=0){
-                            VentanaJuego.borrarJugadoresAntiguos();
                             this.devolverCoordenada().setX(this.devolverCoordenada().getX()-1);
-                            puedeMoverseDir=true;
-                        }
-                        else{
-                            puedeMoverseDir=false;
-                        }
                     }
                     case 4 ->{
-                        if(this.devolverCoordenada().getX()+1<=Juego.getTamanoCuadricula().getX()){
-                            VentanaJuego.borrarJugadoresAntiguos();
                             this.devolverCoordenada().setX(this.devolverCoordenada().getX()+1);
-                            puedeMoverseDir=true;
-                        }
-                        else{
-                            puedeMoverseDir=false;
-                        }
                     }
                 }
-                if (puedeMoverseDir==false){
-                    JOptionPane.showMessageDialog(null, "El superviviente no se puede mover en esta dirección", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);
+                if (this.numAcciones==3){
+                      VentanaJuego.textoSeg.setText("");
                 }
-                else{
-                     if (this.numAcciones==3){
-                         VentanaJuego.textoSeg.setText("");
-                     }
-                     this.numAcciones-=1;
-                     if(this.numAcciones == 0){
-                         VentanaJuego.pasarTurnoJugador();
-                     }
-                     VentanaJuego.textoSeg.append(this.getNombre() + " te moviste\n");
-                     VentanaJuego.textoSeg.append("Numero de acciones: " + this.getNumAcciones() + "\n");
-                     VentanaJuego.actualizarTodo();
-                     
-                }       
-            }
-        }
-        else{ /*no puede moverse por culpa de los zombis*/
-            JOptionPane.showMessageDialog(null, "El superviviente no se puede mover porque está rodeado", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
-        }
+                this.numAcciones -= (1 + numZombies);
+                if(this.numAcciones == 0){
+                       VentanaJuego.pasarTurnoJugador();
+                }
+                VentanaJuego.textoSeg.append(this.getNombre() + " te moviste\n");
+                VentanaJuego.textoSeg.append("Numero de acciones: " + this.getNumAcciones() + "\n");
+                VentanaJuego.actualizarTodo();
+                       
     }
     public void atacar(int x, int y, EArmas arma){   
         boolean hayZombies=false;
@@ -328,8 +292,5 @@ public class Superviviente extends EntidadActivable{
             JOptionPane.showMessageDialog(null, "No hay zombies en esta casilla", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
         }
     }
-    @Override
-    public void morir(){
-        Juego.getSupervivientes().remove(this);
-    }  
+
 }
