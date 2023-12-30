@@ -21,8 +21,8 @@ import javax.swing.JTextArea;
  * @author vaant
  */
 public class VentanaJuego extends javax.swing.JFrame {
-
-    JFrame frame = new JFrame();
+    public static boolean victoria=false;
+    public static JFrame frame = new JFrame();
     JPanel seguimiento = new JPanel();
     JPanel posiciones = new JPanel();
     public static JTextArea textoPosiciones = new JTextArea();
@@ -102,9 +102,19 @@ public class VentanaJuego extends javax.swing.JFrame {
         }
         if(VentanaJuego.llegarObjetivoProvisiones() && Juego.jugadoresVivos()){
             JOptionPane.showMessageDialog(null, "Fin partida", "Has ganado" , JOptionPane.WARNING_MESSAGE);
+            for(int i=0; i<Juego.getSupervivientes().size(); i++){
+                Juego.getSupervivientes().get(i).morir();
+            }
+            victoria=true;
+            textoSeg.setText("");
+            textoSeg.append("PARTIDA FINALIZADA:\n");
+            textoSeg.append("VICTORIA\n");
         }
-        if(!Juego.jugadoresVivos()){
+        if(!Juego.jugadoresVivos() && !victoria){
             JOptionPane.showMessageDialog(null, "Todos los supervivientes han muerto", "¡Perdiste!" , JOptionPane.WARNING_MESSAGE);
+            textoSeg.setText("");
+            textoSeg.append("PARTIDA FINALIZADA:\n");
+            textoSeg.append("DERROTA\n");
         }
     }
     /*public static void actualizarJugadores(){
@@ -190,7 +200,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         int cont3 = 0;
         for(int i = 0;i<Juego.getSupervivientes().size();i++){//contamos todos los jugadores vivos
             if(Juego.getSupervivientes().get(i).isVivo()){
-                cont++;
+                cont3++;
             }
         }
         return cont == cont3 && cont2 >= cont; //si los jugadores en el objetivo son iguales a los jugadores vivos, y ademas hay proviviones para todos es true
@@ -328,7 +338,9 @@ public class VentanaJuego extends javax.swing.JFrame {
         }
     
          private void atacarActionPerformed(java.awt.event.ActionEvent evt){ 
+             if(Juego.jugadoresVivos()){
                 VentanaAtacarElegirArma ventana = new VentanaAtacarElegirArma();
+             }
                   /*Superviviente jugador = Juego.obtenerJugadorActual();
                   jugador.atacar();
                   if(jugador.getNumAcciones() == 0 && (Juego.getTurnoJugador() == Juego.getSupervivientes().size()-1 )){
@@ -344,38 +356,46 @@ public class VentanaJuego extends javax.swing.JFrame {
                   textoSeg3.setText("" + Juego.getSupervivientes().get(1).devolverCoordenada().getX() + Juego.getSupervivientes().get(1).devolverCoordenada().getY());*/
          }
          private void moverActionPerformed(java.awt.event.ActionEvent evt){
-                  VentanaMoverse ventanaMoverse = new VentanaMoverse();
+                if(Juego.jugadoresVivos()){
+                    VentanaMoverse ventanaMoverse = new VentanaMoverse();
+                }
                  
          }
          private void noHacerNadaMouseClicked(java.awt.event.MouseEvent evt){
-                  Juego.obtenerJugadorActual().noHacerNada();
-                  
-                 
+                if(Juego.jugadoresVivos()){
+                    Juego.obtenerJugadorActual().noHacerNada(); 
+                }
          }
          private void buscarMouseClicked(java.awt.event.MouseEvent evt){
-                  Juego.obtenerJugadorActual().buscar();
+                if(Juego.jugadoresVivos()){
+                    Juego.obtenerJugadorActual().buscar();
+                }
                  
          }
          private void inventarioActionPerformed(java.awt.event.ActionEvent evt){
-             if((Juego.obtenerJugadorActual().getInventario().size()!=0) || (Juego.obtenerJugadorActual().getArmasActivas().size()!=0)){
-                  VentanaMostrarInventario ventanaInventario = new VentanaMostrarInventario();
-             }
-             else{
-                 JOptionPane.showMessageDialog(null, "El superviviente no tiene nada", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);
-             }
+            if(Juego.jugadoresVivos()){
+                if((Juego.obtenerJugadorActual().getInventario().size()!=0) || (Juego.obtenerJugadorActual().getArmasActivas().size()!=0)){
+                     VentanaMostrarInventario ventanaInventario = new VentanaMostrarInventario();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "El superviviente no tiene nada", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);
+                }
+            }
          }
          private void equiparActionPerformed(java.awt.event.ActionEvent evt){
-             boolean tieneArmasInv=false;
-             for(int i=0;i<Juego.obtenerJugadorActual().getInventario().size();i++){
-                 if(Juego.obtenerJugadorActual().getInventario().get(i) instanceof EArmas){
-                     tieneArmasInv=true;
-                 }
-             }
-             if(!tieneArmasInv){
-                JOptionPane.showMessageDialog(null, "El superviviente no tiene armas en el inventario", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);                
-             }
-             else{
-                 VentanaEquiparArma ventanaEquiparArma = new VentanaEquiparArma();
-             }         
+            if(Juego.jugadoresVivos()){
+                boolean tieneArmasInv=false;
+                for(int i=0;i<Juego.obtenerJugadorActual().getInventario().size();i++){
+                    if(Juego.obtenerJugadorActual().getInventario().get(i) instanceof EArmas){
+                        tieneArmasInv=true;
+                    }
+                }
+                if(!tieneArmasInv){
+                   JOptionPane.showMessageDialog(null, "El superviviente no tiene armas en el inventario", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);                
+                }
+                else{
+                    VentanaEquiparArma ventanaEquiparArma = new VentanaEquiparArma();
+                }   
+            }
          }
 }

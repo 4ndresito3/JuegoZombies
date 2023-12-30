@@ -18,6 +18,7 @@ public class VentanaMoverse extends javax.swing.JFrame {
     public VentanaMoverse() {
         initComponents();
         setVisible(true);
+        this.setLocation(600, 600);
     }
 
     /**

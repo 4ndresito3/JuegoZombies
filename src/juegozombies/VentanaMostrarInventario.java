@@ -18,16 +18,16 @@ public class VentanaMostrarInventario {
     public VentanaMostrarInventario(){
         frame.setTitle("INVENTARIO");
         frame.setSize(400, 600);
-        frame.setLocation(300,300); 
+        frame.setLocation(600,50); 
         frame.setResizable(true);
         texto.setEditable(false);
         texto.append("Armas activas:\n");
         for(int i=0; i<Juego.obtenerJugadorActual().getArmasActivas().size();i++){
             texto.append(i+1 + ".-" + Juego.obtenerJugadorActual().getArmasActivas().get(i).getNombre() + "\n");
-            texto.append(" -Alcance: " + Juego.obtenerJugadorActual().getArmasActivas().get(i).getAlcanceMax() + "\n");
+            texto.append(" -Alcance: " + Juego.obtenerJugadorActual().getArmasActivas().get(i).getAlcanceMax() + " ");
             texto.append(" -Potencia: " + Juego.obtenerJugadorActual().getArmasActivas().get(i).getPotencia() + "\n");
-            texto.append(" -Dados: " + Juego.obtenerJugadorActual().getArmasActivas().get(i).getNumDados() + "\n");
-            texto.append(" -Valor de exito: " + Juego.obtenerJugadorActual().getArmasActivas().get(i).getValorExito() + "\n");           
+            texto.append(" -Dados: " + Juego.obtenerJugadorActual().getArmasActivas().get(i).getNumDados() + " ");
+            texto.append(" -Valor de éxito: " + Juego.obtenerJugadorActual().getArmasActivas().get(i).getValorExito() + "\n");           
         }
         texto.append("\n");
         texto.append("Inventario:\n");
@@ -35,10 +35,10 @@ public class VentanaMostrarInventario {
             texto.append(i+1 + ".-" + Juego.obtenerJugadorActual().getInventario().get(i).getNombre() + "\n");
             if(Juego.obtenerJugadorActual().getInventario().get(i) instanceof EArmas){
                 EArmas arma = (EArmas) Juego.obtenerJugadorActual().getInventario().get(i);
-                texto.append(" -Alcance: " + arma.getAlcanceMax() + "\n");
+                texto.append(" -Alcance: " + arma.getAlcanceMax() + " ");
                 texto.append(" -Potencia: " + arma.getPotencia() + "\n");
-                texto.append(" -Dados: " + arma.getNumDados() + "\n");
-                texto.append(" -Valor de exito: " + arma.getValorExito() + "\n");
+                texto.append(" -Dados: " + arma.getNumDados() + " ");
+                texto.append(" -Valor de éxito: " + arma.getValorExito() + "\n");
             }
         }
         

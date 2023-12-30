@@ -227,11 +227,13 @@ public class Juego {
         
         public static Superviviente obtenerJugadorActual(){
             return listaSupervivientes.get(turnoJugador);
-        }
+        }      
         public static void pasarTurno(){
-            do{
-                turnoJugador = (turnoJugador + 1) % listaSupervivientes.size();
-            }while(!Juego.obtenerJugadorActual().isVivo());
+            if(jugadoresVivos()){
+                do{
+                    turnoJugador = (turnoJugador + 1) % listaSupervivientes.size();
+                }while(!Juego.obtenerJugadorActual().isVivo());
+            }
         }
         public static boolean jugadoresVivos(){
             int cont = 0;
@@ -247,11 +249,11 @@ public class Juego {
                  for(int j = 0 ; j < Juego.getSupervivientes().size() ; j++){
                     // se va a buscar si el zombi esta en la misma casilla que un survi, para atacarle
                     if(Juego.jugadoresVivos()){
-                        if(Juego.getZombis().get(i).devolverCoordenada().equals(Juego.getSupervivientes().get(j).devolverCoordenada()) && Juego.getSupervivientes().get(j).isVivo()){
+                        if(Juego.getZombis().get(i).devolverCoordenada().equals(Juego.getSupervivientes().get(j).devolverCoordenada()) && Juego.getSupervivientes().get(j).isVivo() && Juego.getZombis().get(i).isVivo()){
                             Juego.getZombis().get(i).atacar();
-                        } else{ // si no ha encontrado a ningun superviviente se mueve
+                        } else if(Juego.getZombis().get(i).isVivo()){ // si no ha encontrado a ningun superviviente se mueve
                             Juego.getZombis().get(i).moverse();
-                     }
+                        }
                     }
                  }
             }

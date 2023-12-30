@@ -21,6 +21,7 @@ public class VentanaAtacarObjetivo extends javax.swing.JFrame {
         this.arma = arma;
         initComponents();
         setVisible(true);
+        this.setLocation(600, 600);
     }
 
     /**

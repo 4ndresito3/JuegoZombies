@@ -44,7 +44,7 @@ public class VentanaAtacarElegirArma extends javax.swing.JFrame {
         frame.setTitle("Elige el arma");
         frame.setSize(400, 200);
         frame.setResizable(false);
-        frame.setLocation(300,300);
+        frame.setLocation(600,600);
         aceptar  = new JButton("Aceptar");
         panelBoton.add(aceptar);
         frame.add(panelBoton, BorderLayout.SOUTH);
