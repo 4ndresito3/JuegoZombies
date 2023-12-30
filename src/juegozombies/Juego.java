@@ -255,6 +255,13 @@ public class Juego {
                             Juego.getZombis().get(i).moverse();
                         }
                     }
+                    if(Juego.jugadoresVivos() && Juego.getZombis().get(i) instanceof ZCorredor){
+                        if(Juego.getZombis().get(i).devolverCoordenada().equals(Juego.getSupervivientes().get(j).devolverCoordenada()) && Juego.getSupervivientes().get(j).isVivo() && Juego.getZombis().get(i).isVivo()){
+                            Juego.getZombis().get(i).atacar();
+                        } else if(Juego.getZombis().get(i).isVivo()){ // si no ha encontrado a ningun superviviente se mueve
+                            Juego.getZombis().get(i).moverse();
+                        }
+                    }
                  }
             }
             Juego.generarZombies(true);

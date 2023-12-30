@@ -13,6 +13,18 @@ public class ZCorredorBerserker  extends ZCorredor{
     public void reaccion(Superviviente superviviente , EArmas arma){
         if (arma.getPotencia() >= this.getAguante() && arma.getAlcanceMax() == 0){
             this.morir();
+            VentanaJuego.textoSeg.append(" " + this.obtenerTipo() + " ha muerto\n");
+            superviviente.setExitos(superviviente.getExitos()-1);
+        }
+        else{
+            VentanaJuego.textoSeg.append(" " + this.obtenerTipo2() + " sigue vivo\n");
+            if(arma.getPotencia() < this.getAguante()){
+                VentanaJuego.textoSeg.append(" tiene aguante " + this.getAguante() + "\n");
+            }
+            if(arma.getAlcanceMax()!=0){
+                VentanaJuego.textoSeg.append(" Este zombie es inmune\n");
+                VentanaJuego.textoSeg.append(" a ataques a distancia\n");
+            }
         }
     }
     @Override

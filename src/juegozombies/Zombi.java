@@ -75,6 +75,7 @@ public abstract class Zombi extends EntidadActivable{
         }
         if(Juego.getSupervivientes().get(i).getHeridas() == 2){
             Juego.getSupervivientes().get(i).morir();
+            VentanaJuego.textoSeg.append(Juego.getSupervivientes().get(i).getNombre() + " ha muerto\n");
         }
     }
     public void moverse(){
