@@ -26,7 +26,7 @@ public class Superviviente extends EntidadActivable{
     
     public Superviviente (String nombre, Punto posicion){
         this.nombre = nombre;
-        this.setPosicion(posicion);
+        this.setPosicion(posicion.copia());
         this.heridas = 0;
         this.elimZombies = 0;
         this.armasActivas = new ArrayList();
@@ -184,8 +184,12 @@ public class Superviviente extends EntidadActivable{
         else{
             JOptionPane.showMessageDialog(null, "El superviviente no puede llevar nada más", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
         }
+        if (this.numAcciones==3){
+            VentanaJuego.textoSeg.setText("");
+            VentanaJuego.textoSeg.append("Turno de " + Juego.obtenerJugadorActual().getNombre() + "\n");
+        }
         if(this.numAcciones == 0){
-            VentanaJuego.pasarTurnoJugador();
+            VentanaJuego.pasarTurnoJugador();            
         }
         VentanaJuego.actualizarTodo();
     }
@@ -193,12 +197,13 @@ public class Superviviente extends EntidadActivable{
     public void noHacerNada(){
         if (this.numAcciones==3){
             VentanaJuego.textoSeg.setText("");
+            VentanaJuego.textoSeg.append("Turno de " + Juego.obtenerJugadorActual().getNombre() + "\n");
         }
         this.numAcciones-=1;
         VentanaJuego.textoSeg.append(this.getNombre() + ", no has hecho nada\n");
         VentanaJuego.textoSeg.append("Número de acciones: " + this.getNumAcciones() + "\n");
         if (numAcciones == 0){
-            VentanaJuego.pasarTurnoJugador();
+            VentanaJuego.pasarTurnoJugador();           
         } 
     }
     
@@ -239,11 +244,11 @@ public class Superviviente extends EntidadActivable{
         }
                 switch (direccion){ /*1:derecha 2:izqda 3:arriba 4:abajo*/
                     case 1 ->{
-                            this.devolverCoordenada().setY(this.devolverCoordenada().getY()+1);
+                            this.devolverCoordenada().setY(this.devolverCoordenada().getY()+1);     
                     }
                     case 2 ->{
                             this.devolverCoordenada().setY(this.devolverCoordenada().getY()-1);
-                        }
+                    }
                     case 3 ->{
                             this.devolverCoordenada().setX(this.devolverCoordenada().getX()-1);
                     }
@@ -253,6 +258,7 @@ public class Superviviente extends EntidadActivable{
                 }
                 if (this.numAcciones==3){
                       VentanaJuego.textoSeg.setText("");
+                      VentanaJuego.textoSeg.append("Turno de " + Juego.obtenerJugadorActual().getNombre() + "\n");
                 }
                 this.numAcciones -= (1 + numZombies);
                 VentanaJuego.textoSeg.append(this.getNombre() + " se movió\n");
@@ -275,6 +281,7 @@ public class Superviviente extends EntidadActivable{
         if(hayZombies){           
             if (this.numAcciones==3){
                 VentanaJuego.textoSeg.setText("");
+                VentanaJuego.textoSeg.append("Turno de " + Juego.obtenerJugadorActual().getNombre() + "\n");
             }
             this.numAcciones-=1;
             //ESTA MIERDA NO FUNCIONA

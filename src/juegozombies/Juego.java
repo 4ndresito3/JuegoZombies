@@ -244,28 +244,41 @@ public class Juego {
             }
             return cont >= 1 ;
         }
-        public static void turnoZombies(){
+        public static void turnoZombies(){  
+            boolean ataque=false;
             for(int i = 0; i < Juego.getZombis().size(); i++){
-                 for(int j = 0 ; j < Juego.getSupervivientes().size() ; j++){
+                ataque=false;
+                for(int j = 0 ; j < Juego.getSupervivientes().size() ; j++){
                     // se va a buscar si el zombi esta en la misma casilla que un survi, para atacarle
                     if(Juego.jugadoresVivos()){
                         if(Juego.getZombis().get(i).devolverCoordenada().equals(Juego.getSupervivientes().get(j).devolverCoordenada()) && Juego.getSupervivientes().get(j).isVivo() && Juego.getZombis().get(i).isVivo()){
                             Juego.getZombis().get(i).atacar();
-                        } else if(Juego.getZombis().get(i).isVivo()){ // si no ha encontrado a ningun superviviente se mueve
-                            Juego.getZombis().get(i).moverse();
+                            ataque = true;
+                            break;
                         }
                     }
+                }
+                if(ataque == false){
+                    Juego.getZombis().get(i).moverse();
+                }
+            }
+            for(int i = 0; i < Juego.getZombis().size(); i++){
+                ataque=false;
+                for(int j = 0 ; j < Juego.getSupervivientes().size() ; j++){
+                    // se va a buscar si el zombi esta en la misma casilla que un survi, para atacarle
                     if(Juego.jugadoresVivos() && Juego.getZombis().get(i) instanceof ZCorredor){
                         if(Juego.getZombis().get(i).devolverCoordenada().equals(Juego.getSupervivientes().get(j).devolverCoordenada()) && Juego.getSupervivientes().get(j).isVivo() && Juego.getZombis().get(i).isVivo()){
                             Juego.getZombis().get(i).atacar();
-                        } else if(Juego.getZombis().get(i).isVivo()){ // si no ha encontrado a ningun superviviente se mueve
-                            Juego.getZombis().get(i).moverse();
+                            ataque = true;
+                            break;
                         }
                     }
-                 }
+                }
+                if(ataque == false && Juego.getZombis().get(i) instanceof ZCorredor){
+                    Juego.getZombis().get(i).moverse();
+                }
             }
             Juego.generarZombies(true);
-            VentanaJuego.actualizarTodo();
-            
+            VentanaJuego.actualizarTodo();   
         }
-    }
+}

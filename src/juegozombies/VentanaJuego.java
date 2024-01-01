@@ -332,7 +332,7 @@ public class VentanaJuego extends javax.swing.JFrame {
                   Juego.turnoZombies();
                   Juego.pasarTurno();     
                  }else{
-                     jugador.setNumAcciones(3);
+                     jugador.setNumAcciones(3);                    
                      Juego.pasarTurno();
                     }
         }

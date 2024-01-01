@@ -23,6 +23,10 @@ public abstract class EntidadActivable {
     public void setPosicion(Punto posicion) {
         this.posicion = posicion;
     }
+    public void setPosicion(int x, int y){
+        this.posicion.coordenadaX = x;
+        this.posicion.coordenadaY = y;
+    }
     public Punto devolverCoordenada(){
         return this.posicion;
     }

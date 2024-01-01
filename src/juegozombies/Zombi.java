@@ -18,7 +18,7 @@ public abstract class Zombi extends EntidadActivable{
         this.numAcciones = numAcciones;
         this.setVivo(true);
     }
-
+    
     public int getAguante() {
         return this.aguante;
     }
@@ -62,14 +62,14 @@ public abstract class Zombi extends EntidadActivable{
         boolean atacado = false;
         do{ 
             // bucle para sacar el superviviente al que hay que atacar
-            if(this.devolverCoordenada().equals(Juego.getSupervivientes().get(i).devolverCoordenada())){
+            if(this.devolverCoordenada().equals(Juego.getSupervivientes().get(i).devolverCoordenada()) && Juego.getSupervivientes().get(i).isVivo() ){
                 atacado = true;
             }else{
                 // Si no encuentra al superviviente avanza la posicion de la lista
                 i++;
             }
         }while((i < Juego.getSupervivientes().size()) && !(atacado));
-        if(i < Juego.getSupervivientes().size() && atacado){
+        if(i < Juego.getSupervivientes().size() && atacado && Juego.getSupervivientes().get(i).isVivo()){
             Juego.getSupervivientes().get(i).setHeridas(Juego.getSupervivientes().get(i).getHeridas()+ 1);
             VentanaJuego.textoSeg.append(Juego.getSupervivientes().get(i).getNombre() + " tiene " + Juego.getSupervivientes().get(i).getHeridas() + " heridas\n");
         }

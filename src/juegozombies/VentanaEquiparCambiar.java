@@ -69,6 +69,7 @@ public class VentanaEquiparCambiar extends javax.swing.JFrame {
                 
                 if (jugador.getNumAcciones()==3){
                     VentanaJuego.textoSeg.setText("");
+                    VentanaJuego.textoSeg.append("Turno de " + Juego.obtenerJugadorActual().getNombre() + "\n");
                 }
                 Juego.obtenerJugadorActual().setNumAcciones(Juego.obtenerJugadorActual().getNumAcciones()-1);
                 VentanaJuego.textoSeg.append("Se han cambiado las armas\n");
