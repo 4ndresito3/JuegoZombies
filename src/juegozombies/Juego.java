@@ -61,26 +61,6 @@ public class Juego {
         int random1 = (int)Math.round(Math.random())*(numeroSupervivientes+5);
         int random2 = (int)Math.round(Math.random())*(numeroSupervivientes+5);
         Punto posicion = new Punto(random1,random2);
-        //int random = (int)((Math.random()*4)+1);
-        //posicion.setX(Math.round(Math.random())*(numeroSupervivientes+6)
-        /*switch(random){
-            case 1->{
-                posicion.setX(0);
-                posicion.setY(0);
-            }
-            case 2->{
-                posicion.setX(numeroSupervivientes + 5);
-                posicion.setY(numeroSupervivientes + 5);
-            }
-            case 3->{
-                posicion.setX(0);
-                posicion.setY(numeroSupervivientes + 5);
-            }
-            case 4->{
-                posicion.setX(numeroSupervivientes + 5);
-                posicion.setY(0);
-            }
-        }*/
         this.generarObjetivo(random1,random2);
         for(int i = 0; i < numeroSupervivientes ; i++){
             Juego.listaSupervivientes.add(new Superviviente(listaNombres[i], posicion));

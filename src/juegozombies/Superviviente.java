@@ -297,7 +297,8 @@ public class Superviviente extends EntidadActivable{
             }*/
             VentanaJuego.textoSeg.append("Número de éxitos: " + exitos + "\n");            
             for(int i=0; i<Juego.getZombis().size(); i++){
-                if (casillaObj.equals(Juego.getZombis().get(i).devolverCoordenada()) && exitos>0 && Juego.getZombis().get(i).isVivo()){   
+                if (casillaObj.equals(Juego.getZombis().get(i).devolverCoordenada()) && exitos>0 && Juego.getZombis().get(i).isVivo()){ 
+                    this.elimZombies++;
                     Juego.getZombis().get(i).reaccion(this, arma);  //reaccion en lugar de morir
                     /*if(arma.getPotencia()>=Juego.getZombis().get(i).getAguante()){ 
                         Juego.getZombis().get(i).morir();
