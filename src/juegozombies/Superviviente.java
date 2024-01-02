@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
  */
 public class Superviviente extends EntidadActivable{
     private String nombre;
-    private boolean vivo;
     private int numAcciones;
     private int elimZombies;
     private int heridas;
