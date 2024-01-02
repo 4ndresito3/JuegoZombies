@@ -33,31 +33,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     /**
      * Creates new form JFrame
      */
-    /*public static void turnoJugador(Superviviente jugador){
-        
-    }    
-    private void jugar(){
-        boolean todosMuertos = false;
-        boolean todosObjetivo = false;
-        int cont = 0;
-        while(!todosMuertos && !todosObjetivo){
-             for(int i = 0; i < Juego.getSupervivientes().size(); i++){
-                  while(Juego.getSupervivientes().get(i).getNumAcciones() > 0){
-                        turnoJugador(Juego.getSupervivientes().get(i));
-                  }
-             }
-            
-            
-            
-            for(int i = 0; i < Juego.getSupervivientes().size(); i++){
-                if(Juego.getSupervivientes().get(i).devolverCoordenada().equals(Juego.getObjetivo())){
-                    cont ++;
-                }
-            }
-            todosMuertos = Juego.getSupervivientes().isEmpty();
-            todosObjetivo = cont == Juego.getSupervivientes().size();
-        }
-    }*/
+    
     public static void actualizarTodo(){
         for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
             for(int j=0; j< Juego.getTamanoCuadricula().getY(); j++){
@@ -117,67 +93,7 @@ public class VentanaJuego extends javax.swing.JFrame {
             textoSeg.append("DERROTA\n");
         }
     }
-    /*public static void actualizarJugadores(){
-        
-        // Actualizacion de casillas
-        for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
-            for(int j=0; j< Juego.getTamanoCuadricula().getY(); j++){
-                for(int l = 0; l< Juego.getSupervivientes().size(); l++){
-                    if(Juego.getSupervivientes().get(l).devolverCoordenada().getX() == i && Juego.getSupervivientes().get(l).devolverCoordenada().getY() == j ){                       
-                           String texto = celda[i][j].getText();
-                           String newTexto=Juego.getSupervivientes().get(l).getNombre();                          
-                           StringBuilder textoBoton = new StringBuilder("<html>"+texto);
-                           textoBoton.append("<br>" + newTexto);
-                           celda[i][j].setText(textoBoton.toString());
-                    }
-                }              
-            }
-        }
-         
-        if(VentanaJuego.llegarObjetivoProvisiones()){
-            JOptionPane.showMessageDialog(null, "Fin partida", "Has ganado" , JOptionPane.WARNING_MESSAGE);
-        }                                    
-    }
-        public static void borrarJugadoresAntiguos(){
-         for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
-            for(int j=0; j< Juego.getTamanoCuadricula().getY(); j++){
-                for(int l = 0; l< Juego.getSupervivientes().size(); l++){
-                    if(Juego.getSupervivientes().get(l).devolverCoordenada().getX() == i && Juego.getSupervivientes().get(l).devolverCoordenada().getY() == j ){                       
-                           celda[i][j].setText("");
-                    }
-                }              
-            }
-        }
-    }
-    public static void borrarZombiesAntiguos(){
-        for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
-            for(int j=0; j< Juego.getTamanoCuadricula().getY(); j++){
-                for(int k = 0; k< Juego.getZombis().size(); k++){                            
-                    if(Juego.getZombis().get(k).devolverCoordenada().getX() == i && Juego.getZombis().get(k).devolverCoordenada().getY() == j){
-                        celda[i][j].setText("");                
-                    }               
-                }               
-            }
-        }
-    }
-    public static void actualizarZombies(){
-        for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
-            for(int j=0; j< Juego.getTamanoCuadricula().getY(); j++){
-                for(int k = 0; k< Juego.getZombis().size(); k++){                            
-                    if(Juego.getZombis().get(k).devolverCoordenada().getX() == i && Juego.getZombis().get(k).devolverCoordenada().getY() == j){
-                        String texto2 = celda[i][j].getText();
-                           String newTexto2=Juego.getZombis().get(k).obtenerTipo2();                          
-                           StringBuilder textoBoton2 = new StringBuilder("<html>"+texto2);
-                           textoBoton2.append("<br>" + newTexto2);
-                           celda[i][j].setText(textoBoton2.toString());                    
-                    }               
-                }               
-            }
-        }
-        if(VentanaJuego.jugadoresVivos()){
-                JOptionPane.showMessageDialog(null, "Todos los supervivientes han muerto", "¡Perdiste!" , JOptionPane.WARNING_MESSAGE);
-            }
-    }*/
+    
     public static boolean llegarObjetivoProvisiones(){
         /*
         * Comprueba si los supervivientes estan en la casilla objetivo con provisiones
@@ -348,19 +264,6 @@ public class VentanaJuego extends javax.swing.JFrame {
              if(Juego.jugadoresVivos()){
                 VentanaAtacarElegirArma ventana = new VentanaAtacarElegirArma();
              }
-                  /*Superviviente jugador = Juego.obtenerJugadorActual();
-                  jugador.atacar();
-                  if(jugador.getNumAcciones() == 0 && (Juego.getTurnoJugador() == Juego.getSupervivientes().size()-1 )){
-                      Juego.turnoZombies();
-                      Juego.pasarTurno();     
-                  }else if(jugador.getNumAcciones() == 0 && (Juego.getTurnoJugador() != Juego.getSupervivientes().size()-1 )){
-                      Juego.pasarTurno();
-                  }else if(jugador.getNumAcciones() > 0){
-                      
-                  }*/
-                  /*textoSeg.setText("" + Juego.getObjetivo().getX() + Juego.getObjetivo().getY());
-                  textoSeg2.setText("" + Juego.getSupervivientes().get(0).devolverCoordenada().getX() + Juego.getSupervivientes().get(0).devolverCoordenada().getY());
-                  textoSeg3.setText("" + Juego.getSupervivientes().get(1).devolverCoordenada().getX() + Juego.getSupervivientes().get(1).devolverCoordenada().getY());*/
          }
          private void moverActionPerformed(java.awt.event.ActionEvent evt){
                 if(Juego.jugadoresVivos()){

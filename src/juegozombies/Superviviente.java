@@ -18,8 +18,6 @@ public class Superviviente extends EntidadActivable{
     private int heridas;
     ArrayList<Equipo>inventario;
     ArrayList<EArmas>armasActivas;
-    //Contadores de armas, para identificarlas
-    private int cont1=0,cont2=0,cont3=0,cont4=0,cont5=0,cont6=0,cont7=0;
     int exitos;
     
     
@@ -106,33 +104,29 @@ public class Superviviente extends EntidadActivable{
                 EProvisiones provision = new EProvisiones("",0);
                     if (probArmaEquipo<=50){                       
                         if (probArmaEquipo>0 && probArmaEquipo<=5){
-                            cont1++;
-                            arma = new EArmas("Bazooka " + cont1, 3, 5, 5, 2);
+                            arma = new EArmas("Bazooka ", 3, 5, 5, 2);
                         }
                         if (probArmaEquipo>5 && probArmaEquipo<=15){
-                            cont2++;
-                            arma = new EArmas("Uzi " + cont2, 1, 2, 10, 6);
+                            arma = new EArmas("Uzi ", 1, 2, 10, 6);
                         }
                         if (probArmaEquipo>15 && probArmaEquipo<=20){
-                            cont3++;
-                            arma = new EArmas("Raygun " + cont3, 3, 1, 2, 3);
+                            arma = new EArmas("Raygun ", 3, 1, 2, 3);
                         }
                         if (probArmaEquipo>20 && probArmaEquipo<=30){
-                            cont4++;
-                            arma = new EArmas("Bate con pinchos " + cont4, 2, 0, 3, 3);
+                            arma = new EArmas("Bate con pinchos ", 2, 0, 3, 3);
                         }
                         if (probArmaEquipo>30 && probArmaEquipo<=35){
-                            cont5++;
-                            arma = new EArmas("Katana " + cont5, 3, 0, 4, 4);
+                            arma = new EArmas("Katana " , 3, 0, 4, 4);
                         }
                         if (probArmaEquipo>35 && probArmaEquipo<=45){
-                            cont6++;
-                            arma = new EArmas("Ballesta " + cont6, 2, 3, 3, 4);
+                            arma = new EArmas("Ballesta ", 2, 3, 3, 4);
                         } 
-                        if (probArmaEquipo>45 && probArmaEquipo<=50){
-                            cont7++;
-                            arma = new EArmas("Pistola de agua " + cont7, 0, 2, 10, 2);
-                        } 
+                        if (probArmaEquipo>45 && probArmaEquipo<=46){
+                            arma = new EArmas("Pistola de agua ", 0, 2, 10, 2);
+                        }
+                        if(probArmaEquipo>46 && probArmaEquipo<=50){
+                            arma = new EArmas("Motosierra",3,0,(int)( Math.random()*100+1),3);
+                        }
                         if (this.numAcciones==3){
                             VentanaJuego.textoSeg.setText("");
                             VentanaJuego.textoSeg.append("Turno de " + Juego.obtenerJugadorActual().getNombre() + "\n");
@@ -285,30 +279,13 @@ public class Superviviente extends EntidadActivable{
                 VentanaJuego.textoSeg.append("Turno de " + Juego.obtenerJugadorActual().getNombre() + "\n");
             }
             this.numAcciones-=1;
-            //ESTA MIERDA NO FUNCIONA
-            /*Iterator<Zombi>iterator = Juego.getZombis().iterator();
-            while(iterator.hasNext()){
-                if (casillaObj.equals(iterator.next().devolverCoordenada()) && exitos>0){               
-                    if(arma.getPotencia()>=iterator.next().getAguante()){ 
-                        iterator.remove();
-                        exitos-=1;
-                        VentanaJuego.textoSeg.append(" " + iterator.next().obtenerTipo() + " ha muerto\n");
-                    }
-                }
-            }*/
             VentanaJuego.textoSeg.append("Número de éxitos: " + exitos + "\n");            
             for(int i=0; i<Juego.getZombis().size(); i++){
                 if (casillaObj.equals(Juego.getZombis().get(i).devolverCoordenada()) && exitos>0 && Juego.getZombis().get(i).isVivo()){ 
-                    this.elimZombies++;
                     Juego.getZombis().get(i).reaccion(this, arma);  //reaccion en lugar de morir
-                    /*if(arma.getPotencia()>=Juego.getZombis().get(i).getAguante()){ 
-                        Juego.getZombis().get(i).morir();
-                        exitos-=1;
-                        VentanaJuego.textoSeg.append(" " + Juego.getZombis().get(i).obtenerTipo() + " ha muerto\n");
-                    }else if(arma.getPotencia()<Juego.getZombis().get(i).getAguante() && exitos>0){
-                        VentanaJuego.textoSeg.append(" " + Juego.getZombis().get(i).obtenerTipo2() + " sigue vivo\n");
-                        VentanaJuego.textoSeg.append(" tiene aguante " + Juego.getZombis().get(i).getAguante() + "\n");
-                    }*/
+                    if (!Juego.getZombis().get(i).isVivo()){
+                        this.elimZombies++;
+                    }
                 }
             }
             VentanaJuego.textoSeg.append("Número de acciones: " + this.numAcciones + "\n");

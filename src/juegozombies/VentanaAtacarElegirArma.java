@@ -27,8 +27,6 @@ public class VentanaAtacarElegirArma extends javax.swing.JFrame {
      * Creates new form VentanaAtacarElegirArma
      */
     public VentanaAtacarElegirArma() {
-        /*jugador.getArmasActivas().add(new EArmas("Paco",0,1,2,3));
-        jugador.getArmasActivas().add(new EArmas("Paco",0,0,0,0));*/
         if(jugador.getArmasActivas().size() == 0){
             JOptionPane.showMessageDialog(null, "El superviviente no tiene armas", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
             frame.dispose();
@@ -66,6 +64,7 @@ public class VentanaAtacarElegirArma extends javax.swing.JFrame {
             if(nombreArma.equals(jugador.getArmasActivas().get(i).getNombre())){
                 VentanaAtacarObjetivo ventana = new VentanaAtacarObjetivo(jugador.getArmasActivas().get(i));
                 frame.dispose();
+                break;
             }
         }
     }

@@ -185,19 +185,6 @@ public class Juego {
         }
     }
     private void generarObjetivo(int genSupervivientes,int genSupervivientes2){
-        /*switch(genSupervivientes){
-            case 1->{
-                this.objetivo = new Punto (Juego.tamanoCuadricula.getX()-1,Juego.tamanoCuadricula.getY()-1);
-            }
-            case 2->{
-                this.objetivo = new Punto ();
-            }
-            case 3->{
-                this.objetivo = new Punto (Juego.tamanoCuadricula.getX()-1,0);
-            }
-            case 4->{
-                this.objetivo = new Punto (0,Juego.tamanoCuadricula.getY()-1);
-            }*/
             objetivo = new Punto (Math.abs(genSupervivientes-(tamanoCuadricula.getX()-1)),Math.abs(genSupervivientes2-(tamanoCuadricula.getY()-1)));
         }
 
