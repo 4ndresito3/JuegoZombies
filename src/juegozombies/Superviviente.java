@@ -136,7 +136,8 @@ public class Superviviente extends EntidadActivable{
                         } 
                         if (this.numAcciones==3){
                             VentanaJuego.textoSeg.setText("");
-                        }                            
+                            VentanaJuego.textoSeg.append("Turno de " + Juego.obtenerJugadorActual().getNombre() + "\n");
+                        }
                         this.numAcciones-=1;
                         VentanaJuego.textoSeg.append(" Se ha encontrado el arma:\n");
                         VentanaJuego.textoSeg.append(" " + arma.getNombre() + "\n");
@@ -162,6 +163,10 @@ public class Superviviente extends EntidadActivable{
                         }
                         if(this.inventario.size()<5){
                             this.inventario.add(provision);
+                            if (this.numAcciones==3){
+                                VentanaJuego.textoSeg.setText("");
+                                VentanaJuego.textoSeg.append("Turno de " + Juego.obtenerJugadorActual().getNombre() + "\n");
+                            }
                             this.numAcciones-=1;
                             VentanaJuego.textoSeg.append(" Se ha encontrado: " + provision.getNombre() + "\n");
                             VentanaJuego.textoSeg.append(" -Valor energético: " + provision.getValorEnergetico() + "\n");
@@ -184,10 +189,7 @@ public class Superviviente extends EntidadActivable{
         else{
             JOptionPane.showMessageDialog(null, "El superviviente no puede llevar nada más", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
         }
-        if (this.numAcciones==3){
-            VentanaJuego.textoSeg.setText("");
-            VentanaJuego.textoSeg.append("Turno de " + Juego.obtenerJugadorActual().getNombre() + "\n");
-        }
+        
         if(this.numAcciones == 0){
             VentanaJuego.pasarTurnoJugador();            
         }

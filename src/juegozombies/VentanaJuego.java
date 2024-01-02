@@ -326,15 +326,22 @@ public class VentanaJuego extends javax.swing.JFrame {
         }
         
         public static void pasarTurnoJugador(){
-            Superviviente jugador = Juego.obtenerJugadorActual();            
-            if((Juego.getTurnoJugador() == Juego.getSupervivientes().size()-1 )){
+            Superviviente jugador = Juego.obtenerJugadorActual();    
+            int turno = 0;
+            for(int i=Juego.getSupervivientes().size()-1; i >= 0;i--){
+                if (Juego.getSupervivientes().get(i).isVivo()){
+                    turno = i;
+                    break;
+                }
+            }
+            if((Juego.getTurnoJugador() == turno )){
                   jugador.setNumAcciones(3);
                   Juego.turnoZombies();
                   Juego.pasarTurno();     
                  }else{
                      jugador.setNumAcciones(3);                    
                      Juego.pasarTurno();
-                    }
+                 }
         }
     
          private void atacarActionPerformed(java.awt.event.ActionEvent evt){ 
