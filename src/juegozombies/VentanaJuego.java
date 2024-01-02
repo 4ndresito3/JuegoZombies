@@ -85,12 +85,14 @@ public class VentanaJuego extends javax.swing.JFrame {
             textoSeg.setText("");
             textoSeg.append("PARTIDA FINALIZADA:\n");
             textoSeg.append("VICTORIA\n");
+            VentanaEstadisticas ventanaStats = new VentanaEstadisticas();
         }
         if(!Juego.jugadoresVivos() && !victoria){
             JOptionPane.showMessageDialog(null, "Todos los supervivientes han muerto", "¡Perdiste!" , JOptionPane.WARNING_MESSAGE);
             textoSeg.setText("");
             textoSeg.append("PARTIDA FINALIZADA:\n");
             textoSeg.append("DERROTA\n");
+            VentanaEstadisticas ventanaStats = new VentanaEstadisticas();
         }
     }
     

@@ -39,7 +39,7 @@ public class Superviviente extends EntidadActivable{
     public void setExitos(int exitos) {
         this.exitos = exitos;
     }
-
+      
     public String getNombre() {
         return nombre;
     }
