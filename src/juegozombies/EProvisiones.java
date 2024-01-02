@@ -29,7 +29,6 @@ public class EProvisiones extends Equipo {
     public String getCaducidad() {
         return this.caducidad;
     }
-
     public void setCaducidad(String caducidad) {
         this.caducidad = caducidad;
     }

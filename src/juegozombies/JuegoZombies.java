@@ -17,7 +17,5 @@ public class JuegoZombies {
         VentanaMenu juego = new VentanaMenu();
         juego.setVisible(true);
         juego.setLocationRelativeTo(null);
-        
     }
-    
 }

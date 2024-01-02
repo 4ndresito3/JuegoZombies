@@ -10,13 +10,24 @@ package juegozombies;
  */
 public abstract class EntidadActivable {
     private Punto posicion;
+    private boolean vivo;
+
+    public boolean isVivo() {
+        return vivo;
+    }
+
+    public void setVivo(boolean vivo) {
+        this.vivo = vivo;
+    }
+    
     public void setPosicion(Punto posicion) {
         this.posicion = posicion;
     }
+    
     public Punto devolverCoordenada(){
         return this.posicion;
     }
-    public abstract void moverse();
-    public abstract void atacar();
-    public abstract void morir();
+    public  void morir(){
+        this.setVivo(false);
+    }
 }

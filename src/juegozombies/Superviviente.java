@@ -5,25 +5,42 @@
 package juegozombies;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Andrés
  */
 public class Superviviente extends EntidadActivable{
     private String nombre;
-    private boolean estado;
+    private boolean vivo;
     private int numAcciones;
     private int elimZombies;
     private int heridas;
     ArrayList<Equipo>inventario;
     ArrayList<EArmas>armasActivas;
+    //Contadores de armas, para identificarlas
+    private int cont1=0,cont2=0,cont3=0,cont4=0,cont5=0,cont6=0,cont7=0;
+    int exitos;
     
     
     public Superviviente (String nombre, Punto posicion){
         this.nombre = nombre;
-        this.setPosicion(posicion);
+        this.setPosicion(posicion.copia());
         this.heridas = 0;
         this.elimZombies = 0;
+        this.armasActivas = new ArrayList();
+        this.inventario = new ArrayList();
+        this.numAcciones = 3;
+        this.setVivo(true);
+    }
+
+    public int getExitos() {
+        return exitos;
+    }
+
+    public void setExitos(int exitos) {
+        this.exitos = exitos;
     }
 
     public String getNombre() {
@@ -32,13 +49,6 @@ public class Superviviente extends EntidadActivable{
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public boolean isEstado() {
-        return estado;
-    }
-    public void setEstado(boolean estado) {
-        this.estado = estado;
     }
 
     public int getNumAcciones() {
@@ -81,8 +91,8 @@ public class Superviviente extends EntidadActivable{
         this.armasActivas = armasActivas;
     }
     public boolean casillaBuscada(Punto casilla){
-        int i;
-        for(i=0; i>Juego.getListaCasillasBuscadas().size(); i++){ /*comprueba que la casilla que se va a buscar no esta en la lista*/
+        
+        for(int i=0; i<Juego.getListaCasillasBuscadas().size(); i++){ /*comprueba que la casilla que se va a buscar no esta en la lista*/
             if(this.devolverCoordenada().equals(Juego.getListaCasillasBuscadas().get(i))){
                 return true;
             }
@@ -90,89 +100,120 @@ public class Superviviente extends EntidadActivable{
         return false;
     }
     public void buscar(){
-        if(!this.casillaBuscada(this.devolverCoordenada())){
-            int probArmaEquipo = (int) (Math.random()*100+1); /*prob arma o equipo*/       
-            EArmas arma = new EArmas("",0,0,0,0);
-            EProvisiones provision = new EProvisiones("",0);
-                if (probArmaEquipo<=50){
-                    if (probArmaEquipo>0 && probArmaEquipo<=10){
-                        arma = new EArmas("Bazooka", 3, 5, 5, 2);
+        if(this.inventario.size()<5 || this.armasActivas.size()<2){
+            if(!this.casillaBuscada(this.devolverCoordenada())){
+                int probArmaEquipo = (int) (Math.random()*100+1); /*prob arma o equipo*/       
+                EArmas arma = new EArmas("",0,0,0,0);
+                EProvisiones provision = new EProvisiones("",0);
+                    if (probArmaEquipo<=50){                       
+                        if (probArmaEquipo>0 && probArmaEquipo<=5){
+                            cont1++;
+                            arma = new EArmas("Bazooka " + cont1, 3, 5, 5, 2);
+                        }
+                        if (probArmaEquipo>5 && probArmaEquipo<=15){
+                            cont2++;
+                            arma = new EArmas("Uzi " + cont2, 1, 2, 10, 6);
+                        }
+                        if (probArmaEquipo>15 && probArmaEquipo<=20){
+                            cont3++;
+                            arma = new EArmas("Raygun " + cont3, 3, 1, 2, 3);
+                        }
+                        if (probArmaEquipo>20 && probArmaEquipo<=30){
+                            cont4++;
+                            arma = new EArmas("Bate con pinchos " + cont4, 2, 0, 3, 3);
+                        }
+                        if (probArmaEquipo>30 && probArmaEquipo<=35){
+                            cont5++;
+                            arma = new EArmas("Katana " + cont5, 3, 0, 4, 4);
+                        }
+                        if (probArmaEquipo>35 && probArmaEquipo<=45){
+                            cont6++;
+                            arma = new EArmas("Ballesta " + cont6, 2, 3, 3, 4);
+                        } 
+                        if (probArmaEquipo>45 && probArmaEquipo<=50){
+                            cont7++;
+                            arma = new EArmas("Pistola de agua " + cont7, 0, 2, 10, 2);
+                        } 
+                        if (this.numAcciones==3){
+                            VentanaJuego.textoSeg.setText("");
+                        }                            
+                        this.numAcciones-=1;
+                        VentanaJuego.textoSeg.append(" Se ha encontrado el arma:\n");
+                        VentanaJuego.textoSeg.append(" " + arma.getNombre() + "\n");
+                        if (this.armasActivas.size()<2){
+                            this.armasActivas.add(arma);
+                            VentanaJuego.textoSeg.append(" Añadido el arma a armas activas \n");
+                        }
+                        else{
+                            this.inventario.add(arma);
+                            VentanaJuego.textoSeg.append(" Añadido el arma al inventario \n");
+                        }
+                        VentanaJuego.textoSeg.append(" Número de acciones: " + this.getNumAcciones() + "\n");
                     }
-                    if (probArmaEquipo>10 && probArmaEquipo<=20){
-                        arma = new EArmas("Uzi", 1, 3, 10, 4);
+                    else if (probArmaEquipo>50){
+                        if (probArmaEquipo>50 && probArmaEquipo<=70){
+                            provision = new EProvisiones("Redbull",1000);
+                        }
+                        if (probArmaEquipo>70 && probArmaEquipo<=85){
+                            provision = new EProvisiones("Lata de judías",300);
+                        }
+                        if (probArmaEquipo>85 && probArmaEquipo<=100){
+                            provision = new EProvisiones("Golosinas",200);
+                        }
+                        if(this.inventario.size()<5){
+                            this.inventario.add(provision);
+                            this.numAcciones-=1;
+                            VentanaJuego.textoSeg.append(" Se ha encontrado: " + provision.getNombre() + "\n");
+                            VentanaJuego.textoSeg.append(" -Valor energético: " + provision.getValorEnergetico() + "\n");
+                            VentanaJuego.textoSeg.append(" -Caducidad: " + provision.getCaducidad() + "\n");
+                            VentanaJuego.textoSeg.append(" Número de acciones: " + this.getNumAcciones() + "\n");
+                            
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Hay una provisión, pero el inventario está lleno", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
+                        }
                     }
-                    if (probArmaEquipo>20 && probArmaEquipo<=30){
-                        arma = new EArmas("Raygun", 3, 2, 2, 2);
-                    }
-                    if (probArmaEquipo>30 && probArmaEquipo<=40){
-                        arma = new EArmas("Bate con pinchos", 2, 1, 3, 3);
-                    }
-                    if (probArmaEquipo>40 && probArmaEquipo<=50){
-                        arma = new EArmas("Ballesta", 2, 4, 3, 4);
-                    }
-                    this.armasActivas.add(arma);
-                }
-                else if (probArmaEquipo>50){
-                    if (probArmaEquipo>50 && probArmaEquipo<=70){
-                        provision = new EProvisiones("Redbull",1000);
-                    }
-                    if (probArmaEquipo>70 && probArmaEquipo<=85){
-                        provision = new EProvisiones("Lata de judías",300);
-                    }
-                    if (probArmaEquipo>85 && probArmaEquipo<=100){
-                        provision = new EProvisiones("Golosinas",200);
-                    }
-                    this.inventario.add(provision);
-                }
-            Juego.getListaCasillasBuscadas().add(this.devolverCoordenada());
+                   Juego.getListaCasillasBuscadas().add(this.devolverCoordenada().copia());
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Ya se había buscado en esta casilla", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
+
+                /*ya se habia buscado antes en esta coordenada*/
+            }
         }
         else{
-            this.noHacerNada(); /*ya se habia buscado antes en esta coordenada*/
+            JOptionPane.showMessageDialog(null, "El superviviente no puede llevar nada más", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
         }
+        if (this.numAcciones==3){
+            VentanaJuego.textoSeg.setText("");
+            VentanaJuego.textoSeg.append("Turno de " + Juego.obtenerJugadorActual().getNombre() + "\n");
+        }
+        if(this.numAcciones == 0){
+            VentanaJuego.pasarTurnoJugador();            
+        }
+        VentanaJuego.actualizarTodo();
     }
     
     public void noHacerNada(){
+        if (this.numAcciones==3){
+            VentanaJuego.textoSeg.setText("");
+            VentanaJuego.textoSeg.append("Turno de " + Juego.obtenerJugadorActual().getNombre() + "\n");
+        }
         this.numAcciones-=1;
+        VentanaJuego.textoSeg.append(this.getNombre() + ", no has hecho nada\n");
+        VentanaJuego.textoSeg.append("Número de acciones: " + this.getNumAcciones() + "\n");
+        if (numAcciones == 0){
+            VentanaJuego.pasarTurnoJugador();           
+        } 
     }
     
     public void setActivas(EArmas arma){
         
     }
-    public EArmas elegirArma(int huecoArma){
-        /*El usuario elige entre las armas disponibles para el superviviente*/
-        return this.armasActivas.get(huecoArma);
-    }
-    public int obtenerArma(){
-        int i=0;
-        do{
-            i=0;  /*Para obtener el argumento que recibe elegirArma desde la interfaz, posiblemente innecesario idk*/
-        }while(i>5 || i<0);
-        return i;
-    }
-    public Punto elegirCasillaObj(int x, int y){
-        /*El usuario elige la casilla a la que va a atacar el superviviente, teniendo en cuenta el alcance*/
-        Punto casillaObj = new Punto(x,y);
-        return casillaObj;
-    }
-    public int obtenerCasillaObjX(EArmas arma){ /*argumento para elegirCasillaObj*/
-        int x=0;
-        do{
-            x=0; /*este valor se elige desde la interfaz grafica*/
-        }while((x>Juego.getTamanoCuadricula().getX() || x<0) && (x-this.devolverCoordenada().getX()>arma.getAlcanceMax()));          
-        return x;
-    }
-    public int obtenerCasillaObjY(EArmas arma){ /*argumento para elegirCasillaObj*/
-        int y=0;
-        do{
-            y=0; /*este valor se elige desde la interfaz grafica*/
-        }
-        while((y>Juego.getTamanoCuadricula().getY() || y<0) && (y-this.devolverCoordenada().getY()>arma.getAlcanceMax()));
-        return y;
-    }
     public int tirarDados(EArmas arma){
         int i;
         int exitos=0;
-        for(i=0; i>arma.getNumDados(); i++){
+        for(i=0; i<arma.getNumDados(); i++){
             int numero = (int)Math.floor(Math.random()*6+1);
             if(numero>=arma.getValorExito()){
                 exitos+=1;
@@ -180,86 +221,104 @@ public class Superviviente extends EntidadActivable{
         }
         return exitos;
     }
-    public boolean puedeMoverse(){ /*depende de si hay zombis*/
+    public int puedeMoverse(){ /*depende de si hay zombis*/
         int numZombies=0; /*Zombis en la misma casilla del survi*/
-        for(int i=0; i>Juego.getZombis().size(); i++){
-            if (this.devolverCoordenada().equals(Juego.getZombis().get(i).devolverCoordenada())){
+        for(int i=0; i<Juego.getZombis().size(); i++){
+            if (this.devolverCoordenada().equals(Juego.getZombis().get(i).devolverCoordenada()) && Juego.getZombis().get(i).isVivo()){
                 numZombies+=1;
             }          
         }
         // Devuelve true si se puede mover
-        return this.numAcciones >= numZombies + 1;
-    }
-    @Override   
-    public void moverse(){
-        boolean puedeMoverseDir = false; /*para comprobar si se puede mover en una determinada direccion*/
-        if(this.puedeMoverse()){
-            int direccion=0; /*desde la interfaz*/
-            while (!puedeMoverseDir){
-                switch (direccion){ /*1:arriba 2:abajo 3:izquierda 4:derecha*/
+        if(this.numAcciones >= numZombies + 1){
+            return 0; // puede moverse
+        }else{
+            return 1;
+        }
+    } 
+    public void moverse(int direccion){
+        int numZombies=0; /*Zombis en la misma casilla del survi*/
+        for(int i=0; i<Juego.getZombis().size(); i++){
+            if (this.devolverCoordenada().equals(Juego.getZombis().get(i).devolverCoordenada()) && Juego.getZombis().get(i).isVivo()){
+                numZombies+=1;
+            }          
+        }
+                switch (direccion){ /*1:derecha 2:izqda 3:arriba 4:abajo*/
                     case 1 ->{
-                        if(this.devolverCoordenada().getY()+1<=Juego.getTamanoCuadricula().getY()){
-                            this.devolverCoordenada().setY(this.devolverCoordenada().getY()+1);
-                            puedeMoverseDir=true;
-                        }
-                        else{ /*el survi no se puede mover en esta direccion*/
-                            puedeMoverseDir=false;
-                        }
+                            this.devolverCoordenada().setY(this.devolverCoordenada().getY()+1);     
                     }
                     case 2 ->{
-                        if(this.devolverCoordenada().getY()-1>=0){
                             this.devolverCoordenada().setY(this.devolverCoordenada().getY()-1);
-                            puedeMoverseDir=true;
-                        }
-                        else{
-                            puedeMoverseDir=false;
-                        }
                     }
                     case 3 ->{
-                        if(this.devolverCoordenada().getX()-1>=0){
                             this.devolverCoordenada().setX(this.devolverCoordenada().getX()-1);
-                            puedeMoverseDir=true;
-                        }
-                        else{
-                            puedeMoverseDir=false;
-                        }
                     }
                     case 4 ->{
-                        if(this.devolverCoordenada().getX()+1<=Juego.getTamanoCuadricula().getX()){
                             this.devolverCoordenada().setX(this.devolverCoordenada().getX()+1);
-                            puedeMoverseDir=true;
-                        }
-                        else{
-                            puedeMoverseDir=false;
-                        }
                     }
                 }
-            }
-        }
-        else{ /*no puede moverse por culpa de los zombis*/
-            this.noHacerNada();
-        }
+                if (this.numAcciones==3){
+                      VentanaJuego.textoSeg.setText("");
+                      VentanaJuego.textoSeg.append("Turno de " + Juego.obtenerJugadorActual().getNombre() + "\n");
+                }
+                this.numAcciones -= (1 + numZombies);
+                VentanaJuego.textoSeg.append(this.getNombre() + " se movió\n");
+                VentanaJuego.textoSeg.append("Número de acciones: " + this.getNumAcciones() + "\n");                
+                if(this.numAcciones == 0){
+                       VentanaJuego.pasarTurnoJugador();
+                }
+                VentanaJuego.actualizarTodo();
+                       
     }
-    @Override
-    public void atacar(){
-        int i;
-        this.numAcciones-=1;        
-        EArmas arma= this.elegirArma(this.obtenerArma()); /*se elige arma*/
-        int x = this.obtenerCasillaObjX(arma);
-        int y = this.obtenerCasillaObjY(arma);
-        Punto casillaObj = this.elegirCasillaObj(x, y); /*se elige casilla objetivo*/
-        int exitos = this.tirarDados(arma);
-        for(i=0; i>Juego.getZombis().size(); i++){
-            if (casillaObj.equals(Juego.getZombis().get(i).devolverCoordenada()) && exitos>0){               
-                if(arma.getPotencia()>=Juego.getZombis().get(i).getAguante()){ /*comprueba si el arma mata el zombi*/
-                    Juego.getZombis().get(i).morir();
-                    exitos-=1;
+    public void atacar(int x, int y, EArmas arma){   
+        boolean hayZombies=false;
+        exitos = this.tirarDados(arma);
+        Punto casillaObj = new Punto(x, y);
+        for(int i=0; i<Juego.getZombis().size(); i++){
+            if (casillaObj.equals(Juego.getZombis().get(i).devolverCoordenada()) && Juego.getZombis().get(i).isVivo()){ 
+                hayZombies=true;              
+            }         
+        }
+        if(hayZombies){           
+            if (this.numAcciones==3){
+                VentanaJuego.textoSeg.setText("");
+                VentanaJuego.textoSeg.append("Turno de " + Juego.obtenerJugadorActual().getNombre() + "\n");
+            }
+            this.numAcciones-=1;
+            //ESTA MIERDA NO FUNCIONA
+            /*Iterator<Zombi>iterator = Juego.getZombis().iterator();
+            while(iterator.hasNext()){
+                if (casillaObj.equals(iterator.next().devolverCoordenada()) && exitos>0){               
+                    if(arma.getPotencia()>=iterator.next().getAguante()){ 
+                        iterator.remove();
+                        exitos-=1;
+                        VentanaJuego.textoSeg.append(" " + iterator.next().obtenerTipo() + " ha muerto\n");
+                    }
+                }
+            }*/
+            VentanaJuego.textoSeg.append("Número de éxitos: " + exitos + "\n");            
+            for(int i=0; i<Juego.getZombis().size(); i++){
+                if (casillaObj.equals(Juego.getZombis().get(i).devolverCoordenada()) && exitos>0 && Juego.getZombis().get(i).isVivo()){ 
+                    this.elimZombies++;
+                    Juego.getZombis().get(i).reaccion(this, arma);  //reaccion en lugar de morir
+                    /*if(arma.getPotencia()>=Juego.getZombis().get(i).getAguante()){ 
+                        Juego.getZombis().get(i).morir();
+                        exitos-=1;
+                        VentanaJuego.textoSeg.append(" " + Juego.getZombis().get(i).obtenerTipo() + " ha muerto\n");
+                    }else if(arma.getPotencia()<Juego.getZombis().get(i).getAguante() && exitos>0){
+                        VentanaJuego.textoSeg.append(" " + Juego.getZombis().get(i).obtenerTipo2() + " sigue vivo\n");
+                        VentanaJuego.textoSeg.append(" tiene aguante " + Juego.getZombis().get(i).getAguante() + "\n");
+                    }*/
                 }
             }
+            VentanaJuego.textoSeg.append("Número de acciones: " + this.numAcciones + "\n");
+            VentanaJuego.actualizarTodo();
+            if(this.getNumAcciones()==0){
+                VentanaJuego.pasarTurnoJugador();
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "No hay zombies en esta casilla", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE); 
         }
     }
-    @Override
-    public void morir(){
-        Juego.getSupervivientes().remove(this);
-    }  
+
 }

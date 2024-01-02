@@ -33,7 +33,7 @@ public class Punto {
         this.coordenadaX = x;
     }
     public void setY(int y){
-        this.coordenadaX = y;
+        this.coordenadaY = y;
     }
     @Override
     public String toString() {
@@ -68,10 +68,7 @@ public class Punto {
             return false;
         }
         final Punto other = (Punto) obj;
-        if (this.coordenadaX != other.coordenadaX) {
-            return false;
-        }
-        return this.coordenadaY == other.coordenadaY;
+        return this.coordenadaY == other.coordenadaY && this.coordenadaX == other.coordenadaX;
     }
 
     

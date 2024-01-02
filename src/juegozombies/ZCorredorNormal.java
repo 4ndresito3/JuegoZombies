@@ -13,6 +13,19 @@ public class ZCorredorNormal extends ZCorredor{
     public void reaccion(Superviviente superviviente , EArmas arma){
         if (arma.getPotencia() >= this.getAguante()){
             this.morir();
+            VentanaJuego.textoSeg.append(" " + this.obtenerTipo() + " ha muerto\n");
+            superviviente.setExitos(superviviente.getExitos()-1);
+        }else{
+            VentanaJuego.textoSeg.append(" " + this.obtenerTipo2() + " sigue vivo\n");
+            VentanaJuego.textoSeg.append(" tiene aguante " + this.getAguante() + "\n");
         }
+    }
+    @Override
+    public String obtenerTipo(){
+        return "ZCorredorNormal";
+    }
+    @Override
+    public String obtenerTipo2(){
+        return "ZCoNormal";
     }
 }

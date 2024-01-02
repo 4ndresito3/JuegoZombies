@@ -22,6 +22,7 @@ public class EArmas extends Equipo {
         this.numDados=numDados;
         this.valorExito=valorExito;
     }
+    
 
     public int getPotencia() {
         return potencia;

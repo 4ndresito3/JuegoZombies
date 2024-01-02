@@ -6,17 +6,19 @@ package juegozombies;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Andrés
  */
 public class Juego {
     
+    private static int turnoJugador;
     private static ArrayList<Superviviente> listaSupervivientes;
     private static ArrayList<Zombi> listaZombies;
     private static ArrayList<Equipo> listaEquipo;
     
-    private Punto objetivo;
+    private static Punto objetivo;
     private static Punto tamanoCuadricula;
     private static ArrayList<Punto> listaCasillasBuscadas;
     
@@ -33,11 +35,18 @@ public class Juego {
     public static ArrayList<Punto> getListaCasillasBuscadas() {
         return listaCasillasBuscadas;
     }
+
+    public static Punto getObjetivo() {
+        return objetivo;
+    }
+    
     
     public Juego(){
+        turnoJugador = 0;
         listaSupervivientes = new ArrayList<>();
         listaZombies = new ArrayList<>();
         listaEquipo = new ArrayList<>();
+        listaCasillasBuscadas = new ArrayList<>();
     }
     
     public void generarSupervivientes(String[] listaNombres){
@@ -48,46 +57,29 @@ public class Juego {
             }
         }
         Juego.tamanoCuadricula = new Punto(numeroSupervivientes + 6, numeroSupervivientes + 6);
-        Punto posicion = new Punto();
-        int random = (int)(Math.random()*4)+1;
-        switch(random){
-            case 1->{
-                posicion.setX(0);
-                posicion.setY(0);
-            }
-            case 2->{
-                posicion.setX(Juego.tamanoCuadricula.getX());
-                posicion.setY(Juego.tamanoCuadricula.getY());
-            }
-            case 3->{
-                posicion.setX(0);
-                posicion.setY(Juego.tamanoCuadricula.getY());
-            }
-            case 4->{
-                posicion.setX(Juego.tamanoCuadricula.getX());
-                posicion.setY(0);
-            }
-        }
-        this.generarObjetivo(random);
+        
+        int random1 = (int)Math.round(Math.random())*(numeroSupervivientes+5);
+        int random2 = (int)Math.round(Math.random())*(numeroSupervivientes+5);
+        Punto posicion = new Punto(random1,random2);
+        this.generarObjetivo(random1,random2);
         for(int i = 0; i < numeroSupervivientes ; i++){
             Juego.listaSupervivientes.add(new Superviviente(listaNombres[i], posicion));
         }
-       
-    }
-    
-    public void generarZombies(boolean opcion){
+    }  
+    public static void generarZombies(boolean opcion){
         // Opcion es para decidir si los zombies se generan por primera vez o a lo largo del juego
         int numSupers = Juego.listaSupervivientes.size();
         boolean repetir = false;
         // Zombi no se inicializa, habria que tener en cuenta algun tipo de zombi inicial para que no salte el error de que puede que no se haga
         Zombi zombi = new ZCaminanteNormal();
+        Punto puntito;
         if(!opcion){
             for(int i = 0; i < 3*numSupers ; i++){
                 do{
                     // Generacion de punto aleatorio del zombi
-                    int random1 = (int) (Math.random()*Juego.tamanoCuadricula.getX());
-                    int random2 = (int) (Math.random()*Juego.tamanoCuadricula.getY());
-                    Punto puntito = new Punto(random1,random2);
+                    int random1 = (int) (Math.random()*Juego.tamanoCuadricula.getX()-1);
+                    int random2 = (int) (Math.random()*Juego.tamanoCuadricula.getY()-1);
+                    puntito = new Punto(random1,random2);
                     for(int j = 0; j < numSupers ; j++){
                         //Comprobacion de que no sea en la casilla del superviviente
                         Punto position = Juego.listaSupervivientes.get(j).devolverCoordenada(); /*cambiado de getposicion*/
@@ -133,16 +125,17 @@ public class Juego {
                         }
                     }
                 }
-                Juego.listaZombies.add(zombi);
-       
+                zombi.setPosicion(puntito);
+                Juego.listaZombies.add(zombi);      
             }
         } else{
             for(int i = 0; i < numSupers ; i++){
                 do{
-                    int random1 = (int) (Math.random()*Juego.tamanoCuadricula.getX());
-                    int random2 = (int) (Math.random()*Juego.tamanoCuadricula.getY());
-                    Punto puntito = new Punto(random1,random2);
+                    int random1 = (int) (Math.random()*Juego.tamanoCuadricula.getX()-1);
+                    int random2 = (int) (Math.random()*Juego.tamanoCuadricula.getY()-1);
+                    puntito = new Punto(random1,random2);
                     for(int j = 0; j < numSupers ; j++){
+                        // Se comprueba que no se genera encima de un superviviente
                         Punto position = Juego.listaSupervivientes.get(j).devolverCoordenada(); /*cambiado de getposicion*/
                         repetir = position.equals(puntito);
                     }
@@ -186,33 +179,86 @@ public class Juego {
                         }
                     }
                 }
+                zombi.setPosicion(puntito);
                 Juego.listaZombies.add(zombi);
             }
         }
-
-        
     }
-    
-    
-    
-    private void generarObjetivo(int genSupervivientes){
-        switch(genSupervivientes){
+    private void generarObjetivo(int genSupervivientes,int genSupervivientes2){
+        /*switch(genSupervivientes){
             case 1->{
-                this.objetivo = new Punto (Juego.tamanoCuadricula.getX(),Juego.tamanoCuadricula.getY());
+                this.objetivo = new Punto (Juego.tamanoCuadricula.getX()-1,Juego.tamanoCuadricula.getY()-1);
             }
             case 2->{
                 this.objetivo = new Punto ();
             }
             case 3->{
-                this.objetivo = new Punto (Juego.tamanoCuadricula.getX(),0);
+                this.objetivo = new Punto (Juego.tamanoCuadricula.getX()-1,0);
             }
             case 4->{
-                this.objetivo = new Punto (0,Juego.tamanoCuadricula.getY());
+                this.objetivo = new Punto (0,Juego.tamanoCuadricula.getY()-1);
+            }*/
+            objetivo = new Punto (Math.abs(genSupervivientes-(tamanoCuadricula.getX()-1)),Math.abs(genSupervivientes2-(tamanoCuadricula.getY()-1)));
+        }
+
+        public static int getTurnoJugador() {
+            return turnoJugador;
+        }
+        
+        public static Superviviente obtenerJugadorActual(){
+            return listaSupervivientes.get(turnoJugador);
+        }      
+        public static void pasarTurno(){
+            if(jugadoresVivos()){
+                do{
+                    turnoJugador = (turnoJugador + 1) % listaSupervivientes.size();
+                }while(!Juego.obtenerJugadorActual().isVivo());
             }
         }
-    }
-    
-    
-    
-    
+        public static boolean jugadoresVivos(){
+            int cont = 0;
+            for(int i = 0; i < Juego.getSupervivientes().size(); i++){
+                if(Juego.getSupervivientes().get(i).isVivo()){
+                    cont++;
+                }
+            }
+            return cont >= 1 ;
+        }
+        public static void turnoZombies(){  
+            boolean ataque=false;
+            for(int i = 0; i < Juego.getZombis().size(); i++){
+                ataque=false;
+                for(int j = 0 ; j < Juego.getSupervivientes().size() ; j++){
+                    // se va a buscar si el zombi esta en la misma casilla que un survi, para atacarle
+                    if(Juego.jugadoresVivos()){
+                        if(Juego.getZombis().get(i).devolverCoordenada().equals(Juego.getSupervivientes().get(j).devolverCoordenada()) && Juego.getSupervivientes().get(j).isVivo() && Juego.getZombis().get(i).isVivo()){
+                            Juego.getZombis().get(i).atacar();
+                            ataque = true;
+                            break;
+                        }
+                    }
+                }
+                if(ataque == false){
+                    Juego.getZombis().get(i).moverse();
+                }
+            }
+            for(int i = 0; i < Juego.getZombis().size(); i++){
+                ataque=false;
+                for(int j = 0 ; j < Juego.getSupervivientes().size() ; j++){
+                    // se va a buscar si el zombi esta en la misma casilla que un survi, para atacarle
+                    if(Juego.jugadoresVivos() && Juego.getZombis().get(i) instanceof ZCorredor){
+                        if(Juego.getZombis().get(i).devolverCoordenada().equals(Juego.getSupervivientes().get(j).devolverCoordenada()) && Juego.getSupervivientes().get(j).isVivo() && Juego.getZombis().get(i).isVivo()){
+                            Juego.getZombis().get(i).atacar();
+                            ataque = true;
+                            break;
+                        }
+                    }
+                }
+                if(ataque == false && Juego.getZombis().get(i) instanceof ZCorredor){
+                    Juego.getZombis().get(i).moverse();
+                }
+            }
+            Juego.generarZombies(true);
+            VentanaJuego.actualizarTodo();   
+        }
 }
