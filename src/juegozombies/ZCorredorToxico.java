@@ -19,10 +19,15 @@ public class ZCorredorToxico extends ZCorredor{
                 } 
                 if(Juego.getSupervivientes().get(i).getHeridas() == 2){
                     Juego.getSupervivientes().get(i).morir();
-                    VentanaJuego.pasarTurnoJugador();
-                    VentanaJuego.textoSeg.append(Juego.getSupervivientes().get(i).getNombre() + " ha muerto\n");
+                    if(Juego.getSupervivientes().get(i).equals(Juego.obtenerJugadorActual()) && Juego.obtenerJugadorActual().getNumAcciones()>0){
+                        VentanaJuego.pasarTurnoJugador();
+                    }
+                    VentanaJuego.textoSeg.append(Juego.getSupervivientes().get(i).getNombre() + " ha muerto\n");              
                 }
             }
+            /*if(!Juego.obtenerJugadorActual().isVivo() && Juego.obtenerJugadorActual().getNumAcciones()>0){
+                VentanaJuego.pasarTurnoJugador();
+            }*/
             this.morir();
             VentanaJuego.textoSeg.append(" " + this.obtenerTipo() + " ha muerto\n");
             superviviente.setExitos(superviviente.getExitos()-1);
