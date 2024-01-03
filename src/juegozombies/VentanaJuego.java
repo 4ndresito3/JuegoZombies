@@ -77,7 +77,7 @@ public class VentanaJuego extends javax.swing.JFrame {
             
         }
         if(VentanaJuego.llegarObjetivoProvisiones() && Juego.jugadoresVivos()){
-            JOptionPane.showMessageDialog(null, "Fin partida", "Has ganado" , JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Has ganado", "Fin partida" , JOptionPane.WARNING_MESSAGE);
             for(int i=0; i<Juego.getSupervivientes().size(); i++){
                 Juego.getSupervivientes().get(i).morir();
             }
@@ -88,7 +88,7 @@ public class VentanaJuego extends javax.swing.JFrame {
             VentanaEstadisticas ventanaStats = new VentanaEstadisticas();
         }
         if(!Juego.jugadoresVivos() && !victoria){
-            JOptionPane.showMessageDialog(null, "Todos los supervivientes han muerto", "¡Perdiste!" , JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "¡Perdiste!\nTodos los supervivientes han muerto", "Fin partida" , JOptionPane.WARNING_MESSAGE);
             textoSeg.setText("");
             textoSeg.append("PARTIDA FINALIZADA:\n");
             textoSeg.append("DERROTA\n");
