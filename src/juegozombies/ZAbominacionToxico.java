@@ -13,12 +13,16 @@ public class ZAbominacionToxico extends ZAbominacion{
     public void reaccion(Superviviente superviviente , EArmas arma){
         if (arma.getPotencia() >= this.getAguante()){
             for(int i=0; i<Juego.getSupervivientes().size(); i++){
-                if(Juego.getSupervivientes().get(i).devolverCoordenada().equals(this.devolverCoordenada())){
+                if(Juego.getSupervivientes().get(i).devolverCoordenada().equals(this.devolverCoordenada()) && Juego.getSupervivientes().get(i).isVivo()){
                     Juego.getSupervivientes().get(i).setHeridas(Juego.getSupervivientes().get(i).getHeridas()+1);
                     VentanaJuego.textoSeg.append(Juego.getSupervivientes().get(i).getNombre() + " tiene " + Juego.getSupervivientes().get(i).getHeridas() + " heridas\n");
                 } 
-                if(Juego.getSupervivientes().get(i).getHeridas() == 2){
+               if(Juego.getSupervivientes().get(i).getHeridas() == 2 && Juego.getSupervivientes().get(i).isVivo()){
                     Juego.getSupervivientes().get(i).morir();
+                    if(Juego.getSupervivientes().get(i).equals(Juego.obtenerJugadorActual()) && Juego.obtenerJugadorActual().getNumAcciones()>0){
+                        VentanaJuego.pasarTurnoJugador();
+                    }  
+                    
                     VentanaJuego.textoSeg.append(Juego.getSupervivientes().get(i).getNombre() + " ha muerto\n");
                 }
             }       

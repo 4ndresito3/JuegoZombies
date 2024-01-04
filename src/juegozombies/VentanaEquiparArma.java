@@ -68,6 +68,7 @@ public class VentanaEquiparArma extends javax.swing.JFrame {
             if(nombreArma.equals(jugador.getInventario().get(i).getNombre())){
                 VentanaEquiparCambiar ventanaEquiparCambiar = new VentanaEquiparCambiar(jugador.getInventario().get(i));
                 frame.dispose();
+                break;
             }
         }
     }

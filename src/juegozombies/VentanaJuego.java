@@ -22,6 +22,7 @@ import javax.swing.JTextArea;
  */
 public class VentanaJuego extends javax.swing.JFrame {
     public static boolean victoria=false;
+    public static boolean yaMostrado = false;
     public static JFrame frame = new JFrame();
     JPanel seguimiento = new JPanel();
     JPanel posiciones = new JPanel();
@@ -33,31 +34,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     /**
      * Creates new form JFrame
      */
-    /*public static void turnoJugador(Superviviente jugador){
-        
-    }    
-    private void jugar(){
-        boolean todosMuertos = false;
-        boolean todosObjetivo = false;
-        int cont = 0;
-        while(!todosMuertos && !todosObjetivo){
-             for(int i = 0; i < Juego.getSupervivientes().size(); i++){
-                  while(Juego.getSupervivientes().get(i).getNumAcciones() > 0){
-                        turnoJugador(Juego.getSupervivientes().get(i));
-                  }
-             }
-            
-            
-            
-            for(int i = 0; i < Juego.getSupervivientes().size(); i++){
-                if(Juego.getSupervivientes().get(i).devolverCoordenada().equals(Juego.getObjetivo())){
-                    cont ++;
-                }
-            }
-            todosMuertos = Juego.getSupervivientes().isEmpty();
-            todosObjetivo = cont == Juego.getSupervivientes().size();
-        }
-    }*/
+    
     public static void actualizarTodo(){
         for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
             for(int j=0; j< Juego.getTamanoCuadricula().getY(); j++){
@@ -100,84 +77,28 @@ public class VentanaJuego extends javax.swing.JFrame {
             }
             
         }
-        if(VentanaJuego.llegarObjetivoProvisiones() && Juego.jugadoresVivos()){
-            JOptionPane.showMessageDialog(null, "Fin partida", "Has ganado" , JOptionPane.WARNING_MESSAGE);
+        if(VentanaJuego.llegarObjetivoProvisiones() && Juego.jugadoresVivos() && !yaMostrado){
+            JOptionPane.showMessageDialog(null, "Has ganado", "Fin partida" , JOptionPane.WARNING_MESSAGE);
             for(int i=0; i<Juego.getSupervivientes().size(); i++){
                 Juego.getSupervivientes().get(i).morir();
             }
-            victoria=true;
+            victoria=true; 
+            yaMostrado = true;
             textoSeg.setText("");
             textoSeg.append("PARTIDA FINALIZADA:\n");
             textoSeg.append("VICTORIA\n");
+            VentanaEstadisticas ventanaStats = new VentanaEstadisticas();
         }
-        if(!Juego.jugadoresVivos() && !victoria){
-            JOptionPane.showMessageDialog(null, "Todos los supervivientes han muerto", "¡Perdiste!" , JOptionPane.WARNING_MESSAGE);
+        if(!Juego.jugadoresVivos() && !victoria && !yaMostrado){
+            JOptionPane.showMessageDialog(null, "¡Perdiste!\nTodos los supervivientes han muerto", "Fin partida" , JOptionPane.WARNING_MESSAGE);
+            yaMostrado = true;
             textoSeg.setText("");
             textoSeg.append("PARTIDA FINALIZADA:\n");
             textoSeg.append("DERROTA\n");
+            VentanaEstadisticas ventanaStats = new VentanaEstadisticas();
         }
     }
-    /*public static void actualizarJugadores(){
-        
-        // Actualizacion de casillas
-        for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
-            for(int j=0; j< Juego.getTamanoCuadricula().getY(); j++){
-                for(int l = 0; l< Juego.getSupervivientes().size(); l++){
-                    if(Juego.getSupervivientes().get(l).devolverCoordenada().getX() == i && Juego.getSupervivientes().get(l).devolverCoordenada().getY() == j ){                       
-                           String texto = celda[i][j].getText();
-                           String newTexto=Juego.getSupervivientes().get(l).getNombre();                          
-                           StringBuilder textoBoton = new StringBuilder("<html>"+texto);
-                           textoBoton.append("<br>" + newTexto);
-                           celda[i][j].setText(textoBoton.toString());
-                    }
-                }              
-            }
-        }
-         
-        if(VentanaJuego.llegarObjetivoProvisiones()){
-            JOptionPane.showMessageDialog(null, "Fin partida", "Has ganado" , JOptionPane.WARNING_MESSAGE);
-        }                                    
-    }
-        public static void borrarJugadoresAntiguos(){
-         for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
-            for(int j=0; j< Juego.getTamanoCuadricula().getY(); j++){
-                for(int l = 0; l< Juego.getSupervivientes().size(); l++){
-                    if(Juego.getSupervivientes().get(l).devolverCoordenada().getX() == i && Juego.getSupervivientes().get(l).devolverCoordenada().getY() == j ){                       
-                           celda[i][j].setText("");
-                    }
-                }              
-            }
-        }
-    }
-    public static void borrarZombiesAntiguos(){
-        for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
-            for(int j=0; j< Juego.getTamanoCuadricula().getY(); j++){
-                for(int k = 0; k< Juego.getZombis().size(); k++){                            
-                    if(Juego.getZombis().get(k).devolverCoordenada().getX() == i && Juego.getZombis().get(k).devolverCoordenada().getY() == j){
-                        celda[i][j].setText("");                
-                    }               
-                }               
-            }
-        }
-    }
-    public static void actualizarZombies(){
-        for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
-            for(int j=0; j< Juego.getTamanoCuadricula().getY(); j++){
-                for(int k = 0; k< Juego.getZombis().size(); k++){                            
-                    if(Juego.getZombis().get(k).devolverCoordenada().getX() == i && Juego.getZombis().get(k).devolverCoordenada().getY() == j){
-                        String texto2 = celda[i][j].getText();
-                           String newTexto2=Juego.getZombis().get(k).obtenerTipo2();                          
-                           StringBuilder textoBoton2 = new StringBuilder("<html>"+texto2);
-                           textoBoton2.append("<br>" + newTexto2);
-                           celda[i][j].setText(textoBoton2.toString());                    
-                    }               
-                }               
-            }
-        }
-        if(VentanaJuego.jugadoresVivos()){
-                JOptionPane.showMessageDialog(null, "Todos los supervivientes han muerto", "¡Perdiste!" , JOptionPane.WARNING_MESSAGE);
-            }
-    }*/
+    
     public static boolean llegarObjetivoProvisiones(){
         /*
         * Comprueba si los supervivientes estan en la casilla objetivo con provisiones
@@ -326,34 +247,28 @@ public class VentanaJuego extends javax.swing.JFrame {
         }
         
         public static void pasarTurnoJugador(){
-            Superviviente jugador = Juego.obtenerJugadorActual();            
-            if((Juego.getTurnoJugador() == Juego.getSupervivientes().size()-1 )){
+            Superviviente jugador = Juego.obtenerJugadorActual();    
+            int turno = 0;
+            for(int i=Juego.getSupervivientes().size()-1; i >= 0;i--){
+                if (Juego.getSupervivientes().get(i).isVivo()){
+                    turno = i;
+                    break;
+                }
+            }
+            if((Juego.getTurnoJugador() == turno)){
                   jugador.setNumAcciones(3);
                   Juego.turnoZombies();
                   Juego.pasarTurno();     
                  }else{
                      jugador.setNumAcciones(3);                    
                      Juego.pasarTurno();
-                    }
+                 }
         }
     
          private void atacarActionPerformed(java.awt.event.ActionEvent evt){ 
              if(Juego.jugadoresVivos()){
                 VentanaAtacarElegirArma ventana = new VentanaAtacarElegirArma();
              }
-                  /*Superviviente jugador = Juego.obtenerJugadorActual();
-                  jugador.atacar();
-                  if(jugador.getNumAcciones() == 0 && (Juego.getTurnoJugador() == Juego.getSupervivientes().size()-1 )){
-                      Juego.turnoZombies();
-                      Juego.pasarTurno();     
-                  }else if(jugador.getNumAcciones() == 0 && (Juego.getTurnoJugador() != Juego.getSupervivientes().size()-1 )){
-                      Juego.pasarTurno();
-                  }else if(jugador.getNumAcciones() > 0){
-                      
-                  }*/
-                  /*textoSeg.setText("" + Juego.getObjetivo().getX() + Juego.getObjetivo().getY());
-                  textoSeg2.setText("" + Juego.getSupervivientes().get(0).devolverCoordenada().getX() + Juego.getSupervivientes().get(0).devolverCoordenada().getY());
-                  textoSeg3.setText("" + Juego.getSupervivientes().get(1).devolverCoordenada().getX() + Juego.getSupervivientes().get(1).devolverCoordenada().getY());*/
          }
          private void moverActionPerformed(java.awt.event.ActionEvent evt){
                 if(Juego.jugadoresVivos()){
