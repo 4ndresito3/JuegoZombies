@@ -22,6 +22,7 @@ public class ZAbominacionToxico extends ZAbominacion{
                     if(Juego.getSupervivientes().get(i).equals(Juego.obtenerJugadorActual()) && Juego.obtenerJugadorActual().getNumAcciones()>0){
                         VentanaJuego.pasarTurnoJugador();
                     }  
+                    
                     VentanaJuego.textoSeg.append(Juego.getSupervivientes().get(i).getNombre() + " ha muerto\n");
                 }
             }       
