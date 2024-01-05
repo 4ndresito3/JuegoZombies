@@ -84,6 +84,10 @@ public class Persistencia {
                     potenciaElement.appendChild(doc.createTextNode(String.valueOf(((EArmas) equipo).getPotencia())));
                     armaElement.appendChild(potenciaElement);
                     
+                    Element alcanceMaxElement = doc.createElement("alcanceMax");
+                    alcanceMaxElement.appendChild(doc.createTextNode(String.valueOf(((EArmas) equipo).getAlcanceMax())));
+                    armaElement.appendChild(alcanceMaxElement);
+                            
                     Element numDadosElement = doc.createElement("numDados");
                     numDadosElement.appendChild(doc.createTextNode(String.valueOf(((EArmas) equipo).getNumDados())));
                     armaElement.appendChild(numDadosElement);
@@ -178,4 +182,97 @@ public class Persistencia {
     }
     
     }
+    
+    public static Juego cargarJuego() {
+    Juego juego = new Juego();
+
+    try {
+        File archivoXML = new File("src\\juegozombies\\partidaZombiesGuardada.xml");
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(archivoXML);
+        doc.getDocumentElement().normalize();
+
+        Node turnoNode = doc.getElementsByTagName("turnoJugador").item(0);
+        juego.setTurnoJugador(Integer.parseInt(turnoNode.getTextContent()));
+
+        NodeList listaSupervivientes = doc.getElementsByTagName("superviviente");
+        for (int i = 0; i < listaSupervivientes.getLength(); i++) {
+            Node nodoSuperviviente = listaSupervivientes.item(i);
+            if (nodoSuperviviente.getNodeType() == Node.ELEMENT_NODE) {
+                Element elementoSuperviviente = (Element) nodoSuperviviente;
+                String nombre = elementoSuperviviente.getElementsByTagName("nombre").item(0).getTextContent();
+                Punto posicion = new Punto();
+                posicion.parsePunto(elementoSuperviviente.getElementsByTagName("posicion").item(0).getTextContent().split(","));
+                Superviviente superviviente = new Superviviente(nombre, posicion);
+                Boolean vivo = Boolean.parseBoolean(elementoSuperviviente.getElementsByTagName("vivo").item(0).getTextContent());
+                superviviente.setVivo(vivo);
+                int numAcciones = Integer.parseInt(elementoSuperviviente.getElementsByTagName("numAcciones").item(0).getTextContent());
+                superviviente.setNumAcciones(numAcciones);
+                int elimZombies = Integer.parseInt(elementoSuperviviente.getElementsByTagName("elimZombies").item(0).getTextContent());
+                superviviente.setElimZombies(elimZombies);
+                int heridas = Integer.parseInt(elementoSuperviviente.getElementsByTagName("heridas").item(0).getTextContent());
+                superviviente.setHeridas(heridas);
+                
+                Element elementoInventario = (Element) elementoSuperviviente.getElementsByTagName("inventario").item(0);
+                NodeList equiposNodeList = elementoInventario.getChildNodes();
+                ArrayList<Equipo> inventario = new ArrayList<>();
+                
+                for(int j = 0; j < equiposNodeList.getLength(); j++) {
+                    Node equipoNode = equiposNodeList.item(i);
+
+                if (equipoNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element equipoElement = (Element) equipoNode;
+                    
+                if (equipoElement.getNodeName().equals("arma")) {
+                    
+                    String nombreArma = equipoElement.getElementsByTagName("nombre").item(0).getTextContent();
+                    int potencia = Integer.parseInt(equipoElement.getElementsByTagName("potencia").item(0).getTextContent());
+                    int alcanceMax = Integer.parseInt(equipoElement.getElementsByTagName("alcanceMax").item(0).getTextContent());
+                    int numDados = Integer.parseInt(equipoElement.getElementsByTagName("numDados").item(0).getTextContent());
+                    int valorExito = Integer.parseInt(equipoElement.getElementsByTagName("valorExito").item(0).getTextContent());
+                    boolean armaActiva = Boolean.parseBoolean(equipoElement.getElementsByTagName("armaActiva").item(0).getTextContent());
+
+                    EArmas arma = new EArmas(nombreArma, potencia, alcanceMax, numDados, valorExito);
+                    arma.setArmaActiva(armaActiva);
+                    inventario.add(arma);
+                } else if (equipoElement.getNodeName().equals("provision")) {
+            
+                    String nombreProvision = equipoElement.getElementsByTagName("nombre").item(0).getTextContent();
+                    int valorEnergetico = Integer.parseInt(equipoElement.getElementsByTagName("valorEnergetico").item(0).getTextContent());
+                    String fechaCaducidad = equipoElement.getElementsByTagName("fechaCaducidad").item(0).getTextContent();
+
+                    EProvisiones provision = new EProvisiones(nombreProvision, valorEnergetico);
+                    provision.setCaducidad(fechaCaducidad);
+                    inventario.add(provision);
+                }
+            }
+        }
+                superviviente.setInventario(inventario);
+        
+                int exitos = Integer.parseInt(elementoSuperviviente.getElementsByTagName("exitos").item(0).getTextContent());
+                superviviente.setExitos(exitos);
+                juego.getSupervivientes().add(superviviente);
+            }
+        }
+
+        NodeList listaZombies = doc.getElementsByTagName("zombi");
+        for (int i = 0; i < listaZombies.getLength(); i++) {
+            Node nodoZombi = listaZombies.item(i);
+            if (nodoZombi.getNodeType() == Node.ELEMENT_NODE) {
+                Element elementoZombi = (Element) nodoZombi;
+                
+                
+                //juego.getZombis().add();
+            }
+        }
+
+        // Resto de atributos de juego
+
+    } catch (ParserConfigurationException | SAXException | IOException e) {
+        e.printStackTrace();
+    }
+
+    return juego;
+}
 }

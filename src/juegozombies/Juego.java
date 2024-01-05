@@ -192,6 +192,10 @@ public class Juego {
             return turnoJugador;
         }
         
+        public void setTurnoJugador(int turno) {
+            this.turnoJugador = turno;
+        }
+        
         public static Superviviente obtenerJugadorActual(){
             return listaSupervivientes.get(turnoJugador);
         }      

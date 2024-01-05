@@ -39,6 +39,15 @@ public class Punto {
     public String toString() {
         return "Punto{" + "coordenadaX=" + coordenadaX + ", coordenadaY=" + coordenadaY + '}';
     }
+    
+    public String puntoString() {
+        return this.coordenadaX + "," + this.coordenadaY;
+    }
+    
+    public void toPunto(String[] puntoString) {
+        this.coordenadaX = Integer.parseInt(puntoString[0]);
+        this.coordenadaY = Integer.parseInt(puntoString[1]);
+    }
     public void desplazarXY(int xDespl,int yDespl){
         if (xDespl>0){
             this.coordenadaX = this.coordenadaX + xDespl;
