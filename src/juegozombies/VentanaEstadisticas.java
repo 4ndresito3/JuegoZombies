@@ -26,7 +26,7 @@ public class VentanaEstadisticas {
         for(int i=0; i<Juego.getSupervivientes().size();i++){
             texto.append("\n");
             texto.append(Juego.getSupervivientes().get(i).getNombre() + " ha eliminado " + Juego.getSupervivientes().get(i).getElimZombies() + " zombies\n");
-            texto.append( " tiene " + Juego.getSupervivientes().get(i).getHeridas() + " heridas");         
+            texto.append( "Tiene " + Juego.getSupervivientes().get(i).getHeridas() + " heridas");         
             if(Juego.getSupervivientes().get(i).getHeridas()>=2){
                 texto.append(" y ha muerto");
             }
