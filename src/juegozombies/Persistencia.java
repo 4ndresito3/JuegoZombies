@@ -132,7 +132,7 @@ public class Persistencia {
         Element zombiesElement = doc.createElement("zombies");
         for (Zombi zombi : juego.getZombis()) {
             Element zombiElement = doc.createElement(zombi.obtenerTipo());
-            
+                
             Element posicionElement = doc.createElement("posicion");
             posicionElement.appendChild(doc.createTextNode((zombi.devolverCoordenada().toString())));
             zombiElement.appendChild(posicionElement);
@@ -154,16 +154,16 @@ public class Persistencia {
         rootElement.appendChild(zombiesElement);
         
         Element objetivoElement = doc.createElement("objetivo");
-        objetivoElement.appendChild(doc.createTextNode(juego.getObjetivo().toString()));
+        objetivoElement.appendChild(doc.createTextNode(juego.getObjetivo().puntoString()));
         rootElement.appendChild(objetivoElement);
         
         Element tamanoCuadriculaElement = doc.createElement("tamanoCuadricula");
-        tamanoCuadriculaElement.appendChild(doc.createTextNode(juego.getTamanoCuadricula().toString()));
+        tamanoCuadriculaElement.appendChild(doc.createTextNode(juego.getTamanoCuadricula().puntoString()));
         
         Element casillasBuscadasElement = doc.createElement("listCasillasBuscadas");
         for(Punto casilla: juego.getListaCasillasBuscadas()) {
             Element casillaElement = doc.createElement("casilla");
-            casillaElement.appendChild(doc.createTextNode(casilla.toString()));
+            casillaElement.appendChild(doc.createTextNode(casilla.puntoString()));
             casillasBuscadasElement.appendChild(casillaElement);
         }
         rootElement.appendChild(casillasBuscadasElement);
@@ -203,7 +203,7 @@ public class Persistencia {
                 Element elementoSuperviviente = (Element) nodoSuperviviente;
                 String nombre = elementoSuperviviente.getElementsByTagName("nombre").item(0).getTextContent();
                 Punto posicion = new Punto();
-                posicion.parsePunto(elementoSuperviviente.getElementsByTagName("posicion").item(0).getTextContent().split(","));
+                posicion.parsePunto(elementoSuperviviente.getElementsByTagName("posicion").item(0).getTextContent());
                 Superviviente superviviente = new Superviviente(nombre, posicion);
                 Boolean vivo = Boolean.parseBoolean(elementoSuperviviente.getElementsByTagName("vivo").item(0).getTextContent());
                 superviviente.setVivo(vivo);
@@ -261,13 +261,71 @@ public class Persistencia {
             Node nodoZombi = listaZombies.item(i);
             if (nodoZombi.getNodeType() == Node.ELEMENT_NODE) {
                 Element elementoZombi = (Element) nodoZombi;
-                
-                
-                //juego.getZombis().add();
+                switch (elementoZombi.getNodeName()) {
+                    case "ZAbominacionBerserker" -> {
+                        
+                    }
+                    
+                    case "ZAbominacionNormal" ->{
+                        
+                    }
+                    
+                    case "ZAbominacionToxico" -> {
+                        
+                    }
+                    
+                    case "ZCaminanteBerserker" -> {
+                        
+                    }
+                    
+                    case "ZCaminanteNormal" -> {
+                        
+                    }
+                    
+                    case "ZCaminanteToxico" -> {
+                        
+                    }
+                    
+                    case "ZCorredorBerserker" -> {
+                        
+                    }
+                        
+                    case "ZCorredorNormal" -> {
+                        
+                    }
+                    
+                    case "ZCorredorToxico" -> {
+                        
+                    }
+                 }
+            }
+            //juego.getZombis().add(zombi);
+        }
+        
+        Node objetivoNode = doc.getElementsByTagName("objetivo").item(0);
+        Punto obj = new Punto();
+        juego.setObjetivo(obj.parsePunto(objetivoNode.getTextContent()));
+        
+        Node tamanoCuadriculaNode = doc.getElementsByTagName("tamanoCuadricula").item(0);
+        Punto tamanoCuadricula = new Punto();
+        juego.setTamanoCuadricula(tamanoCuadricula.parsePunto(tamanoCuadriculaNode.getTextContent()));
+        
+        Element elementoCasillasBuscadas = (Element) doc.getElementsByTagName("listaCasillasBuscadas").item(0);
+        NodeList casillasBuscadas = elementoCasillasBuscadas.getChildNodes();
+        ArrayList<Punto> listaCasillasBuscadas = new ArrayList<>();
+        
+        for (int i = 0; i < casillasBuscadas.getLength(); ++i) {
+            Node casillaNode = casillasBuscadas.item(i);
+            
+            if (casillaNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element casillaElement = (Element) casillaNode;
+                Punto casilla = new Punto();
+                casilla.parsePunto(casillaElement.getTextContent());
+                listaCasillasBuscadas.add(casilla);
             }
         }
-
-        // Resto de atributos de juego
+        
+        juego.setListaCasillasBuscadas(listaCasillasBuscadas);      
 
     } catch (ParserConfigurationException | SAXException | IOException e) {
         e.printStackTrace();

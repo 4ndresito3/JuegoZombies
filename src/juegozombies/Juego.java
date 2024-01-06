@@ -31,13 +31,25 @@ public class Juego {
     public static Punto getTamanoCuadricula() {
         return tamanoCuadricula;
     }
+    
+    public void setTamanoCuadricula(Punto tamano) {
+        this.tamanoCuadricula = tamano;
+    }
 
     public static ArrayList<Punto> getListaCasillasBuscadas() {
         return listaCasillasBuscadas;
     }
+    
+    public void setListaCasillasBuscadas(ArrayList<Punto> casillasBuscadas) {
+        this.listaCasillasBuscadas = casillasBuscadas;
+    }
 
     public static Punto getObjetivo() {
         return objetivo;
+    }
+    
+    public void setObjetivo(Punto punto) {
+        this.objetivo = punto;
     }
     
     

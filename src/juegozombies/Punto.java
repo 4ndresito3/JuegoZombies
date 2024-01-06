@@ -44,7 +44,8 @@ public class Punto {
         return this.coordenadaX + "," + this.coordenadaY;
     }
     
-    public Punto parsePunto(String[] puntoString) {
+    public Punto parsePunto(String stringPunto) {
+        String[] puntoString = stringPunto.split(",");
         Punto punto = new Punto(Integer.parseInt(puntoString[0]), Integer.parseInt(puntoString[1]));
         return punto;
     }
