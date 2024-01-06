@@ -31,6 +31,10 @@ public abstract class Zombi extends EntidadActivable{
         return this.numAcciones;
     }
     
+    public void setNumAcciones(int numAcciones) {
+        this.numAcciones = numAcciones;
+    }
+    
     public Punto supervivienteCercano(){
         /**
          * Calculo de que superviviente esta mas cerca y devuelve sus coordenadas

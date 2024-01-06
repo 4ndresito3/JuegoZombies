@@ -25,9 +25,19 @@ public class Juego {
     public static ArrayList<Zombi> getZombis (){
         return listaZombies;
     }
+    
+    public void setZombis(ArrayList<Zombi> listZombis) {
+        this.listaZombies = listZombis;
+    }
+    
     public static ArrayList<Superviviente> getSupervivientes (){
         return listaSupervivientes;
     }
+    
+    public void setSupervivientes(ArrayList<Superviviente> listSupervivientes) {
+        this.listaSupervivientes = listSupervivientes;
+    }
+    
     public static Punto getTamanoCuadricula() {
         return tamanoCuadricula;
     }

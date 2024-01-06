@@ -10,6 +10,17 @@ package juegozombies;
  */
 public class ZAbominacionBerserker extends ZAbominacion{
     
+    public ZAbominacionBerserker() {
+        super();
+    }
+    
+    public ZAbominacionBerserker(Punto posicion, boolean vivo, int aguante, int numAcciones) {
+        super();
+        this.setPosicion(posicion);
+        this.setVivo(vivo);
+        this.setAguante(aguante);
+        this.setNumAcciones(numAcciones);
+    }
     @Override
     public void reaccion(Superviviente superviviente , EArmas arma){
         if (arma.getPotencia() >= this.getAguante() && arma.getAlcanceMax() == 0){

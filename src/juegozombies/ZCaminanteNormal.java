@@ -9,6 +9,19 @@ package juegozombies;
  * @author j.perezm.2022
  */
 public class ZCaminanteNormal extends ZCaminante{
+    
+    public ZCaminanteNormal() {
+        super();
+    }
+            
+    public ZCaminanteNormal(Punto posicion, boolean vivo, int aguante, int numAcciones) {
+        super();
+        this.setPosicion(posicion);
+        this.setVivo(vivo);
+        this.setAguante(aguante);
+        this.setNumAcciones(numAcciones);
+    }
+    
     @Override
     public void reaccion(Superviviente superviviente , EArmas arma){
         if (arma.getPotencia() >= this.getAguante()){

@@ -195,10 +195,11 @@ public class Persistencia {
 
         Node turnoNode = doc.getElementsByTagName("turnoJugador").item(0);
         juego.setTurnoJugador(Integer.parseInt(turnoNode.getTextContent()));
-
-        NodeList listaSupervivientes = doc.getElementsByTagName("superviviente");
-        for (int i = 0; i < listaSupervivientes.getLength(); i++) {
-            Node nodoSuperviviente = listaSupervivientes.item(i);
+        
+        ArrayList<Superviviente> listaSupervivientes = new ArrayList<>();
+        NodeList listSupervivientes = doc.getElementsByTagName("superviviente");
+        for (int i = 0; i < listSupervivientes.getLength(); i++) {
+            Node nodoSuperviviente = listSupervivientes.item(i);
             if (nodoSuperviviente.getNodeType() == Node.ELEMENT_NODE) {
                 Element elementoSuperviviente = (Element) nodoSuperviviente;
                 String nombre = elementoSuperviviente.getElementsByTagName("nombre").item(0).getTextContent();
@@ -252,55 +253,77 @@ public class Persistencia {
         
                 int exitos = Integer.parseInt(elementoSuperviviente.getElementsByTagName("exitos").item(0).getTextContent());
                 superviviente.setExitos(exitos);
-                juego.getSupervivientes().add(superviviente);
+                listaSupervivientes.add(superviviente);
             }
         }
-
-        NodeList listaZombies = doc.getElementsByTagName("zombi");
-        for (int i = 0; i < listaZombies.getLength(); i++) {
-            Node nodoZombi = listaZombies.item(i);
+        
+        juego.setSupervivientes(listaSupervivientes);
+        
+        ArrayList<Zombi> listaZombies = new ArrayList<>();
+        NodeList listZombies = doc.getElementsByTagName("zombi");
+        for (int i = 0; i < listZombies.getLength(); i++) {
+            Node nodoZombi = listZombies.item(i);
             if (nodoZombi.getNodeType() == Node.ELEMENT_NODE) {
                 Element elementoZombi = (Element) nodoZombi;
+                Punto posicion = new Punto();
+                posicion.parsePunto(elementoZombi.getElementsByTagName("posicion").item(0).getTextContent());
+                boolean vivo = Boolean.parseBoolean(elementoZombi.getElementsByTagName("vivo").item(0).getTextContent());
+                int aguante = Integer.parseInt(elementoZombi.getElementsByTagName("aguante").item(0).getTextContent());
+                int numAcciones = Integer.parseInt(elementoZombi.getElementsByTagName("numAcciones").item(0).getTextContent());
                 switch (elementoZombi.getNodeName()) {
                     case "ZAbominacionBerserker" -> {
-                        
+                        ZAbominacionBerserker zombi = new ZAbominacionBerserker(posicion, vivo, aguante, numAcciones);
+                        listaZombies.add(zombi);
                     }
                     
                     case "ZAbominacionNormal" ->{
-                        
+                        ZAbominacionNormal zombi = new ZAbominacionNormal(posicion, vivo, aguante, numAcciones);
+                        zombi.setPosicion(posicion);
+                        zombi.setVivo(vivo);
+                        zombi.setAguante(aguante);
+                        zombi.setNumAcciones(numAcciones);
+                        listaZombies.add(zombi);
                     }
                     
                     case "ZAbominacionToxico" -> {
-                        
+                        ZAbominacionToxico zombi = new ZAbominacionToxico(posicion, vivo, aguante, numAcciones);
+                        listaZombies.add(zombi);
                     }
                     
                     case "ZCaminanteBerserker" -> {
-                        
+                        ZCaminanteBerserker zombi = new ZCaminanteBerserker(posicion, vivo, aguante, numAcciones);
+                        listaZombies.add(zombi);
                     }
                     
                     case "ZCaminanteNormal" -> {
-                        
+                        ZCaminanteNormal zombi = new ZCaminanteNormal(posicion, vivo, aguante, numAcciones);
+                        listaZombies.add(zombi);
                     }
                     
                     case "ZCaminanteToxico" -> {
-                        
+                        ZCaminanteToxico zombi = new ZCaminanteToxico(posicion, vivo, aguante, numAcciones);
+                        listaZombies.add(zombi);
                     }
                     
                     case "ZCorredorBerserker" -> {
-                        
+                        ZCorredorBerserker zombi = new ZCorredorBerserker(posicion, vivo, aguante, numAcciones);
+                        listaZombies.add(zombi);
                     }
                         
                     case "ZCorredorNormal" -> {
-                        
+                        ZCorredorNormal zombi = new ZCorredorNormal(posicion, vivo, aguante, numAcciones);
+                        listaZombies.add(zombi);
                     }
                     
                     case "ZCorredorToxico" -> {
-                        
+                        ZCorredorToxico zombi = new ZCorredorToxico(posicion, vivo, aguante, numAcciones);
+                        listaZombies.add(zombi);
                     }
                  }
             }
-            //juego.getZombis().add(zombi);
         }
+        
+        juego.setZombis(listaZombies);
         
         Node objetivoNode = doc.getElementsByTagName("objetivo").item(0);
         Punto obj = new Punto();
