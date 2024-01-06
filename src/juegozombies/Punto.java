@@ -44,9 +44,9 @@ public class Punto {
         return this.coordenadaX + "," + this.coordenadaY;
     }
     
-    public void toPunto(String[] puntoString) {
-        this.coordenadaX = Integer.parseInt(puntoString[0]);
-        this.coordenadaY = Integer.parseInt(puntoString[1]);
+    public Punto parsePunto(String[] puntoString) {
+        Punto punto = new Punto(Integer.parseInt(puntoString[0]), Integer.parseInt(puntoString[1]));
+        return punto;
     }
     public void desplazarXY(int xDespl,int yDespl){
         if (xDespl>0){
