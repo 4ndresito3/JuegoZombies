@@ -29,7 +29,7 @@ import org.xml.sax.SAXException;
  */
 public class Persistencia {
     
-    public static void guardarJuego(Juego juego) {
+    public static void guardarJuego() {
     try {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -37,13 +37,13 @@ public class Persistencia {
         Document doc = docBuilder.newDocument();
         Element rootElement = doc.createElement("juego");
         doc.appendChild(rootElement);
-
+        
         Element turnoElement = doc.createElement("turnoJugador");
-        turnoElement.appendChild(doc.createTextNode(String.valueOf(juego.getTurnoJugador())));
+        turnoElement.appendChild(doc.createTextNode(String.valueOf(Juego.getTurnoJugador())));
         rootElement.appendChild(turnoElement);
 
         Element supervivientesElement = doc.createElement("supervivientes");
-        for (Superviviente superviviente : juego.getSupervivientes()) {
+        for (Superviviente superviviente : Juego.getSupervivientes()) {
             Element supervivienteElement = doc.createElement("superviviente");
             
             Element nombreElement = doc.createElement("nombre");
@@ -71,6 +71,34 @@ public class Persistencia {
             heridasElement.appendChild(doc.createTextNode(String.valueOf(superviviente.getHeridas())));
             supervivienteElement.appendChild(heridasElement);
             
+            Element armasActElement = doc.createElement("armasActivas");
+            for(EArmas arma : superviviente.getArmasActivas()){
+                Element armaElement = doc.createElement("arma");
+                
+                Element nombreArmaElement = doc.createElement("nombre");                
+                nombreArmaElement.appendChild(doc.createTextNode(arma.getNombre()));
+                armaElement.appendChild(nombreArmaElement);
+                
+                Element potenciaArmaElement = doc.createElement("potencia");                
+                potenciaArmaElement.appendChild(doc.createTextNode(String.valueOf(arma.getPotencia())));
+                armaElement.appendChild(potenciaArmaElement);
+                
+                Element alcanceArmaElement = doc.createElement("alcanceMax");                
+                alcanceArmaElement.appendChild(doc.createTextNode(String.valueOf(arma.getAlcanceMax())));
+                armaElement.appendChild(alcanceArmaElement);
+                
+                Element dadosArmaElement = doc.createElement("numDados");                
+                dadosArmaElement.appendChild(doc.createTextNode(String.valueOf(arma.getNumDados())));
+                armaElement.appendChild(dadosArmaElement);
+                
+                Element exitoArmaElement = doc.createElement("valorExito");                
+                exitoArmaElement.appendChild(doc.createTextNode(String.valueOf(arma.getValorExito())));
+                armaElement.appendChild(exitoArmaElement);
+                
+                armasActElement.appendChild(armaElement);
+            }
+            supervivienteElement.appendChild(armasActElement);
+            
             Element inventarioElement = doc.createElement("inventario");
             for (Equipo equipo : superviviente.getInventario()) {
                 if (equipo instanceof EArmas) {
@@ -95,10 +123,6 @@ public class Persistencia {
                     Element valorExitoElement = doc.createElement("valorExito");
                     valorExitoElement.appendChild(doc.createTextNode(String.valueOf(((EArmas) equipo).getValorExito())));
                     armaElement.appendChild(valorExitoElement);
-                    
-                    Element armaActivaElement = doc.createElement("armaActiva");
-                    armaActivaElement.appendChild(doc.createTextNode(String.valueOf(((EArmas) equipo).isArmaActiva())));
-                    armaElement.appendChild(armaActivaElement);
                     
                     inventarioElement.appendChild(armaElement);
                 } else if (equipo instanceof EProvisiones) {
@@ -130,40 +154,37 @@ public class Persistencia {
         rootElement.appendChild(supervivientesElement);
         
         Element zombiesElement = doc.createElement("zombies");
-        for (Zombi zombi : juego.getZombis()) {
-            Element zombiElement = doc.createElement(zombi.obtenerTipo());
-                
+        for (Zombi zombi : Juego.getZombis()) {
+            Element preZombiElement = doc.createElement("zombi");
+            
+            Element zombiElement = doc.createElement("clase");
+            zombiElement.appendChild(doc.createTextNode(zombi.obtenerTipo()));
+            preZombiElement.appendChild(zombiElement);
+            
             Element posicionElement = doc.createElement("posicion");
             posicionElement.appendChild(doc.createTextNode((zombi.devolverCoordenada().toString())));
-            zombiElement.appendChild(posicionElement);
+            preZombiElement.appendChild(posicionElement);
             
             Element vivoElement = doc.createElement("vivo");
             vivoElement.appendChild(doc.createTextNode(String.valueOf(zombi.isVivo())));
-            zombiElement.appendChild(vivoElement);
-            
-            Element aguanteElement = doc.createElement("aguante");
-            aguanteElement.appendChild(doc.createTextNode(String.valueOf(zombi.getAguante())));
-            zombiElement.appendChild(aguanteElement);
-            
-            Element numAccionesElement = doc.createElement("numAcciones");
-            numAccionesElement.appendChild(doc.createTextNode(String.valueOf(zombi.getNumAcciones())));
-            zombiElement.appendChild(numAccionesElement);
+            preZombiElement.appendChild(vivoElement);
            
-            zombiesElement.appendChild(zombiElement);
-        }
+            zombiesElement.appendChild(preZombiElement);
+         }
         rootElement.appendChild(zombiesElement);
         
         Element objetivoElement = doc.createElement("objetivo");
-        objetivoElement.appendChild(doc.createTextNode(juego.getObjetivo().puntoString()));
+        objetivoElement.appendChild(doc.createTextNode(Juego.getObjetivo().toString()));
         rootElement.appendChild(objetivoElement);
         
         Element tamanoCuadriculaElement = doc.createElement("tamanoCuadricula");
-        tamanoCuadriculaElement.appendChild(doc.createTextNode(juego.getTamanoCuadricula().puntoString()));
+        tamanoCuadriculaElement.appendChild(doc.createTextNode(Juego.getTamanoCuadricula().toString()));
+        rootElement.appendChild(tamanoCuadriculaElement);
         
-        Element casillasBuscadasElement = doc.createElement("listCasillasBuscadas");
-        for(Punto casilla: juego.getListaCasillasBuscadas()) {
+        Element casillasBuscadasElement = doc.createElement("listaCasillasBuscadas");
+        for(Punto casilla: Juego.getListaCasillasBuscadas()) {
             Element casillaElement = doc.createElement("casilla");
-            casillaElement.appendChild(doc.createTextNode(casilla.puntoString()));
+            casillaElement.appendChild(doc.createTextNode(casilla.toString()));
             casillasBuscadasElement.appendChild(casillaElement);
         }
         rootElement.appendChild(casillasBuscadasElement);
@@ -184,9 +205,8 @@ public class Persistencia {
     }
     
     public static Juego cargarJuego() {
-    Juego juego = new Juego();
-
     try {
+        Juego juego = new Juego();
         File archivoXML = new File("src\\juegozombies\\partidaZombiesGuardada.xml");
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -203,8 +223,8 @@ public class Persistencia {
             if (nodoSuperviviente.getNodeType() == Node.ELEMENT_NODE) {
                 Element elementoSuperviviente = (Element) nodoSuperviviente;
                 String nombre = elementoSuperviviente.getElementsByTagName("nombre").item(0).getTextContent();
-                Punto posicion = new Punto();
-                posicion.parsePunto(elementoSuperviviente.getElementsByTagName("posicion").item(0).getTextContent());
+                Punto prePosicion = new Punto();
+                Punto posicion = prePosicion.parsePunto(elementoSuperviviente.getElementsByTagName("posicion").item(0).getTextContent());
                 Superviviente superviviente = new Superviviente(nombre, posicion);
                 Boolean vivo = Boolean.parseBoolean(elementoSuperviviente.getElementsByTagName("vivo").item(0).getTextContent());
                 superviviente.setVivo(vivo);
@@ -215,12 +235,30 @@ public class Persistencia {
                 int heridas = Integer.parseInt(elementoSuperviviente.getElementsByTagName("heridas").item(0).getTextContent());
                 superviviente.setHeridas(heridas);
                 
+                Element elementoActiva = (Element) elementoSuperviviente.getElementsByTagName("armasActivas").item(0);
+                NodeList activaNodeList = elementoActiva.getChildNodes();
+                ArrayList<EArmas> armasActivas = new ArrayList<>();
+                for(int j=0; j < activaNodeList.getLength(); j++){
+                    Node activaNode = activaNodeList.item(j);
+                    if (activaNode.getNodeType() == Node.ELEMENT_NODE) {
+                        Element actElement = (Element) activaNode;
+                        String nombreArma = actElement.getElementsByTagName("nombre").item(0).getTextContent();
+                        int potencia = Integer.parseInt(actElement.getElementsByTagName("potencia").item(0).getTextContent());
+                        int alcanceMax = Integer.parseInt(actElement.getElementsByTagName("alcanceMax").item(0).getTextContent());
+                        int numDados = Integer.parseInt(actElement.getElementsByTagName("numDados").item(0).getTextContent());
+                        int valorExito = Integer.parseInt(actElement.getElementsByTagName("valorExito").item(0).getTextContent());
+                        EArmas arma = new EArmas(nombreArma, potencia, alcanceMax, numDados, valorExito);
+                        armasActivas.add(arma);
+                    }   
+                }
+                superviviente.setArmasActivas(armasActivas);
+                
                 Element elementoInventario = (Element) elementoSuperviviente.getElementsByTagName("inventario").item(0);
                 NodeList equiposNodeList = elementoInventario.getChildNodes();
                 ArrayList<Equipo> inventario = new ArrayList<>();
                 
                 for(int j = 0; j < equiposNodeList.getLength(); j++) {
-                    Node equipoNode = equiposNodeList.item(i);
+                    Node equipoNode = equiposNodeList.item(j);
 
                 if (equipoNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element equipoElement = (Element) equipoNode;
@@ -232,10 +270,7 @@ public class Persistencia {
                     int alcanceMax = Integer.parseInt(equipoElement.getElementsByTagName("alcanceMax").item(0).getTextContent());
                     int numDados = Integer.parseInt(equipoElement.getElementsByTagName("numDados").item(0).getTextContent());
                     int valorExito = Integer.parseInt(equipoElement.getElementsByTagName("valorExito").item(0).getTextContent());
-                    boolean armaActiva = Boolean.parseBoolean(equipoElement.getElementsByTagName("armaActiva").item(0).getTextContent());
-
                     EArmas arma = new EArmas(nombreArma, potencia, alcanceMax, numDados, valorExito);
-                    arma.setArmaActiva(armaActiva);
                     inventario.add(arma);
                 } else if (equipoElement.getNodeName().equals("provision")) {
             
@@ -246,9 +281,9 @@ public class Persistencia {
                     EProvisiones provision = new EProvisiones(nombreProvision, valorEnergetico);
                     provision.setCaducidad(fechaCaducidad);
                     inventario.add(provision);
+                    }
                 }
             }
-        }
                 superviviente.setInventario(inventario);
         
                 int exitos = Integer.parseInt(elementoSuperviviente.getElementsByTagName("exitos").item(0).getTextContent());
@@ -265,58 +300,53 @@ public class Persistencia {
             Node nodoZombi = listZombies.item(i);
             if (nodoZombi.getNodeType() == Node.ELEMENT_NODE) {
                 Element elementoZombi = (Element) nodoZombi;
-                Punto posicion = new Punto();
-                posicion.parsePunto(elementoZombi.getElementsByTagName("posicion").item(0).getTextContent());
-                boolean vivo = Boolean.parseBoolean(elementoZombi.getElementsByTagName("vivo").item(0).getTextContent());
-                int aguante = Integer.parseInt(elementoZombi.getElementsByTagName("aguante").item(0).getTextContent());
-                int numAcciones = Integer.parseInt(elementoZombi.getElementsByTagName("numAcciones").item(0).getTextContent());
-                switch (elementoZombi.getNodeName()) {
+                Punto prePosicion = new Punto();
+                Punto posicion = prePosicion.parsePunto(elementoZombi.getElementsByTagName("posicion").item(0).getTextContent());
+                Boolean vivo = Boolean.parseBoolean(elementoZombi.getElementsByTagName("vivo").item(0).getTextContent());
+                String clase = elementoZombi.getElementsByTagName("clase").item(0).getTextContent(); 
+                switch (clase){
                     case "ZAbominacionBerserker" -> {
-                        ZAbominacionBerserker zombi = new ZAbominacionBerserker(posicion, vivo, aguante, numAcciones);
+                        ZAbominacionBerserker zombi = new ZAbominacionBerserker(posicion, vivo);
                         listaZombies.add(zombi);
                     }
                     
                     case "ZAbominacionNormal" ->{
-                        ZAbominacionNormal zombi = new ZAbominacionNormal(posicion, vivo, aguante, numAcciones);
-                        zombi.setPosicion(posicion);
-                        zombi.setVivo(vivo);
-                        zombi.setAguante(aguante);
-                        zombi.setNumAcciones(numAcciones);
+                        ZAbominacionNormal zombi = new ZAbominacionNormal(posicion, vivo);
                         listaZombies.add(zombi);
                     }
                     
                     case "ZAbominacionToxico" -> {
-                        ZAbominacionToxico zombi = new ZAbominacionToxico(posicion, vivo, aguante, numAcciones);
+                        ZAbominacionToxico zombi = new ZAbominacionToxico(posicion, vivo);
                         listaZombies.add(zombi);
                     }
                     
                     case "ZCaminanteBerserker" -> {
-                        ZCaminanteBerserker zombi = new ZCaminanteBerserker(posicion, vivo, aguante, numAcciones);
+                        ZCaminanteBerserker zombi = new ZCaminanteBerserker(posicion, vivo);
                         listaZombies.add(zombi);
                     }
                     
                     case "ZCaminanteNormal" -> {
-                        ZCaminanteNormal zombi = new ZCaminanteNormal(posicion, vivo, aguante, numAcciones);
+                        ZCaminanteNormal zombi = new ZCaminanteNormal(posicion, vivo);
                         listaZombies.add(zombi);
                     }
                     
                     case "ZCaminanteToxico" -> {
-                        ZCaminanteToxico zombi = new ZCaminanteToxico(posicion, vivo, aguante, numAcciones);
+                        ZCaminanteToxico zombi = new ZCaminanteToxico(posicion, vivo);
                         listaZombies.add(zombi);
                     }
                     
                     case "ZCorredorBerserker" -> {
-                        ZCorredorBerserker zombi = new ZCorredorBerserker(posicion, vivo, aguante, numAcciones);
+                        ZCorredorBerserker zombi = new ZCorredorBerserker(posicion, vivo);
                         listaZombies.add(zombi);
                     }
                         
                     case "ZCorredorNormal" -> {
-                        ZCorredorNormal zombi = new ZCorredorNormal(posicion, vivo, aguante, numAcciones);
+                        ZCorredorNormal zombi = new ZCorredorNormal(posicion, vivo);
                         listaZombies.add(zombi);
                     }
                     
                     case "ZCorredorToxico" -> {
-                        ZCorredorToxico zombi = new ZCorredorToxico(posicion, vivo, aguante, numAcciones);
+                        ZCorredorToxico zombi = new ZCorredorToxico(posicion, vivo);
                         listaZombies.add(zombi);
                     }
                  }
@@ -349,11 +379,12 @@ public class Persistencia {
         }
         
         juego.setListaCasillasBuscadas(listaCasillasBuscadas);      
-
+        return juego;
     } catch (ParserConfigurationException | SAXException | IOException e) {
         e.printStackTrace();
+        return null;
     }
 
-    return juego;
+    
 }
 }

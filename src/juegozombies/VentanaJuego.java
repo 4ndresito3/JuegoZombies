@@ -77,6 +77,7 @@ public class VentanaJuego extends javax.swing.JFrame {
             }
             
         }
+        Persistencia.guardarJuego();
         if(VentanaJuego.llegarObjetivoProvisiones() && Juego.jugadoresVivos() && !yaMostrado){
             JOptionPane.showMessageDialog(null, "Has ganado", "Fin partida" , JOptionPane.WARNING_MESSAGE);
             for(int i=0; i<Juego.getSupervivientes().size(); i++){
@@ -126,19 +127,20 @@ public class VentanaJuego extends javax.swing.JFrame {
         }
         return cont == cont3 && cont2 >= cont; //si los jugadores en el objetivo son iguales a los jugadores vivos, y ademas hay proviviones para todos es true
     }
+    
     public VentanaJuego() {
         frame.setTitle("VentanaJuego");
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-        
+       
         //tablero
         for (int i=0; i<Juego.getTamanoCuadricula().getX()  ; i++){
             for(int j=0; j< Juego.getTamanoCuadricula().getY(); j++){
                 celda[i][j] = new JButton("");
                 for(int l = 0; l< Juego.getSupervivientes().size(); l++){
-                    if(Juego.getSupervivientes().get(l).devolverCoordenada().getX() == i && Juego.getSupervivientes().get(l).devolverCoordenada().getY() == j ){                       
+                    if(Juego.getSupervivientes().get(l).devolverCoordenada().getX() == i && Juego.getSupervivientes().get(l).devolverCoordenada().getY() == j && Juego.getSupervivientes().get(l).isVivo()){                       
                            String texto = celda[i][j].getText();
                            String newTexto=Juego.getSupervivientes().get(l).getNombre();                          
                            StringBuilder textoBoton = new StringBuilder("<html>"+texto);
@@ -147,7 +149,7 @@ public class VentanaJuego extends javax.swing.JFrame {
                     }
                 }
                 for(int k = 0; k< Juego.getZombis().size(); k++){                            
-                    if(Juego.getZombis().get(k).devolverCoordenada().getX() == i && Juego.getZombis().get(k).devolverCoordenada().getY() == j){
+                    if(Juego.getZombis().get(k).devolverCoordenada().getX() == i && Juego.getZombis().get(k).devolverCoordenada().getY() == j && Juego.getZombis().get(k).isVivo()){
                         String texto2 = celda[i][j].getText();
                            String newTexto2=Juego.getZombis().get(k).obtenerTipo2();                          
                            StringBuilder textoBoton2 = new StringBuilder("<html>"+texto2);
@@ -183,14 +185,18 @@ public class VentanaJuego extends javax.swing.JFrame {
         //mostrar posiciones
         textoPosiciones.append("SUPERVIVIENTES\n");
         for(int i = 0; i<Juego.getSupervivientes().size(); i++){           
-            textoPosiciones.append("" + Juego.getSupervivientes().get(i).getNombre() + ": " 
+            if(Juego.getSupervivientes().get(i).isVivo()){
+                  textoPosiciones.append("" + Juego.getSupervivientes().get(i).getNombre() + ": " 
                     + Juego.getSupervivientes().get(i).devolverCoordenada().getX() + ", " + Juego.getSupervivientes().get(i).devolverCoordenada().getY() + "\n");
+            }
         }
         textoPosiciones.append("\n");
         textoPosiciones.append("ZOMBIES\n");
         for(int i = 0; i<Juego.getZombis().size(); i++){
-            textoPosiciones.append("" + Juego.getZombis().get(i).obtenerTipo() + ": " 
+            if(Juego.getZombis().get(i).isVivo()){
+                textoPosiciones.append("" + Juego.getZombis().get(i).obtenerTipo() + ": " 
                     + Juego.getZombis().get(i).devolverCoordenada().getX() + ", " + Juego.getZombis().get(i).devolverCoordenada().getY() + "\n");         
+            }    
         }
         posiciones.add(textoPosiciones);
         
@@ -243,7 +249,7 @@ public class VentanaJuego extends javax.swing.JFrame {
             }
         });
         frame.setVisible(true);
-        //jugar();
+        Persistencia.guardarJuego();
         }
         
         public static void pasarTurnoJugador(){

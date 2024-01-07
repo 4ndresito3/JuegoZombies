@@ -5,8 +5,6 @@
 package juegozombies;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-import javax.swing.JOptionPane;
 /**
  *
  * @author Andrés
@@ -26,40 +24,40 @@ public class Juego {
         return listaZombies;
     }
     
-    public void setZombis(ArrayList<Zombi> listZombis) {
-        this.listaZombies = listZombis;
+    public static void setZombis(ArrayList<Zombi> listZombis) {
+        listaZombies = listZombis;
     }
     
     public static ArrayList<Superviviente> getSupervivientes (){
         return listaSupervivientes;
     }
     
-    public void setSupervivientes(ArrayList<Superviviente> listSupervivientes) {
-        this.listaSupervivientes = listSupervivientes;
+    public static void setSupervivientes(ArrayList<Superviviente> listSupervivientes) {
+        listaSupervivientes = listSupervivientes;
     }
     
     public static Punto getTamanoCuadricula() {
         return tamanoCuadricula;
     }
     
-    public void setTamanoCuadricula(Punto tamano) {
-        this.tamanoCuadricula = tamano;
+    public static void setTamanoCuadricula(Punto tamano) {
+        tamanoCuadricula = tamano;
     }
 
     public static ArrayList<Punto> getListaCasillasBuscadas() {
         return listaCasillasBuscadas;
     }
     
-    public void setListaCasillasBuscadas(ArrayList<Punto> casillasBuscadas) {
-        this.listaCasillasBuscadas = casillasBuscadas;
+    public static void setListaCasillasBuscadas(ArrayList<Punto> casillasBuscadas) {
+        listaCasillasBuscadas = casillasBuscadas;
     }
 
     public static Punto getObjetivo() {
         return objetivo;
     }
     
-    public void setObjetivo(Punto punto) {
-        this.objetivo = punto;
+    public static void setObjetivo(Punto punto) {
+        objetivo = punto;
     }
     
     
@@ -71,7 +69,7 @@ public class Juego {
         listaCasillasBuscadas = new ArrayList<>();
     }
     
-    public void generarSupervivientes(String[] listaNombres){
+    public static void generarSupervivientes(String[] listaNombres){
         int numeroSupervivientes = 0;
         for(int i = 0; i < 4; i++){
             if(!listaNombres[i].equals("")){
@@ -83,7 +81,7 @@ public class Juego {
         int random1 = (int)Math.round(Math.random())*(numeroSupervivientes+5);
         int random2 = (int)Math.round(Math.random())*(numeroSupervivientes+5);
         Punto posicion = new Punto(random1,random2);
-        this.generarObjetivo(random1,random2);
+        generarObjetivo(random1,random2);
         for(int i = 0; i < numeroSupervivientes ; i++){
             Juego.listaSupervivientes.add(new Superviviente(listaNombres[i], posicion));
         }
@@ -206,7 +204,7 @@ public class Juego {
             }
         }
     }
-    private void generarObjetivo(int genSupervivientes,int genSupervivientes2){
+    private static void generarObjetivo(int genSupervivientes,int genSupervivientes2){
             objetivo = new Punto (Math.abs(genSupervivientes-(tamanoCuadricula.getX()-1)),Math.abs(genSupervivientes2-(tamanoCuadricula.getY()-1)));
         }
 

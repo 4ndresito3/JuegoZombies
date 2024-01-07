@@ -5,7 +5,6 @@
 package juegozombies;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import javax.swing.JOptionPane;
 /**
  *
@@ -18,7 +17,7 @@ public class Superviviente extends EntidadActivable{
     private int heridas;
     ArrayList<Equipo>inventario;
     ArrayList<EArmas>armasActivas;
-    int exitos;
+    private int exitos;
     
     
     public Superviviente (String nombre, Punto posicion){

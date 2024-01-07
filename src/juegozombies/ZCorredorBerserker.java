@@ -14,12 +14,10 @@ public class ZCorredorBerserker  extends ZCorredor{
         super();
     }
     
-    public ZCorredorBerserker(Punto posicion, boolean vivo, int aguante, int numAcciones) {
+    public ZCorredorBerserker(Punto posicion, boolean vivo) {
         super();
         this.setPosicion(posicion);
         this.setVivo(vivo);
-        this.setAguante(aguante);
-        this.setNumAcciones(numAcciones);
     }
     @Override
     public void reaccion(Superviviente superviviente , EArmas arma){

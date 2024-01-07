@@ -4,6 +4,11 @@
  */
 package juegozombies;
 
+import java.io.IOException;
+import javax.swing.JOptionPane;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
+
 /**
  *
  * @author andre
@@ -133,7 +138,18 @@ public class VentanaMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cargarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarPartidaActionPerformed
-        // TODO add your handling code here:
+        Juego prueba = Persistencia.cargarJuego();
+        if(Juego.jugadoresVivos()){
+            if(prueba == null){
+                JOptionPane.showMessageDialog(null, "No hay partida guardada", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);
+            }else{
+                VentanaJuego ventanaJuego = new VentanaJuego();
+                ventanaJuego.setVisible(true);
+                this.dispose();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay partida guardada", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_cargarPartidaActionPerformed
 
     private void nuevaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaPartidaActionPerformed

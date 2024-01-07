@@ -37,17 +37,15 @@ public class Punto {
     }
     @Override
     public String toString() {
-        return "Punto{" + "coordenadaX=" + coordenadaX + ", coordenadaY=" + coordenadaY + '}';
-    }
-    
-    public String puntoString() {
         return this.coordenadaX + "," + this.coordenadaY;
     }
     
     public Punto parsePunto(String stringPunto) {
         String[] puntoString = stringPunto.split(",");
-        Punto punto = new Punto(Integer.parseInt(puntoString[0]), Integer.parseInt(puntoString[1]));
-        return punto;
+        //Punto punto = new Punto(Integer.parseInt(puntoString[0]), Integer.parseInt(puntoString[1]));
+        this.coordenadaX = Integer.parseInt(puntoString[0]);
+        this.coordenadaY = Integer.parseInt(puntoString[1]);
+        return this;
     }
     public void desplazarXY(int xDespl,int yDespl){
         if (xDespl>0){

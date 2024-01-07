@@ -14,12 +14,10 @@ public class ZCaminanteBerserker extends ZCaminante{
         super();
     }
     
-    public ZCaminanteBerserker(Punto posicion, boolean vivo, int aguante, int numAcciones) {
+    public ZCaminanteBerserker(Punto posicion, boolean vivo) {
         super();
         this.setPosicion(posicion);
         this.setVivo(vivo);
-        this.setAguante(aguante);
-        this.setNumAcciones(numAcciones);
     }
     
     @Override

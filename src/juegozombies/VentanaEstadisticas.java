@@ -20,6 +20,7 @@ public class VentanaEstadisticas {
         frame.setSize(600, 600);
         frame.setLocation(400,75); 
         frame.setResizable(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         texto.setEditable(false);
         
         int heridasTotal=0;

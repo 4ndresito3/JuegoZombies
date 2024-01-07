@@ -14,12 +14,10 @@ public class ZCaminanteToxico extends ZCaminante{
         super();
     }
     
-    public ZCaminanteToxico(Punto posicion, boolean vivo, int aguante, int numAcciones) {
+    public ZCaminanteToxico(Punto posicion, boolean vivo) {
         super();
         this.setPosicion(posicion);
         this.setVivo(vivo);
-        this.setAguante(aguante);
-        this.setNumAcciones(numAcciones);
     }
     
     @Override

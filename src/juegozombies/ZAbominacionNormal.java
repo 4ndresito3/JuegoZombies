@@ -14,12 +14,10 @@ public class ZAbominacionNormal extends ZAbominacion{
         super();
     }
     
-    public ZAbominacionNormal(Punto posicion, boolean vivo, int aguante, int numAcciones) {
+    public ZAbominacionNormal(Punto posicion, boolean vivo) {
         super();
         this.setPosicion(posicion);
         this.setVivo(vivo);
-        this.setAguante(aguante);
-        this.setNumAcciones(numAcciones);
     }
     @Override
     public void reaccion(Superviviente superviviente , EArmas arma){

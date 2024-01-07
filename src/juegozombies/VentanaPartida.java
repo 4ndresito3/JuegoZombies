@@ -202,8 +202,8 @@ public class VentanaPartida extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No puedes jugar sin supervivientes", "¡ADVERTENCIA!" , JOptionPane.WARNING_MESSAGE);
         } else{
             Juego partida = new Juego();
-            partida.generarSupervivientes(nombres);
-            partida.generarZombies(false);
+            Juego.generarSupervivientes(nombres);
+            Juego.generarZombies(false);
             this.setVisible(false);
             ventanaJuego = new VentanaJuego();
             

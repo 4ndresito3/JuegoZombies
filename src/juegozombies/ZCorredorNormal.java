@@ -14,12 +14,10 @@ public class ZCorredorNormal extends ZCorredor{
         super();
     }
     
-    public ZCorredorNormal(Punto posicion, boolean vivo, int aguante, int numAcciones) {
+    public ZCorredorNormal(Punto posicion, boolean vivo) {
         super();
         this.setPosicion(posicion);
         this.setVivo(vivo);
-        this.setAguante(aguante);
-        this.setNumAcciones(numAcciones);
     }
     
     @Override

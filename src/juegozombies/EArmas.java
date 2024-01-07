@@ -13,7 +13,6 @@ public class EArmas extends Equipo {
     private int alcanceMax;
     private int numDados;
     private int valorExito;
-    private boolean armaActiva;
     
     public EArmas (String nombre, int potencia, int alcance, int numDados, int valorExito){
         this.setNombre(nombre);
@@ -40,10 +39,6 @@ public class EArmas extends Equipo {
         return valorExito;
     }
 
-    public boolean isArmaActiva() {
-        return armaActiva;
-    }
-
     public void setPotencia(int potencia) {
         this.potencia = potencia;
     }
@@ -58,10 +53,5 @@ public class EArmas extends Equipo {
 
     public void setValorExito(int valorExito) {
         this.valorExito = valorExito;
-    }
-
-    public void setArmaActiva(boolean armaActiva) {
-        this.armaActiva = armaActiva;
-    }
-    
+    }    
 }
