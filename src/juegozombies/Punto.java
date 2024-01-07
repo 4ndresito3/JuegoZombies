@@ -47,14 +47,6 @@ public class Punto {
         this.coordenadaY = Integer.parseInt(puntoString[1]);
         return this;
     }
-    public void desplazarXY(int xDespl,int yDespl){
-        if (xDespl>0){
-            this.coordenadaX = this.coordenadaX + xDespl;
-        }
-        if (yDespl>0){
-            this.coordenadaY = this.coordenadaY + yDespl;
-        }
-    }
 
     @Override
     public int hashCode() {
@@ -84,11 +76,5 @@ public class Punto {
     public Punto copia(){
         Punto puntito = new Punto(this.coordenadaX,this.coordenadaY);
         return puntito;
-    }
-    public boolean estaDebajo(Punto otroPunto){
-        return this.coordenadaY < otroPunto.coordenadaY;
-    }
-    public boolean estaDerecha(Punto otroPunto){
-        return this.coordenadaX > otroPunto.coordenadaX;
     }
 }
