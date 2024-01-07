@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  */
 public class VentanaPartida extends javax.swing.JFrame {
 
-    int [] listaNumeros = {1,2,3,4};
+    private int [] listaNumeros = {1,2,3,4};
     /**
      * Creates new form ventanaPartida
      */
